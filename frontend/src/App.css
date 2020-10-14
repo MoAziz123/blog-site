@@ -1,0 +1,13 @@
+.navbar
+{
+    display:flex;
+    flex-direction:row;
+    justify-content: flex-end;
+    background-color:black;
+    color:white;
+}
+.navbar ul
+{
+    width:95%;
+    list-style: none;
+}

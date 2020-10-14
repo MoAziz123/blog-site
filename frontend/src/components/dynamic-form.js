@@ -38,7 +38,11 @@ export default class DynamicForm extends React.Component
     handleClick=(text)=>{
         switch(text){
             case "heading":
-                this.state.picker.insertBefore(this.Heading)
+                this.state.picker.insertBefore(this.Heading, this.state.picker)
+            case "image":
+                this.state.picker.insertBefore(this.Image, this.state.picker)
+            case "video":
+                this.state.picker.insertBefore(this.Video, this.state.picker)
                 
         }
     }

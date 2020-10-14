@@ -8,7 +8,7 @@ export default class Footer extends React.Component
 {
 
     render=()=>{
-        <div className="footer">
+        return(<div className="footer">
             <div className="footer-wrapper">
                 <div className="footer-col">
                     <h1>Other fun stuff</h1>
@@ -20,9 +20,7 @@ export default class Footer extends React.Component
                 </div>
                 
             </div>
-        </div>
-      
-
+        </div>)
     }
     
 }
