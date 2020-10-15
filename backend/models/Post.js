@@ -4,7 +4,9 @@ const mongoose = require('mongoose')
 const postSchema = mongoose.Schema({
     title: String,
     date: {type:date,default:Date.now()}, 
-    data:Array
+    data:Array,
+    byline:String,
+    tags:Array
 
 })
 

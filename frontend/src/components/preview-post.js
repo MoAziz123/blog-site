@@ -6,19 +6,32 @@ export default class PostPreview extends React.Component{
     {
         super(props)
     }
-    render=()=>{
-        <div className="preview-post">
+    render(){
+        return(<div className="preview-post">
             <div className="post-row">
-                <h4>{this.props.date}</h4>
-                <h1>{this.props.title}</h1>
-                <h3>{this.props.description}</h3>
+                <p className="title">{this.props.title}</p>
+                <p className="byline">by {this.props.byline}</p>
+                <p className="date">Date: {this.props.date}</p>
+                <div className="post-tags">
+                {
+                    this.props.tags.map((tag)=>{
+                        return(
+                            <div className="post-tag">
+                                <text>{tag}</text>
+                            </div>
+                        )
+                    })
+                }
+                </div>
+                <p className="description">{this.props.description}</p>
+                <a href="./html"className="link">Read More...</a>
             </div>
             <div className="post-options">
-                <button className="post-button" onClick={this.handleDelete(this.props.post_id)}>Edit</button>
-                <button className="post-button" onClick={this.handleEditLoad(this.props.post_id)}>Delete</button>
-                <button className="post-button" onClick={this.handleView(this.props.post_id)}>View</button>
+                <button className="post-button" onClick={(e)=>this.handleDelete(this.props.post_id)}>Edit</button>
+                <button className="post-button" onClick={(e)=>this.handleEditLoad(this.props.post_id)}>Delete</button>
+                <button className="post-button" onClick={(e)=>this.handleView(this.props.post_id)}>View</button>
             </div>
-        </div>
+        </div>)
 
     }
 
