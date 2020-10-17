@@ -1,34 +1,41 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import Axios from 'axios'
 function Heading(props){
     return(
-        <div className="form-input heading">
+        <div className="heading">
             <label for="heading">Heading:</label>
             <br/>
-            <input type="text" name="heading"/>
+            <input className="form-input" type="text" name="heading"/>
             <button onClick={(e)=>handleRemove(e)}>Delete</button>
+            <button onClick={(e)=>handleElementUp(e.target.parentElement.parentElement)}>Up</button>
+            <button onClick={(e)=>handleElementDown(e.target.parentElement.parentElement)}>Down</button>
+
         </div>
     )
 }
 function Image(props){
     return(
-        <div className="form-input image">
+        <div className="image">
             <label for="image">Image:</label>
             <br/>
-            <input type="file" name="image"/>
+            <input className="form-input" type="file" name="image"/>
             <button onClick={(e)=>handleRemove(e)}>Delete</button>
+            <button onClick={(e)=>handleElementUp(e.target.parentElement.parentElement)}>Up</button>
+            <button onClick={(e)=>handleElementDown(e.target.parentElement.parentElement)}>Down</button>
+
         </div>
     )
 }
 function Text(props){
     return(
-        <div className="form-input text">
+        <div className="text">
             <label for="image">Text:</label>
             <br/>
-            <input type="text" name="text"/>
+            <input className="form-input" type="text" name="text"/>
             <button onClick={(e)=>handleRemove(e)}>Delete</button>
-            <button onClick={(e)=>handleElementUp(e)}>Up</button>
-            <button onClick={(e)=>handleElementDown(e)}>Down</button>
+            <button onClick={(e)=>handleElementUp(e.target.parentElement.parentElement)}>Up</button>
+            <button onClick={(e)=>handleElementDown(e.target.parentElement.parentElement)}>Down</button>
 
         </div>
     )
@@ -39,29 +46,29 @@ function handleRemove(element){
 
 function Video(props){
     return(
-        <div className="form-input video">
+        <div className="video">
             <label for="video">Video:</label>
             <br/>
-            <input type="file" name="video"/>
-            <button onClick={(e)=>this.handleRemove(e)}>Delete</button>
-         
-
+            <input className="form-input" type="file" name="video"/>
+            <button onClick={(e)=>handleRemove(e)}>Delete</button>
         </div>
     )
 }
 function handleElementUp(element){
     const headElement = document.getElementById("form-inputs")
-    console.log(headElement, element.target.parentElement)
-    const old_position=element.target.parentElement
-    headElement.insertBefore(element.target.parentElement, old_position)
-    old_position.remove()
+    if(element.previousSibling.previousSibling)
+    {
+        headElement.insertBefore(element, element.previousSibling)
+    }
 
 }
 function handleElementDown(element){
     const headElement = document.getElementById("form-inputs")
-    const old_position=element.target
-    headElement.insertAfter(element.target, old_position)
-    old_position.remove()
+    if(element.nextSibling.nextSibling)
+    {
+        headElement.insertBefore(element, element.nextSibling.nextSibling)
+
+    }
 }
 /**@class - DynamicForm
  **@description- dynamic form that updates via JS
@@ -81,25 +88,21 @@ export default class DynamicForm extends React.Component
     }
 
     componentDidMount=()=>{
-        /*Axios.get('/blogs/all',
-        (posts)=>{
-            if(posts.length <= 0){
-                this.setState({message:"No posts found"})
-            }
-            this.setState({posts:posts})
-        })*/
+     
     }
     
-    handleSubmit=(element)=>{
-        const elements = document.getElementsByClassName("form-input")
+    handleSubmit=()=>{
+        let elements = document.getElementsByClassName("form-input")
+        let element
         let data_array = []
-        for(element in elements){
+        for(element of elements){
             data_array.push({
-                name:element.name,
+                name:element.getAttribute("name"),
                 data:element.value
             })
         }
-        //axios.post('/blog/add', data_array)
+        console.log(data_array)
+        Axios.post('/blog/add', data_array)
 
     }
     
@@ -133,20 +136,20 @@ export default class DynamicForm extends React.Component
         <div className="dynamic-form">
             <h1>Add a post</h1>
             <div id="form-inputs">
-                <div className="form-input">
-                    <label for="title">Title:</label>
-                    <input type="text" name="title"/>
+                <div className="s-required">
+                    <div>
+                        <label for="title">Title:</label>
+                        <input className="form-input" type="text" name="title"/>
+                    </div>
+                    <div className="">
+                    <label for="date">Date:</label>
+                        <input className="form-input" type="date" name="date"/>
+                    </div>
+                    <div >
+                    <label for="tags">Tags:</label>
+                        <input className="form-input" type="text" name="tags"/>
+                    </div>
                 </div>
-                <div className="form-input">
-                <label for="date">Date:</label>
-                    <input type="date" name="title"/>
-                </div>
-                <div className="form-input">
-                <label for="tags">Tags:</label>
-                    <input type="text" name="tags"/>
-
-                </div>
-                
                 <div id="form-picker">
                     <div className="form-picker-img" onClick={(e)=>this.handleClick("image")}>
                         <i className="fa fa-image"/>
@@ -163,7 +166,7 @@ export default class DynamicForm extends React.Component
                     </div>
                 </div>
             </div>
-            <button type="button">Submit</button>
+            <button type="button" onClick={(e)=>this.handleSubmit()}>Submit</button>
         </div>
         )
 
