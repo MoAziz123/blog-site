@@ -80,30 +80,33 @@ export default class DynamicForm extends React.Component
     constructor(props){
         super(props)
         this.state={
-            posts:[],
             message:null,
-            picker:null
         }
-
     }
 
-    componentDidMount=()=>{
-     
-    }
-    
     handleSubmit=()=>{
         let elements = document.getElementsByClassName("form-input")
         let element
         let data_array = []
+        let tags = document.getElementById("tags").value.split(",")
         for(element of elements){
-            data_array.push({
-                name:element.getAttribute("name"),
-                data:element.value
-            })
+                data_array.push({
+                    name:element.getAttribute("name"),
+                    data:element.value
+                })
         }
-        console.log(data_array)
-        Axios.post('/blog/add', data_array)
-
+        console.log(data_array, document.getElementById("title").value, document.getElementById("date").value,document.getElementById("tags").value)
+        Axios.post('http://localhost:8080/posts/new', {
+            title:document.getElementById("title").value,
+            date:document.getElementById("date").value,
+            description:document.getElementById("description").value,
+            byline:document.getElementById("byline").value,
+            data:data_array,
+            tags:tags
+        })
+        .then((res)=>{
+            this.setState({message:res.message})
+        })
     }
     
     
@@ -134,20 +137,29 @@ export default class DynamicForm extends React.Component
     render=()=>{
         return(
         <div className="dynamic-form">
+            <p>{this.state.message}</p>
             <h1>Add a post</h1>
             <div id="form-inputs">
                 <div className="s-required">
                     <div>
                         <label for="title">Title:</label>
-                        <input className="form-input" type="text" name="title"/>
+                        <input className="form-input-required" id="title" type="text" name="title"/>
                     </div>
                     <div className="">
                     <label for="date">Date:</label>
-                        <input className="form-input" type="date" name="date"/>
+                        <input className="form-input-required" id="date" type="date" name="date"/>
+                    </div>
+                    <div>
+                        <label for="byline">Byline:</label>
+                        <input className="form-input-required" id="byline" type="text" name="byline"/>
+                    </div>
+                    <div>
+                        <label for="description">Description:</label>
+                        <input className="form-input-required" id="description" type="text" name="description"/>
                     </div>
                     <div >
                     <label for="tags">Tags:</label>
-                        <input className="form-input" type="text" name="tags"/>
+                        <input className="form-input-required" id="tags" type="text" name="tags"/>
                     </div>
                 </div>
                 <div id="form-picker">

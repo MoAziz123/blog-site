@@ -44,7 +44,7 @@ body
     justify-content: center;
     margin:auto;
     border-bottom: 1px solid white;
-    width:50%;
+    width:auto;
     margin-bottom:2em;
     padding-bottom:.5em;
 }

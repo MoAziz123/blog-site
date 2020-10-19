@@ -8,20 +8,21 @@ const js_yaml = require('js-yaml')
 const fs = require('fs')
 const cors = require('cors')
 const bodyparser = require('body-parser')
-const doc = js_yaml.safeLoad(fs.readFileSync('config.yaml'))
 
 
-
-app.use(bodyparser.json())
-app.use(bodyparser.urlencoded())
 app.use(cors())
+app.use(bodyparser.json())
+app.use(bodyparser.urlencoded({extended:true}))
 
-mongoose.connect("http://localhost:27017/",()=>{
+app.use('/', require('./api/blogpost'))
+
+mongoose.connect("mongodb://localhost:27017/blog-site",{useNewUrlParser:true},()=>{
     console.log("MONGODB CONNECTION ESTABLISHED")
+    app.listen(8080, ()=>{
+        console.log("API CONNECTION ESTABLISHED")
+    })
 })
-.then(()=>{
-    app.listen(8080,()=>{console.log("APP CONNECTION ESTABLISHED")})
-})
+
 
 
 
