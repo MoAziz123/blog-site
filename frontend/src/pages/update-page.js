@@ -1,36 +1,122 @@
 import React from 'react'
 import Axios from 'axios'
-import DynamicForm from '../components/dynamic-form'
 import querystring from 'query-string'
+import ReactDOM from 'react-dom'
 /**@class - UpdatePage
  * @description - used to update a post
  * @since 1.0.0
  */
-export default class UpdatePage extends DynamicForm
+function Heading(props){
+    return(
+        <div className="heading">
+            <label for="heading">Heading:</label>
+            <br/>
+            <input className="form-input" type="text" value={props.value} name="heading"/>
+            <button onClick={(e)=>handleRemove(e)}>Delete</button>
+            <button onClick={(e)=>handleElementUp(e.target.parentElement.parentElement)}>Up</button>
+            <button onClick={(e)=>handleElementDown(e.target.parentElement.parentElement)}>Down</button>
+
+        </div>
+    )
+}
+function Image(props){
+    return(
+        <div className="image">
+            <label for="image">Image:</label>
+            <br/>
+            <input className="form-input" type="file" value={props.value} name="image"/>
+            <button onClick={(e)=>handleRemove(e)}>Delete</button>
+            <button onClick={(e)=>handleElementUp(e.target.parentElement.parentElement)}>Up</button>
+            <button onClick={(e)=>handleElementDown(e.target.parentElement.parentElement)}>Down</button>
+
+        </div>
+    )
+}
+function Text(props){
+    return(
+        <div className="text">
+            <label for="image">Text:</label>
+            <br/>
+            <input className="form-input" type="text" name="text" value={props.value}/>
+            <button onClick={(e)=>handleRemove(e)}>Delete</button>
+            <button onClick={(e)=>handleElementUp(e.target.parentElement.parentElement)}>Up</button>
+            <button onClick={(e)=>handleElementDown(e.target.parentElement.parentElement)}>Down</button>
+
+        </div>
+    )
+}
+function handleRemove(element){
+    element.target.parentElement.parentElement.remove()
+}
+
+function handleElementUp(element){
+    const headElement = document.getElementById("form-inputs")
+    if(element.previousSibling.previousSibling)
+    {
+        headElement.insertBefore(element, element.previousSibling)
+    }
+
+}
+function handleElementDown(element){
+    const headElement = document.getElementById("form-inputs")
+    if(element.nextSibling.nextSibling)
+    {
+        headElement.insertBefore(element, element.nextSibling.nextSibling)
+
+    }
+}
+export default class UpdatePage extends React.Component
 {
-    constructor(props){
+    constructor(){
         super()
         this.state = {
-            post:null,
-            message:null
+            post:"",
+            message:null,
+            tags: ""
         }
     }
-    componentDidMount(){
+    componentWillMount(){
+        console.log("hi")
         const id = querystring.parse(window.location.search).id
         Axios.post("http://localhost:8080/posts/searchOne", 
             {id:id}
         )
         .then((response)=>{
-            console.log(response)
+            let value = ""
             this.setState({
                 post:response.data.post,
                 message:response.data.message
             })
+            
         })
+        .catch(error=>console.error(error))
         
     }
-    
-    render(){
+    handleSubmit()
+    {
+        let elements = document.getElementsByClassName("form-input")
+        let element
+        let data_array = []
+        let tags = document.getElementById("tags").value.split(",")
+        for(element of elements){
+                data_array.push({
+                    name:element.getAttribute("name"),
+                    data:element.value
+                })
+        }
+        Axios.put('http://localhost:8080/posts/update', {
+            title:document.getElementById("title").value,
+            date:document.getElementById("date").value,
+            description:document.getElementById("description").value,
+            byline:document.getElementById("byline").value,
+            data:data_array,
+            tags:tags
+        })
+        .then((res)=>{
+            this.setState({message:res.message})
+        })
+    }
+    render=()=>{
             return(
                 <div className="dynamic-form">
                 <p>{this.state.message}</p>
@@ -55,15 +141,29 @@ export default class UpdatePage extends DynamicForm
                         </div>
                         <div >
                         <label for="tags">Tags:</label>
-                            <input className="form-input-required" id="tags" type="text" value={this.state.post.tags} name="tags"/>
+                            <input className="form-input-required" id="tags" type="text"  value={this.state.post.tags} name="tags"/>
                         </div>
                     </div>
-                    {
-                        this.state.post.data.map((item)=>{
-                            this.handleClick(item.name)
-                            
-                        })
-                    }
+                    {  
+                       this.state.post.data && this.state.post.data.map((item)=>{
+                        const newNode = document.createElement("div")
+                        const refElement = document.getElementById("form-picker")
+                        const headElement = document.getElementById("form-inputs")
+                        if(item.name == "heading"){
+                            headElement.insertBefore(newNode, refElement)
+                            ReactDOM.render(<Heading value={item.data}/>, newNode)
+                        }
+                        else if(item.name == "image"){
+                            headElement.insertBefore(newNode, refElement)
+                            ReactDOM.render(<Image value={item.data}/>, newNode)
+                        }
+                        else if(item.name == "text"){
+                            headElement.insertBefore(newNode, refElement)
+                            ReactDOM.render(<Text value={item.data}/>, newNode)
+                        }
+                       })
+                      
+                   }
                     <div id="form-picker">
                         <div className="form-picker-img" onClick={(e)=>this.handleClick("image")}>
                             <i className="fa fa-image"/>
