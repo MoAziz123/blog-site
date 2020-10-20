@@ -71,21 +71,20 @@ export default class UpdatePage extends React.Component
         super()
         this.state = {
             post:"",
-            message:null,
-            tags: ""
+            message:null
         }
     }
-    componentWillMount(){
+    componentDidMount(){
         console.log("hi")
         const id = querystring.parse(window.location.search).id
         Axios.post("http://localhost:8080/posts/searchOne", 
             {id:id}
         )
         .then((response)=>{
-            let value = ""
             this.setState({
                 post:response.data.post,
-                message:response.data.message
+                message:response.data.message,
+                id:id
             })
             
         })
@@ -104,17 +103,55 @@ export default class UpdatePage extends React.Component
                     data:element.value
                 })
         }
+        console.log(tags, data_array, )
         Axios.put('http://localhost:8080/posts/update', {
-            title:document.getElementById("title").value,
-            date:document.getElementById("date").value,
-            description:document.getElementById("description").value,
-            byline:document.getElementById("byline").value,
+            id:this.state.id,
+            title:this.state.post.title,
+            date:this.state.post.date,
+            description:this.state.post.description,
+            byline:this.state.post.byline,
             data:data_array,
             tags:tags
         })
         .then((res)=>{
+            
             this.setState({message:res.message})
         })
+        
+       console.log(this.state)
+    }
+    handleClick=(text)=>{
+        const newNode = document.createElement("div")
+        const refElement = document.getElementById("form-picker")
+        const headElement = document.getElementById("form-inputs")
+        if(text == "heading"){
+            headElement.insertBefore(newNode, refElement)
+            ReactDOM.render(<Heading/>, newNode)
+        }
+        else if(text == "image"){
+            headElement.insertBefore(newNode, refElement)
+            ReactDOM.render(<Image/>, newNode)
+        }
+        else if(text == "text"){
+            headElement.insertBefore(newNode, refElement)
+            ReactDOM.render(<Text/>, newNode)
+        }
+    }
+
+
+
+    handleUpdate()
+    {
+        let tags = document.getElementById("tags").value.split(",")
+        this.setState({
+                post:{
+                    id:this.state.id,
+                    title:document.getElementById("title").value,
+                    date:document.getElementById("date").value,
+                    description:document.getElementById("description").value,
+                    byline:document.getElementById("byline").value,                    
+                }
+            })
     }
     render=()=>{
             return(
@@ -125,19 +162,19 @@ export default class UpdatePage extends React.Component
                     <div className="s-required">
                         <div>
                             <label for="title">Title:</label>
-                            <input className="form-input-required" id="title" type="text" value={this.state.post.title} name="title"/>
+                            <input className="form-input-required" id="title" type="text" value={this.state.post.title} onChange={(e)=>{this.handleUpdate()}} name="title"/>
                         </div>
                         <div className="">
                         <label for="date">Date:</label>
-                            <input className="form-input-required" id="date" type="date" value={this.state.post.date} name="date"/>
+                            <input className="form-input-required" id="date" type="date" value={this.state.post.date} onChange={(e)=>{this.handleUpdate()}} name="date"/>
                         </div>
                         <div>
                             <label for="byline">Byline:</label>
-                            <input className="form-input-required" id="byline" type="text" value={this.state.post.byline}  name="byline"/>
+                            <input className="form-input-required" id="byline" type="text" value={this.state.post.byline} onChange={(e)=>{this.handleUpdate()}} name="byline"/>
                         </div>
                         <div>
                             <label for="description">Description:</label>
-                            <input className="form-input-required" id="description" type="text" value={this.state.post.description} name="description"/>
+                            <input className="form-input-required" id="description" type="text" value={this.state.post.description} onChange={(e)=>{this.handleUpdate()}} name="description"/>
                         </div>
                         <div >
                         <label for="tags">Tags:</label>

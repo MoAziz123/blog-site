@@ -23,7 +23,6 @@ router.get('/posts', (req,res)=>{
 })
 
 router.post('/posts/searchOne', (req,res)=>{
-    console.log(req.body.id)
     Post.findOne({_id:req.body.id})
     .then((post)=>{
         if(post){
@@ -78,6 +77,53 @@ router.delete('/posts/delete',(req,res)=>{
 })
 
 router.put('/posts/update',(req,res)=>{
+    Post.findOneAndUpdate({_id:req.body.id}, {
+        title:req.body.title,
+        date:req.body.date,
+        tags:req.body.tags,
+        description:req.body.description,
+        byline:req.body.byline,
+        data:req.body.data
+
+    })
+    .then((post)=>{
+        if(post){
+            return res.json({
+                message:"Post updated",
+                post:post
+            })
+        }
+        else{
+            return res.json({
+                message:"Post update unsuccessful"
+            })
+        }
+    })
+    .catch(error=>console.error(error))
 })
 
+router.post('/posts/search', (req,res)=>{
+    Post.find({})
+    .then((posts)=>{
+        if(posts.length > 0)
+        {
+            post_array = posts.filter((post)=>{
+                if(post.title.startsWith(req.body.search)){
+                    return post
+                }
+            })
+            return res.json({
+                posts:post_array,
+                message:"Posts found successfully"
+            })
+        }
+        else
+        {
+            return res.json({
+                message:"Unable to find psots"
+            })
+        }
+    })
+    .catch(error=>console.error(error))
+})
 module.exports = router
