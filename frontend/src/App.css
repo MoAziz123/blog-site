@@ -41,12 +41,12 @@ body
 {
     display:flex;
     flex-direction: row;
-    justify-content: center;
     margin:auto;
     border-bottom: 1px solid white;
-    width:auto;
+    width:750px;
     margin-bottom:2em;
     padding-bottom:.5em;
+    justify-content: space-between;
 }
 .preview-post .post-tags
 {
@@ -66,7 +66,6 @@ body
 {
     font-size:2em;
     font-weight:650;
-    margin:0;
     width: 100%;
     
 }
@@ -90,9 +89,18 @@ body
 }
 .post-button
 {
-    height:2em;
-    width:2em;
+    height:2.5em;
+    width:2.5em;
+    text-decoration: none;
+    border:none;
+    margin-bottom:1em;
+    color:white;
+    background-color: transparent;
 
+}
+.post-button i:hover{
+    border:1px solid white;
+    cursor:pointer;
 
 }
 .preview-post p
@@ -126,12 +134,103 @@ body
 {
     display:flex;
     flex-direction: row;
+    width:auto;
+}
+.form-picker-img
+{
+    border:1px dashed white;
+    padding:1.5em;
+
+
+}
+
+/***footer***/
+.footer
+{
+    display:Flex;
+    flex-direction: row;
+    justify-content: center;
+    border-top:1px solid white;
+}
+
+/***post***/
+
+.post
+{
+    display:flex;
+    flex-direction: row;
+    margin:auto;
+    width:75%;
+    margin-top:1em;
+    margin-bottom:2em;
+    padding-bottom:.5em;
+    border-bottom:2px solid white;
+    margin-left:1em;
+    margin-right:auto;
+}
+.post .post-tags
+{
+    border-bottom: 1px solid white;
+
+    display:flex;
+    flex-direction: row;
+}
+.post .post-tags .post-tag
+{
+    margin-right:.5em;
+    border:1px solid silver;
+    color:silver;
+    padding:0 .5em .2em .5em;
+    margin-bottom: 1em;
+    border-radius:25px;
+}
+.post .title
+{
+    font-size:2.5em;
+    font-weight:650;
+    margin:0;
+    width: 100%;
+    
+}
+.post-heading
+{
+    font-weight:500;
+}
+.post .date
+{
+    color:silver;
+    font-style: italic;
+    text-transform: uppercase;
+    height:auto;
+
+}
+.post-text
+{
+}
+
+
+.image, .text, .heading{
+    display:flex;
+    flex-direction: row;
     justify-content: center;
 }
-.form-picker > *
+
+
+.post-button{
+
+}
+.read-more{
+    margin-top:5em;
+}
+.read-more:hover
 {
-    border:1px solid white;
-    padding:1em;
-    margin-right:1em;
+    border-bottom:1px solid white;
+    cursor:pointer;
+
+}
+/***form inputs*((/*/
+.form-inputs input
+{
+    background-color:red;
 
 }

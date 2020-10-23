@@ -9,6 +9,7 @@ import AddPage from './pages/add-page'
 import UpdatePage from './pages/update-page'
 import LoginPage from './pages/login-page'
 import SearchPage from './pages/search-page'
+import ViewPage from './pages/view-page'
 function App() {
   return (
     <div className="App">
@@ -17,9 +18,11 @@ function App() {
         <Switch>
           <Route exact path="/" component={MainPage}/>
           <Route exact path="/add" component={AddPage}/>
-          <Route exact path="/update" component={UpdatePage}/>
+          <Route exact path="/update"render={(props)=><UpdatePage {...props}/>}/>
           <Route exact path="/login" component={LoginPage}/>
+          <Route exact path="/register" component={RegisterPage}/>
           <Route exact path="/search" component={SearchPage}/>
+          <Route exact path ="/posts" render={(props)=><ViewPage {...props}/>}/>
         </Switch>
       </Router>
       <Footer/>

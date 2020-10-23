@@ -11,11 +11,7 @@ export default class Footer extends React.Component
         return(<div className="footer">
             <div className="footer-wrapper">
                 <div className="footer-col">
-                    <h1>Other fun stuff</h1>
-                    <ul>
-                        <li>Portfolio</li>
-                        <li></li>
-                    </ul>
+                    <p>Copyright Mo Aziz - 2020</p>
                 
                 </div>
                 

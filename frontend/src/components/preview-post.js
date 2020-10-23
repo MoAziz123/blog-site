@@ -12,6 +12,10 @@ export default class PostPreview extends React.Component{
             redirect:null
         }
     }
+    handleView(){
+        this.setState({redirect:"posts"})
+
+    }
     handleDelete=(post_id)=>{
         console.log(post_id)
         Axios.delete("http://localhost:8080/posts/delete",{
@@ -19,16 +23,19 @@ export default class PostPreview extends React.Component{
                 id:post_id
             }
         })
-        .then((res)=>{this.setState({message:res.message})})
+        .then((res)=>{this.setState({posts:res.posts, message:res.message})})
     }
 
     handleEdit(id){
-        this.setState({redirect: "update?id=" + id})
+        this.setState({redirect: "update"})
     }
     render(){
         if(this.state.redirect)
         {
-            return(<Redirect to={this.state.redirect}/>)
+            return(<Redirect to={{
+                pathname:this.state.redirect,
+                state:{id:this.state.id}
+            }}/>)
         }
         return(<div className="preview-post">
             <div className="post-row">
@@ -47,12 +54,13 @@ export default class PostPreview extends React.Component{
                 }
                 </div>
                 <p className="description">{this.props.description}</p>
-                <a href=""className="link">Read More...</a>
             </div>
             <div className="post-options">
-                <button className="post-button" onClick={(e)=>this.handleEdit(this.props.id)}>Edit</button>
-                <button className="post-button" onClick={(e)=>this.handleDelete(this.props.id)}>Delete</button>
+                <button className="post-button" onClick={(e)=>this.handleEdit(this.props.id)}><i className="fa fa-pencil-square-o"/></button>
+                <button className="post-button" onClick={(e)=>this.handleDelete(this.props.id)}><i className="fa fa-trash-o"/></button>                
+                <a className="read-more" onClick={(e)=>this.handleView()}>Read More</a>
             </div>
+
         </div>)
 
     }

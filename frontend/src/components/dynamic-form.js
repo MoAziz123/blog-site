@@ -32,7 +32,7 @@ function Text(props){
         <div className="text">
             <label for="image">Text:</label>
             <br/>
-            <input className="form-input" type="text" name="text"/>
+            <textarea className="form-input" type="text" name="text"></textarea>
             <button onClick={(e)=>handleRemove(e)}>Delete</button>
             <button onClick={(e)=>handleElementUp(e.target.parentElement.parentElement)}>Up</button>
             <button onClick={(e)=>handleElementDown(e.target.parentElement.parentElement)}>Down</button>
@@ -140,12 +140,12 @@ export default class DynamicForm extends React.Component
             <p>{this.state.message}</p>
             <h1>Add a post</h1>
             <div id="form-inputs">
-                <div className="s-required">
+                <div className="form-inputs-required">
                     <div>
                         <label for="title">Title:</label>
                         <input className="form-input-required" id="title" type="text" name="title"/>
                     </div>
-                    <div className="">
+                    <div className="re">
                     <label for="date">Date:</label>
                         <input className="form-input-required" id="date" type="date" name="date"/>
                     </div>

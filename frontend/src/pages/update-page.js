@@ -75,16 +75,14 @@ export default class UpdatePage extends React.Component
         }
     }
     componentDidMount(){
-        console.log("hi")
-        const id = querystring.parse(window.location.search).id
+        this.setState({post:[], message:null})
         Axios.post("http://localhost:8080/posts/searchOne", 
-            {id:id}
+            {id:this.props.location.state.id}
         )
         .then((response)=>{
             this.setState({
                 post:response.data.post,
                 message:response.data.message,
-                id:id
             })
             
         })
@@ -103,9 +101,8 @@ export default class UpdatePage extends React.Component
                     data:element.value
                 })
         }
-        console.log(tags, data_array, )
         Axios.put('http://localhost:8080/posts/update', {
-            id:this.state.id,
+            id:this.props.location.state.id,
             title:this.state.post.title,
             date:this.state.post.date,
             description:this.state.post.description,
@@ -115,7 +112,7 @@ export default class UpdatePage extends React.Component
         })
         .then((res)=>{
             
-            this.setState({message:res.message})
+            this.setState({post:[],message:res.data.message})
         })
         
        console.log(this.state)
@@ -207,11 +204,11 @@ export default class UpdatePage extends React.Component
                             <p>Add an image</p>
                         </div>
                        
-                        <div className="form-picker-text" onClick={(e)=>this.handleClick("text")}>
+                        <div className="form-picker-img" onClick={(e)=>this.handleClick("text")}>
                             <i className="fa fa-image"/>
                             <p>Add text</p>
                         </div>
-                        <div className="form-picker-heading" onClick={(e)=>this.handleClick("heading")}>
+                        <div className="form-picker-img" onClick={(e)=>this.handleClick("heading")}>
                             <i className="fa fa-image"/>
                             <p>Add a heading</p>
                         </div>
