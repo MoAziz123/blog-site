@@ -9,7 +9,7 @@ const User = require('../models/User')
  * @description - submits the login details to authenticate
 */
 
-router.post('/login/submit' ((req,res)=>{
+router.post('/login/submit', (req,res)=>{
     User.findOne({email:req.body.email, password:req.body.password})
     .then((user)=>{
         if(user.email && !user.password)
@@ -35,7 +35,7 @@ router.post('/login/submit' ((req,res)=>{
         }
     })
 
-}))
+})
 
 router.post('/login/register', (req,res)=>{
     let new_user = new User({
@@ -58,3 +58,4 @@ router.post('/login/register', (req,res)=>{
         }
     })
 })
+module.exports = router

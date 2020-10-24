@@ -234,3 +234,9 @@ body
     background-color:red;
 
 }
+
+/***comment***/
+.comment-post{
+    display:flex;
+    flex-direction: row;
+}

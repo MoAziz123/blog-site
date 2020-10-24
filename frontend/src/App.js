@@ -10,6 +10,7 @@ import UpdatePage from './pages/update-page'
 import LoginPage from './pages/login-page'
 import SearchPage from './pages/search-page'
 import ViewPage from './pages/view-page'
+import RegisterPage from './pages/register-page'
 function App() {
   return (
     <div className="App">

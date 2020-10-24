@@ -17,7 +17,6 @@ export default class PostPreview extends React.Component{
 
     }
     handleDelete=(post_id)=>{
-        console.log(post_id)
         Axios.delete("http://localhost:8080/posts/delete",{
             params:{
                 id:post_id

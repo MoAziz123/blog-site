@@ -1,0 +1,91 @@
+import React from 'react'
+import Axios from 'axios'
+
+/**@class - Comment
+ * @description - encapsulates a comment for the user to view
+ * @since 1.0.0
+ */
+export default class Comment extends React.Component{
+    constructor(props)
+    {
+        super(props)
+        this.state ={
+            edit:false,
+            text:this.props.comment.text,
+        }
+    }
+    handleDelete(){
+        console.log(this.props.comment._id)
+        Axios.delete('http://localhost:8080/comment/remove', {params:{id:this.state.id}})
+        .then((res)=>{
+            this.setState({state:this.state
+            })
+        })
+    }
+    handleEdit()
+    {
+        this.setState({edit:true})
+    }
+    handleBack()
+    {
+        this.setState({edit:false})
+    }
+    handleUpdate()
+    {
+        Axios.put('http://localhost:8080/comment/update', {
+            id:this.props.comment._id,
+            date_posted:Date.now(),
+            text:this.state.text,
+            edited:true
+        })
+        .then((post)=>{
+            if(post.data.success){
+                this.setState({state:this.state, edit:false})
+            }
+        })
+    }
+    render(){
+        if(this.state.edit)
+        {
+            return(
+                <div className="comment-post">
+                    <div className="profile">
+                        <img src="/"/>
+                        <p>Username</p>
+            
+                    </div>
+                    <div className="content-wrapper">
+                        <div className="content">
+                            <input type="text" value={this.state.text} onChange={(e)=>this.setState({state:this.state, text:e.target.value})}/>
+                        </div>
+                        <div className="options">
+                            <p>In edit mode</p>
+                            <p>{this.props.comment.date_posted}</p>
+                            <button onClick={(e)=>this.handleBack()}>Back</button>
+                            <button onClick={(e)=>this.handleUpdate()}>Update</button>
+                            <button onClick={(e)=>this.handleDelete()}>Delete</button>
+                        </div>
+                    </div>
+                </div>)
+        }
+        return(
+            <div className="comment-post">
+                <div className="profile">
+                    <img src="/"/>
+                    <p>Username</p>
+        
+                </div>
+                <div className="content-wrapper">
+                    <div className="content">
+                        <p>{this.props.comment.text}</p>
+                    </div>
+                    <div className="options">
+                        <p>{this.props.comment.edited}</p>
+                        <p>{this.props.comment.date_posted}</p>
+                        <button onClick={(e)=>this.handleEdit()}>Edit</button>
+                        <button onClick={(e)=>this.handleDelete()}>Delete</button>
+                    </div>
+                </div>
+            </div>)
+    }
+}

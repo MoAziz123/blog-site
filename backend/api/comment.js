@@ -5,6 +5,18 @@ router.use(bodyParser.json())
 router.use(bodyParser.urlencoded({extended:true}))
 const Comment = require('../models/Comment')
 
+/**
+ * @route - /all
+ * @description - gets all comments
+ */
+router.get('/comment/all', (req,res)=>{
+    Comment.find({})
+    .then((comments)=>{
+        return res.json({
+            comments:comments
+        })
+    })
+})
 
 /**@route - /search
  * @description - gets comments associated with post
@@ -82,14 +94,14 @@ router.delete('/comment/remove', (req,res)=>{
     })
 })
 
- /**@route - /edit
+ /**@route - /update
   * @description - updates a comment
   */
  router.put('/comment/update', (req,res)=>{
      Comment.findOneAndUpdate({_id:req.body.id},{
-        post_id:req.body.post_id,
         text:req.body.text,
-        edited:req.body.edited
+        edited:req.body.edited,
+        date_posted:req.body.date_posted
      })
      .then((comment)=>{
          if(comment){
@@ -102,8 +114,10 @@ router.delete('/comment/remove', (req,res)=>{
              return res.json({
                  message:"Unable to update comment",
                  success:false
+                 
              })
          }
      })
  })
 
+ module.exports = router

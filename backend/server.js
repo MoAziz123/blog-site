@@ -15,6 +15,8 @@ app.use(bodyparser.json())
 app.use(bodyparser.urlencoded({extended:true}))
 
 app.use('/', require('./api/blogpost'))
+app.use('/', require('./api/comment'))
+app.use('/', require('./api/login'))
 
 mongoose.connect("mongodb://localhost:27017/blog-site",{useNewUrlParser:true},()=>{
     console.log("MONGODB CONNECTION ESTABLISHED")
