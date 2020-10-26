@@ -76,17 +76,20 @@ router.post('/comment/add', (req,res)=>{
 /**@route - /remove
  * @description - removes a comment from a post
  */
-router.delete('/comment/remove', (req,res)=>{
-    Comment.findOneAndDelete({_id:req.body.id})
+router.post('/comment/remove', (req,res)=>{
+    console.log(req.body)
+    Comment.findOneAndDelete({_id:req.body.data._id})
     .then((comment)=>{
         if(comment){
             return res.json({
+                comment,
                 message:"comment removed",
                 success:true
             })
         }
         else{
             return res.json({
+                comment,
                 message:"Unable to remove comment",
                 success:false
             })

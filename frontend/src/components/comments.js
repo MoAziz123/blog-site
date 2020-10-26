@@ -32,6 +32,7 @@ export default class Comments extends React.Component{
             text: this.state.text
         })
         .then((res)=>{
+            this.setState({state:this.state, text:null})
             this.componentDidMount()
 
         })

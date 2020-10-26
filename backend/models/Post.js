@@ -6,7 +6,8 @@ const postSchema = mongoose.Schema({
     byline:String,
     date:Date, 
     tags:Array,
-    data:Array
+    data:Array,
+    user_id:String
 })
 
 module.exports = mongoose.model('Post', postSchema)

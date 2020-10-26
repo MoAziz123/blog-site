@@ -14,12 +14,14 @@ export default class Comment extends React.Component{
             text:this.props.comment.text,
         }
     }
-    handleDelete(){
-        console.log(this.props.comment._id)
-        Axios.delete('http://localhost:8080/comment/remove', {params:{id:this.state.id}})
+    handleDelete=()=>{
+        let id = this.props.comment._id
+        console.log(id)
+        Axios.post("http://localhost:8080/comment/remove" , {data:{_id:id}})
         .then((res)=>{
             this.setState({state:this.state
             })
+            console.log(res.data)
         })
     }
     handleEdit()
@@ -40,7 +42,7 @@ export default class Comment extends React.Component{
         })
         .then((post)=>{
             if(post.data.success){
-                this.setState({state:this.state, edit:false})
+                this.setState({state:this.state, edit:false, text:this.state.text})
             }
         })
     }
@@ -77,7 +79,7 @@ export default class Comment extends React.Component{
                 </div>
                 <div className="content-wrapper">
                     <div className="content">
-                        <p>{this.props.comment.text}</p>
+                        <p>{this.state.text}</p>
                     </div>
                     <div className="options">
                         <p>{this.props.comment.edited}</p>

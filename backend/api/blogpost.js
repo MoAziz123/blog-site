@@ -1,9 +1,14 @@
 const express = require('express')
 const router = express.Router()
 const bodyParser = require('body-parser')
+const multer = require('multer')
 router.use(bodyParser.json())
 router.use(bodyParser.urlencoded({extended:true}))
 const Post = require('../models/Post')
+/**@route - upload
+ * @description - used for uploading images
+ */
+
 router.get('/posts', (req,res)=>{
     Post.find({})
     .then((posts)=>{
@@ -59,11 +64,12 @@ router.post('/posts/new',(req,res)=>{
     .catch((error)=>{return res.json({message:error})})
 })
 
-router.delete('/posts/delete',(req,res)=>{
-    Post.findOneAndDelete({id:req.body.id})
+router.post('/posts/delete',(req,res)=>{
+    Post.findOneAndDelete({id:req.body.data.id})
     .then((post)=>{
         if(post){
             return res.json({
+                post,
                 message:"Post deletion successful"
             })
         }
