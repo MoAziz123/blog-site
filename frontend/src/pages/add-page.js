@@ -10,9 +10,7 @@ export default class AddPage extends React.Component
         super()
         
     }
-    componentDidMount=()=>{
-       
-    }
+    
 
     render=()=>{
         return(
