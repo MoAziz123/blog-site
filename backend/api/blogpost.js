@@ -46,12 +46,14 @@ router.post('/posts/new',(req,res)=>{
         tags:req.body.tags,
         description:req.body.description,
         byline:req.body.byline,
+        private:req.body.private,
         data:req.body.data
     })
     .save()
     .then((post)=>{
         if(post){
             return res.json({
+                post,
                 message:"Post created successfully"
             })
         }
@@ -63,9 +65,10 @@ router.post('/posts/new',(req,res)=>{
     })
     .catch((error)=>{return res.json({message:error})})
 })
-
-router.post('/posts/delete',(req,res)=>{
-    Post.findOneAndDelete({id:req.body.data.id})
+//deletes first post
+//TODO: change how it deletes post
+router.delete('/posts/delete',(req,res)=>{
+    Post.findOneAndDelete({id:req.body.id})
     .then((post)=>{
         if(post){
             return res.json({

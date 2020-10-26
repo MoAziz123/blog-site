@@ -11,13 +11,14 @@ export default class PostPreview extends React.Component{
             id:this.props.id,
             redirect:null
         }
+        console.log(this.props)
     }
     handleView(){
         this.setState({redirect:"posts"})
 
     }
     handleDelete=(post_id)=>{
-        Axios.post("http://localhost:8080/posts/delete",{
+        Axios.delete("http://localhost:8080/posts/delete",{
             data:{
                 id:post_id
             }
@@ -26,14 +27,14 @@ export default class PostPreview extends React.Component{
     }
 
     handleEdit(id){
-        this.setState({redirect: "update"})
+        this.setState({redirect:"update"})
     }
     render(){
         if(this.state.redirect)
         {
             return(<Redirect to={{
                 pathname:this.state.redirect,
-                state:{id:this.state.id}
+                state:{id:this.state.id, user:this.props.user}
             }}/>)
         }
         return(<div className="preview-post">

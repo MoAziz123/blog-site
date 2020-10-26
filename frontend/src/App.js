@@ -14,10 +14,10 @@ import RegisterPage from './pages/register-page'
 function App() {
   return (
     <div className="App">
-      <NavBar/>
       <Router>
+      <NavBar/>
         <Switch>
-          <Route exact path="/" component={MainPage}/>
+          <Route exact path="/" render={(props)=><MainPage {...props}/>}/>
           <Route exact path="/add" component={AddPage}/>
           <Route exact path="/update"render={(props)=><UpdatePage {...props}/>}/>
           <Route exact path="/login" component={LoginPage}/>

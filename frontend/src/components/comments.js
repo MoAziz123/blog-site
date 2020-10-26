@@ -27,9 +27,11 @@ export default class Comments extends React.Component{
     }
     handleSubmit()
     {
+        console.log(this.props.user)
         Axios.post('http://localhost:8080/comment/add', {
             post_id:this.props.id,
-            text: this.state.text
+            text: this.state.text,
+            user_name:this.props.user.name
         })
         .then((res)=>{
             this.setState({state:this.state, text:null})

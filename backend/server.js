@@ -10,8 +10,15 @@ const fs = require('fs')
 const cors = require('cors')
 const bodyparser = require('body-parser')
 
+
+
+app.use(cors())
+app.use(bodyparser.json())
+app.use(bodyparser.urlencoded({extended:false}))
+
 /*app.use('/', (req,res,next)=>{
-    if(req.path.includes('/comment') || req.path.includes('/blogpost')){
+    console.log(req.path)
+    if(req.path.includes('/comment') || req.path.includes('/posts')){
         let token = req.get('x-access-token')
         let decoded = jwt.decode(token, {complete:true})
         if((Date.now()/1000) > decoded.payload.exp){
@@ -19,15 +26,11 @@ const bodyparser = require('body-parser')
             res.status(200)
             res.end()
         }
+        console.log(token)
         return next()
     }
     next()
 })*/
-
-app.use(cors())
-app.use(bodyparser.json())
-app.use(bodyparser.urlencoded({extended:false}))
-
 app.use('/', require('./api/blogpost'))
 app.use('/', require('./api/comment'))
 app.use('/', require('./api/login'))

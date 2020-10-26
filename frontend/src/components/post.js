@@ -16,7 +16,6 @@ export default class Post extends React.Component{
 
     }
     componentWillMount(){
-        console.log(this.props)
         Axios.post('http://localhost:8080/posts/searchOne', {id:this.props.id})
         .then((res)=>{
             this.setState({post:res.data.post})

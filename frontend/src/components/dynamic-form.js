@@ -95,14 +95,14 @@ export default class DynamicForm extends React.Component
                     data:element.value
                 })
         }
-        console.log(data_array, document.getElementById("title").value, document.getElementById("date").value,document.getElementById("tags").value)
         Axios.post('http://localhost:8080/posts/new', {
             title:document.getElementById("title").value,
             date:document.getElementById("date").value,
             description:document.getElementById("description").value,
             byline:document.getElementById("byline").value,
             data:data_array,
-            tags:tags
+            tags:tags,
+            private: document.getElementById("private").value == "on" ? true : false
         })
         .then((res)=>{
             this.setState({message:res.message})
@@ -161,6 +161,11 @@ export default class DynamicForm extends React.Component
                     <label for="tags">Tags:</label>
                         <input className="form-input-required" id="tags" type="text" name="tags"/>
                     </div>
+                    <div>
+                    <label for="private">Private:</label>
+                    <input className="form-input-required" id="private" type="checkbox" name="private"/>
+                    </div>
+                    
                 </div>
                 <div id="form-picker">
                     <div className="form-picker-img" onClick={(e)=>this.handleClick("image")}>

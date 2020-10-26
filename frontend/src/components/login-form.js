@@ -19,8 +19,9 @@ export default class LogInForm extends React.Component{
     {
         Axios.post('http://localhost:8080/login/submit', {email:this.state.email, password:this.state.password})
         .then((response)=>{
-            if(response.data.auth)
+            if(response.data.auth == true && response.data.token)
             {
+                localStorage.setItem('x-access-token', response.data.token)
                 this.setState({redirect:{
                     pathname:"/",
                     state:{user:response.data.user}

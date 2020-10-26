@@ -17,7 +17,7 @@ export default class ViewPage extends React.Component{
     }
 
     componentDidMount(){
-        console.log(this.props.location.state)
+        console.log(this.props.location.state.user)
     
     }
 
@@ -25,7 +25,7 @@ export default class ViewPage extends React.Component{
         return(
             <div className="view-page">
             <Post id={this.props.location.state.id}/>
-            <Comments id={this.props.location.state.id}/>
+            <Comments user={this.props.location.state.user} id={this.props.location.state.id}/>
             </div>
         )
 

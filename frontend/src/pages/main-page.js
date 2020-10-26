@@ -7,15 +7,14 @@ import Axios from 'axios'
  */
 export default class MainPage extends React.Component
 {
-    constructor(){
-        super()
+    constructor(props){
+        super(props)
         this.state={
             posts:[],
             message:null
         }
     }
     componentDidMount=()=>{
-        
         Axios.get('http://localhost:8080/posts')
         .then((res)=>{
             this.setState({posts:res.data.posts})
@@ -33,6 +32,7 @@ export default class MainPage extends React.Component
             {
                 this.state.posts.map((post)=>{
                     if(this.state.posts.length > 0){
+
                         return(<PostPreview user={this.props.location.state.user} id={post._id} title={post.title} description={post.description} tags={post.tags} date={post.date} byline={post.byline}/>)
                     }
                     else{

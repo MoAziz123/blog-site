@@ -5,7 +5,8 @@ const commentSchema = mongoose.Schema({
     text:String,
     edited:Boolean,
     date_posted:{type:Date, default:Date.now()},
-    user_id:String
+    user_id:String,
+    user_name:String
 
 })
 

@@ -19,45 +19,33 @@ router.get('/login', (req,res)=>{
 })
 router.post('/login/submit', (req,res)=>{
     console.log(req.body)
-    User.findOne({email:req.body.email})
+    User.findOne({email:req.body.email, password:req.body.password})
     .then((user)=>{
-        if(user)
-        {
-            return res.json({
-                user:{name:user.name, email:user.email},
-                auth:true
-            })
-        }
-        return res.json({
-            auth:false
-        })
-        /*if(user && user.email && !user.password)
-        {
-            return res.json({
-                message:"incorrect password",
-                auth:false
-            })
+        if(user){
+            if(user.email && !user.password)
+            {
+                return res.json({
+                    message:"incorrect password",
+                    auth:false
+                })
 
-        }
-        else if(user && user.email && user.password)
-        {
+            }
             let payload ={email:user.email,password:user.password}
             let token = jwt.sign(payload, 'jwt_secret', {expiresIn:'3h'})
             return res.json({
-                    message:"User authenticated",
-                    token,
-                    auth:true,
-                    user: {email:user.email, name:user.name},
-                    id:user._id
-                })
-           
+                        message:"User authenticated",
+                        token,
+                        auth:true,
+                        user: {id:user._id, email:user.email, name:user.name},
+                        id:user._id
+                    })
         }
-        else if(user && !user.email && !user.password){
-            return res.json({
-                message:"Unable to locate email, or password",
-                auth:false
-            })
-        }*/
+    else{
+        return res.json({
+            message:"Unable to locate email, or password",
+            auth:false
+        })
+    }
     })
 
 })

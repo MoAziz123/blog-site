@@ -177,6 +177,10 @@ export default class UpdatePage extends React.Component
                         <label for="tags">Tags:</label>
                             <input className="form-input-required" id="tags" type="text"  value={this.state.post.tags} name="tags"/>
                         </div>
+                        <div>
+                    <label for="private">Private:</label>
+                        <input className="form-input-required" id="private" type="checkbox" name="private" value={this.state.post.private}/>
+                    </div>
                     </div>
                     {  
                        this.state.post.data && this.state.post.data.map((item)=>{

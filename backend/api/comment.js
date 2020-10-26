@@ -48,7 +48,8 @@ router.post('/comment/add', (req,res)=>{
     let new_comment = new Comment({
         post_id:req.body.post_id,
         text:req.body.text,
-        edited:req.body.edited
+        edited:req.body.edited,
+        user_name:req.body.user_name
     })
     new_comment
     .save()

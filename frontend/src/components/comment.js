@@ -13,15 +13,13 @@ export default class Comment extends React.Component{
             edit:false,
             text:this.props.comment.text,
         }
+        console.log(this.props.comment.user_name)
     }
     handleDelete=()=>{
         let id = this.props.comment._id
-        console.log(id)
         Axios.post("http://localhost:8080/comment/remove" , {data:{_id:id}})
         .then((res)=>{
-            this.setState({state:this.state
-            })
-            console.log(res.data)
+            this.setState({state:this.state})
         })
     }
     handleEdit()
@@ -53,7 +51,7 @@ export default class Comment extends React.Component{
                 <div className="comment-post">
                     <div className="profile">
                         <img src="/"/>
-                        <p>Username</p>
+                        <p>{this.props.comment.user_name}</p>
             
                     </div>
                     <div className="content-wrapper">
@@ -74,7 +72,7 @@ export default class Comment extends React.Component{
             <div className="comment-post">
                 <div className="profile">
                     <img src="/"/>
-                    <p>Username</p>
+                    <p>{this.props.comment.user_name != null ? this.props.comment.user_name : 'username'} </p>
         
                 </div>
                 <div className="content-wrapper">
