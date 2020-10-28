@@ -1,7 +1,7 @@
 import React from 'react'
 import Axios from 'axios'
 import {Redirect} from 'react-router-dom'
-
+import {userContext} from '../contexts/userContext'
 /**@class - LogInForm
  * @description - the form for users to submit login/password
  * @since 1.0.0/
@@ -15,12 +15,21 @@ export default class LogInForm extends React.Component{
         }
 
     }
+    componentDidMount()
+    {
+        let item = localStorage.getItem('x-access-token')
+        if(item)
+        {
+
+        }
+    }
     handleSubmit()
     {
         Axios.post('http://localhost:8080/login/submit', {email:this.state.email, password:this.state.password})
         .then((response)=>{
             if(response.data.auth == true && response.data.token)
             {
+                userContext.user = response.data.user
                 localStorage.setItem('x-access-token', response.data.token)
                 this.setState({redirect:{
                     pathname:"/",

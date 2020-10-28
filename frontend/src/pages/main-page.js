@@ -1,7 +1,7 @@
 import React from 'react'
 import PostPreview from '../components/preview-post'
 import Axios from 'axios'
-
+import {userContext} from '../contexts/userContext'
 /**@class - MainPage
  * @description - used to show posts 
  */
@@ -13,6 +13,7 @@ export default class MainPage extends React.Component
             posts:[],
             message:null
         }
+        console.log(userContext)
     }
     componentDidMount=()=>{
         Axios.get('http://localhost:8080/posts')
@@ -33,7 +34,7 @@ export default class MainPage extends React.Component
                 this.state.posts.map((post)=>{
                     if(this.state.posts.length > 0){
 
-                        return(<PostPreview user={this.props.location.state.user} id={post._id} title={post.title} description={post.description} tags={post.tags} date={post.date} byline={post.byline}/>)
+                        return(<PostPreview user={this.props.location.state.user} post={post}/>)
                     }
                     else{
                         return(<p>No Results Found</p>)

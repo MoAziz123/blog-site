@@ -82,6 +82,7 @@ export default class DynamicForm extends React.Component
         this.state={
             message:null,
         }
+        const user_details = React.useContext(userContext);
     }
 
     handleSubmit=()=>{
@@ -102,7 +103,7 @@ export default class DynamicForm extends React.Component
             byline:document.getElementById("byline").value,
             data:data_array,
             tags:tags,
-            private: document.getElementById("private").value == "on" ? true : false
+            private: document.getElementById("private").value == "on" ? true : false,
         })
         .then((res)=>{
             this.setState({message:res.message})

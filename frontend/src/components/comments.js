@@ -22,7 +22,6 @@ export default class Comments extends React.Component{
             this.setState({
                 comments:res.data.comments
             })
-            console.log(this.state.comments)
         })
     }
     handleSubmit()
@@ -31,7 +30,8 @@ export default class Comments extends React.Component{
         Axios.post('http://localhost:8080/comment/add', {
             post_id:this.props.id,
             text: this.state.text,
-            user_name:this.props.user.name
+            user_name:this.props.user.name,
+            user_id:this.props.user.id
         })
         .then((res)=>{
             this.setState({state:this.state, text:null})
@@ -51,7 +51,7 @@ export default class Comments extends React.Component{
             {
                
                 this.state.comments && this.state.comments.map((comment)=>{
-                    return (<Comment comment={comment}/>)
+                    return (<Comment user={this.props.user} comment={comment}/>)
                 })
             }
         </div>)

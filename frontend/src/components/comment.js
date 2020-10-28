@@ -1,6 +1,5 @@
 import React from 'react'
 import Axios from 'axios'
-
 /**@class - Comment
  * @description - encapsulates a comment for the user to view
  * @since 1.0.0
@@ -13,7 +12,7 @@ export default class Comment extends React.Component{
             edit:false,
             text:this.props.comment.text,
         }
-        console.log(this.props.comment.user_name)
+        console.log(this.props.comment)
     }
     handleDelete=()=>{
         let id = this.props.comment._id
@@ -45,31 +44,9 @@ export default class Comment extends React.Component{
         })
     }
     render(){
-        if(this.state.edit)
+        if(this.props.user.id != this.props.comment.user_id)
         {
-            return(
-                <div className="comment-post">
-                    <div className="profile">
-                        <img src="/"/>
-                        <p>{this.props.comment.user_name}</p>
-            
-                    </div>
-                    <div className="content-wrapper">
-                        <div className="content">
-                            <input type="text" value={this.state.text} onChange={(e)=>this.setState({state:this.state, text:e.target.value})}/>
-                        </div>
-                        <div className="options">
-                            <p>In edit mode</p>
-                            <p>{this.props.comment.date_posted}</p>
-                            <button onClick={(e)=>this.handleBack()}>Back</button>
-                            <button onClick={(e)=>this.handleUpdate()}>Update</button>
-                            <button onClick={(e)=>this.handleDelete()}>Delete</button>
-                        </div>
-                    </div>
-                </div>)
-        }
-        return(
-            <div className="comment-post">
+            return(<div className="comment-post">
                 <div className="profile">
                     <img src="/"/>
                     <p>{this.props.comment.user_name != null ? this.props.comment.user_name : 'username'} </p>
@@ -82,10 +59,55 @@ export default class Comment extends React.Component{
                     <div className="options">
                         <p>{this.props.comment.edited}</p>
                         <p>{this.props.comment.date_posted}</p>
-                        <button onClick={(e)=>this.handleEdit()}>Edit</button>
-                        <button onClick={(e)=>this.handleDelete()}>Delete</button>
                     </div>
                 </div>
             </div>)
-    }
+        }
+        else
+        {
+            if(this.state.edit)
+            {
+                return(
+                    <div className="comment-post">
+                        <div className="profile">
+                            <img src="/"/>
+                            <p>{this.props.comment.user_name}</p>
+                
+                        </div>
+                        <div className="content-wrapper">
+                            <div className="content">
+                                <input type="text" value={this.state.text} onChange={(e)=>this.setState({state:this.state, text:e.target.value})}/>
+                            </div>
+                            <div className="options">
+                                <p>In edit mode</p>
+                                <p>{this.props.comment.date_posted}</p>
+                                <button onClick={(e)=>this.handleBack()}>Back</button>
+                                <button onClick={(e)=>this.handleUpdate()}>Update</button>
+                                <button onClick={(e)=>this.handleDelete()}>Delete</button>
+                            </div>
+                        </div>
+                    </div>)
+            }
+            return(
+                <div className="comment-post">
+                    <div className="profile">
+                        <img src="/"/>
+                        <p>{this.props.comment.user_name != null ? this.props.comment.user_name : 'username'} </p>
+            
+                    </div>
+                    <div className="content-wrapper">
+                        <div className="content">
+                            <p>{this.state.text}</p>
+                        </div>
+                        <div className="options">
+                            <p>{this.props.comment.edited}</p>
+                            <p>{this.props.comment.date_posted}</p>
+                            <button onClick={(e)=>this.handleEdit()}>Edit</button>
+                            <button onClick={(e)=>this.handleDelete()}>Delete</button>
+                        </div>
+                    </div>
+                </div>)
+        }
+        }
+        
 }

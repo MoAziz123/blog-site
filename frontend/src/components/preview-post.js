@@ -8,7 +8,7 @@ export default class PostPreview extends React.Component{
     {
         super(props)
         this.state = {
-            id:this.props.id,
+            id:this.props.post._id,
             redirect:null
         }
         console.log(this.props)
@@ -30,6 +30,7 @@ export default class PostPreview extends React.Component{
         this.setState({redirect:"update"})
     }
     render(){
+        console.log(this.props)
         if(this.state.redirect)
         {
             return(<Redirect to={{
@@ -37,14 +38,16 @@ export default class PostPreview extends React.Component{
                 state:{id:this.state.id, user:this.props.user}
             }}/>)
         }
-        return(<div className="preview-post">
+        if(this.props.user.user_id != this.props.post.user_id)
+        {
+            return(<div className="preview-post">
             <div className="post-row">
-                <p className="title">{this.props.title}</p>
-                <p className="byline">by {this.props.byline}</p>
-                <p className="date">Date: {this.props.date}</p>
+                <p className="title">{this.props.post.title}</p>
+                <p className="byline">by {this.props.post.byline}</p>
+                <p className="date">Date: {this.props.post.date}</p>
                 <div className="post-tags">
                 {
-                    this.props.tags.map((tag)=>{
+                    this.props.post.tags.map((tag)=>{
                         return(
                             <div className="post-tag">
                                 <text>{tag}</text>
@@ -53,11 +56,34 @@ export default class PostPreview extends React.Component{
                     })
                 }
                 </div>
-                <p className="description">{this.props.description}</p>
+                <p className="description">{this.props.post.description}</p>
             </div>
             <div className="post-options">
-                <button className="post-button" onClick={(e)=>this.handleEdit(this.props.id)}><i className="fa fa-pencil-square-o"/></button>
-                <button className="post-button" onClick={(e)=>this.handleDelete(this.props.id)}><i className="fa fa-trash-o"/></button>                
+                <a className="read-more" onClick={(e)=>this.handleView()}>Read More</a>
+            </div>
+        </div>)
+        }
+        return(<div className="preview-post">
+            <div className="post-row">
+                <p className="title">{this.props.post.title}</p>
+                <p className="byline">by {this.props.post.byline}</p>
+                <p className="date">Date: {this.props.post.date}</p>
+                <div className="post-tags">
+                {
+                    this.props.post.tags.map((tag)=>{
+                        return(
+                            <div className="post-tag">
+                                <text>{tag}</text>
+                            </div>
+                        )
+                    })
+                }
+                </div>
+                <p className="description">{this.props.post.description}</p>
+            </div>
+            <div className="post-options">
+                <button className="post-button" onClick={(e)=>this.handleEdit(this.props.post.id)}><i className="fa fa-pencil-square-o"/></button>
+                <button className="post-button" onClick={(e)=>this.handleDelete(this.props.post.id)}><i className="fa fa-trash-o"/></button>                
                 <a className="read-more" onClick={(e)=>this.handleView()}>Read More</a>
             </div>
 

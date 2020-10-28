@@ -11,10 +11,13 @@ import LoginPage from './pages/login-page'
 import SearchPage from './pages/search-page'
 import ViewPage from './pages/view-page'
 import RegisterPage from './pages/register-page'
+import PersonalPage from './pages/personal-page'
+import {userContext} from './contexts/userContext'
 function App() {
   return (
+    <userContext.Provider value={""}>
+    <Router>
     <div className="App">
-      <Router>
       <NavBar/>
         <Switch>
           <Route exact path="/" render={(props)=><MainPage {...props}/>}/>
@@ -25,9 +28,10 @@ function App() {
           <Route exact path="/search" component={SearchPage}/>
           <Route exact path ="/posts" render={(props)=><ViewPage {...props}/>}/>
         </Switch>
-      </Router>
       <Footer/>
     </div>
+    </Router>
+    </userContext.Provider>
   );
 }
 
