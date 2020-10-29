@@ -31,10 +31,7 @@ export default class LogInForm extends React.Component{
             {
                 userContext.user = response.data.user
                 localStorage.setItem('x-access-token', response.data.token)
-                this.setState({redirect:{
-                    pathname:"/",
-                    state:{user:response.data.user}
-                }})
+                this.setState({redirect:"/"})
             }
         })
     }
@@ -49,6 +46,11 @@ export default class LogInForm extends React.Component{
         if(this.state.redirect)
         {
             return(<Redirect to={this.state.redirect}/>)
+        }
+        if(userContext.user)
+        {
+            return(<Redirect to="/"/>)
+
         }
         return(
             <div className="login-form">

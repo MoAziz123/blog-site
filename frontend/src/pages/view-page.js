@@ -3,6 +3,7 @@ import Axios from 'axios'
 import Post from '../components/post'
 import Comments from '../components/comments'
 import {userContext} from '../contexts/userContext'
+import {idContext} from '../contexts/idContext'
 
 /**@class - ViewPage
  * @description - shows the article to the user
@@ -19,15 +20,14 @@ export default class ViewPage extends React.Component{
     }
 
     componentDidMount(){
-        console.log(this.props.location.state.user, this.props.location.state.id)
-    
+        console.log(idContext.id)
     }
 
     render(){
         return(
             <div className="view-page">
-            <Post id={this.props.location.state.id}/>
-            <Comments user={this.props.location.state.user} id={this.props.location.state.id}/>
+            <Post id={idContext.id}/>
+            <Comments user={userContext.user} id={idContext.id}/>
             </div>
         )
 

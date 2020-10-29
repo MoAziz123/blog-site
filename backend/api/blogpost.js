@@ -47,7 +47,8 @@ router.post('/posts/new',(req,res)=>{
         description:req.body.description,
         byline:req.body.byline,
         private:req.body.private,
-        data:req.body.data
+        data:req.body.data,
+        user_id:req.body.user_id
     })
     .save()
     .then((post)=>{

@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import Axios from 'axios'
+import {userContext} from '../contexts/userContext'
 function Heading(props){
     return(
         <div className="heading">
@@ -82,7 +83,7 @@ export default class DynamicForm extends React.Component
         this.state={
             message:null,
         }
-        const user_details = React.useContext(userContext);
+        console.log(userContext.user)
     }
 
     handleSubmit=()=>{
@@ -104,6 +105,7 @@ export default class DynamicForm extends React.Component
             data:data_array,
             tags:tags,
             private: document.getElementById("private").value == "on" ? true : false,
+            user_id:userContext.user.id
         })
         .then((res)=>{
             this.setState({message:res.message})

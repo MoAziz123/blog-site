@@ -1,6 +1,8 @@
 import React from 'react'
 import Axios from 'axios'
 import querystring from 'query-string'
+import userContext from '../contexts/userContext'
+import {idContext} from '../contexts/idContext'
 import ReactDOM from 'react-dom'
 /**@class - UpdateForm
  * @description - used to update a post
@@ -67,8 +69,8 @@ function handleElementDown(element){
 }
 export default class UpdateForm extends React.Component
 {
-    constructor(){
-        super()
+    constructor(props){
+        super(props)
         this.state = {
             post:"",
             message:null
@@ -77,7 +79,7 @@ export default class UpdateForm extends React.Component
     componentDidMount(){
         this.setState({post:[], message:null})
         Axios.post("http://localhost:8080/posts/searchOne", 
-            {id:this.props.location.state.id}
+            {id:idContext.id}
         )
         .then((response)=>{
             this.setState({
@@ -87,6 +89,8 @@ export default class UpdateForm extends React.Component
             
         })
         .catch(error=>console.error(error))
+        
+       console.log(this.props)
         
     }
     handleSubmit()
@@ -102,7 +106,7 @@ export default class UpdateForm extends React.Component
                 })
         }
         Axios.put('http://localhost:8080/posts/update', {
-            id:this.props.location.state.id,
+            id:idContext.id,
             title:this.state.post.title,
             date:this.state.post.date,
             description:this.state.post.description,

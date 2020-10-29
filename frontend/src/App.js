@@ -13,8 +13,10 @@ import ViewPage from './pages/view-page'
 import RegisterPage from './pages/register-page'
 import PersonalPage from './pages/personal-page'
 import {userContext} from './contexts/userContext'
+import {idContext} from './contexts/idContext'
 function App() {
   return (
+    <idContext.Provider value={""}>
     <userContext.Provider value={""}>
     <Router>
     <div className="App">
@@ -32,6 +34,7 @@ function App() {
     </div>
     </Router>
     </userContext.Provider>
+    </idContext.Provider>
   );
 }
 

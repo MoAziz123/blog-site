@@ -11,6 +11,13 @@ export default class PersonalPage extends MainPage
             message:null
         }
     }
+    componentDidMount()
+    {
+        Axios.get('http://localhost:8080/posts')
+        .then((res)=>{
+            this.setState({posts:res.data.posts})
+        })
+    }
     render(){
         return(
                 <div className="main-page">

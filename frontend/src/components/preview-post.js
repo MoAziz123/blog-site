@@ -1,8 +1,11 @@
 import Axios from 'axios'
 import React from 'react'
 import { Redirect } from 'react-router-dom'
-
-/**@class -  */
+import {userContext} from '../contexts/userContext'
+import {idContext} from '../contexts/idContext'
+/**@class - PostPreview
+ * @description - 
+  */
 export default class PostPreview extends React.Component{
     constructor(props)
     {
@@ -11,9 +14,11 @@ export default class PostPreview extends React.Component{
             id:this.props.post._id,
             redirect:null
         }
-        console.log(this.props)
+
     }
     handleView(){
+        idContext.id = this.state.id
+
         this.setState({redirect:"posts"})
 
     }
@@ -27,43 +32,22 @@ export default class PostPreview extends React.Component{
     }
 
     handleEdit(id){
+        idContext.id = this.state.id
+        console.log(idContext.id)
         this.setState({redirect:"update"})
     }
     render(){
-        console.log(this.props)
         if(this.state.redirect)
         {
             return(<Redirect to={{
-                pathname:this.state.redirect,
-                state:{id:this.state.id, user:this.props.user}
+                pathname:this.state.redirect
             }}/>)
         }
-        if(this.props.user.user_id != this.props.post.user_id)
+
+        try{
+        if(userContext.user.id == this.props.post.user_id)
         {
             return(<div className="preview-post">
-            <div className="post-row">
-                <p className="title">{this.props.post.title}</p>
-                <p className="byline">by {this.props.post.byline}</p>
-                <p className="date">Date: {this.props.post.date}</p>
-                <div className="post-tags">
-                {
-                    this.props.post.tags.map((tag)=>{
-                        return(
-                            <div className="post-tag">
-                                <text>{tag}</text>
-                            </div>
-                        )
-                    })
-                }
-                </div>
-                <p className="description">{this.props.post.description}</p>
-            </div>
-            <div className="post-options">
-                <a className="read-more" onClick={(e)=>this.handleView()}>Read More</a>
-            </div>
-        </div>)
-        }
-        return(<div className="preview-post">
             <div className="post-row">
                 <p className="title">{this.props.post.title}</p>
                 <p className="byline">by {this.props.post.byline}</p>
@@ -88,6 +72,34 @@ export default class PostPreview extends React.Component{
             </div>
 
         </div>)
+           
+        }
+    }
+    catch{console.log("hi")}
+        return(
+        <div className="preview-post">
+            <div className="post-row">
+                <p className="title">{this.props.post.title}</p>
+                <p className="byline">by {this.props.post.byline}</p>
+                <p className="date">Date: {this.props.post.date}</p>
+                <div className="post-tags">
+                {
+                    this.props.post.tags.map((tag)=>{
+                        return(
+                            <div className="post-tag">
+                                <text>{tag}</text>
+                            </div>
+                        )
+                    })
+                }
+                </div>
+                <p className="description">{this.props.post.description}</p>
+            </div>
+            <div className="post-options">
+                <a className="read-more" onClick={(e)=>this.handleView()}>Read More</a>
+            </div>
+        </div>)
+        
 
     }
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import Axios from 'axios'
 import Comment from './comment'
-
+import {userContext} from '../contexts/userContext'
 /**@class - Comments
  * @description - encapsulates the comments system
  * @since 1.0.0
@@ -26,23 +26,30 @@ export default class Comments extends React.Component{
     }
     handleSubmit()
     {
-        console.log(this.props.user)
-        Axios.post('http://localhost:8080/comment/add', {
-            post_id:this.props.id,
-            text: this.state.text,
-            user_name:this.props.user.name,
-            user_id:this.props.user.id
-        })
-        .then((res)=>{
-            this.setState({state:this.state, text:null})
-            this.componentDidMount()
-
-        })
+        try{
+            Axios.post('http://localhost:8080/comment/add', {
+                post_id:this.props.id,
+                text: this.state.text,
+                user_name:userContext.user.name,
+                user_id:userContext.user.id
+            })
+            .then((res)=>{
+                this.setState({state:this.state, text:null})
+                this.componentDidMount()
+    
+            })
+        }
+        catch
+        {
+            this.setState({state:this.state, message:"You need to login to post a comment."})
+        }
+      
     }
 
     render(){
         return(
         <div className="comments">
+            <p>{this.state.message}</p>
             <div className="comment-input">
                 <label for="comment">Comment: </label>
                 <textarea name="comment" onChange={(e)=>this.setState({state:this.state, text:e.target.value})}></textarea>
@@ -51,7 +58,12 @@ export default class Comments extends React.Component{
             {
                
                 this.state.comments && this.state.comments.map((comment)=>{
-                    return (<Comment user={this.props.user} comment={comment}/>)
+                    return (
+                        <userContext.Consumer>
+                            {(value)=><Comment comment={comment}/>}
+                        </userContext.Consumer>
+                        )
+                    
                 })
             }
         </div>)

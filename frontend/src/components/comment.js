@@ -1,5 +1,7 @@
 import React from 'react'
 import Axios from 'axios'
+import {userContext} from '../contexts/userContext'
+
 /**@class - Comment
  * @description - encapsulates a comment for the user to view
  * @since 1.0.0
@@ -44,27 +46,29 @@ export default class Comment extends React.Component{
         })
     }
     render(){
-        if(this.props.user.id != this.props.comment.user_id)
+        try{
+        if(userContext.user.id == this.props.comment.user_id)
         {
             return(<div className="comment-post">
-                <div className="profile">
-                    <img src="/"/>
-                    <p>{this.props.comment.user_name != null ? this.props.comment.user_name : 'username'} </p>
-        
-                </div>
-                <div className="content-wrapper">
-                    <div className="content">
-                        <p>{this.state.text}</p>
+                    <div className="profile">
+                        <img src="/"/>
+                        <p>{this.props.comment.user_name != null ? this.props.comment.user_name : 'username'} </p>
+            
                     </div>
-                    <div className="options">
-                        <p>{this.props.comment.edited}</p>
-                        <p>{this.props.comment.date_posted}</p>
+                    <div className="content-wrapper">
+                        <div className="content">
+                            <p>{this.state.text}</p>
+                        </div>
+                        <div className="options">
+                            <p>{this.props.comment.edited}</p>
+                            <p>{this.props.comment.date_posted}</p>
+                            <button onClick={(e)=>this.handleEdit()}>Edit</button>
+                            <button onClick={(e)=>this.handleDelete()}>Delete</button>
+                        </div>
                     </div>
-                </div>
-            </div>)
-        }
-        else
-        {
+                </div>)
+        }}
+        finally{
             if(this.state.edit)
             {
                 return(
@@ -88,26 +92,23 @@ export default class Comment extends React.Component{
                         </div>
                     </div>)
             }
-            return(
-                <div className="comment-post">
-                    <div className="profile">
-                        <img src="/"/>
-                        <p>{this.props.comment.user_name != null ? this.props.comment.user_name : 'username'} </p>
-            
-                    </div>
-                    <div className="content-wrapper">
-                        <div className="content">
-                            <p>{this.state.text}</p>
-                        </div>
-                        <div className="options">
-                            <p>{this.props.comment.edited}</p>
-                            <p>{this.props.comment.date_posted}</p>
-                            <button onClick={(e)=>this.handleEdit()}>Edit</button>
-                            <button onClick={(e)=>this.handleDelete()}>Delete</button>
-                        </div>
-                    </div>
-                </div>)
-        }
-        }
+            return(<div className="comment-post">
+                <div className="profile">
+                    <img src="/"/>
+                    <p>{this.props.comment.user_name != null ? this.props.comment.user_name : 'username'} </p>
         
-}
+                </div>
+                <div className="content-wrapper">
+                    <div className="content">
+                        <p>{this.state.text}</p>
+                    </div>
+                    <div className="options">
+                        <p>{this.props.comment.edited}</p>
+                        <p>{this.props.comment.date_posted}</p>
+                    </div>
+                </div>
+            </div>)
+        }
+
+    }
+    }
