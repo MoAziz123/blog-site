@@ -2,6 +2,8 @@ import React from 'react'
 import PostPreview from '../components/preview-post'
 import Axios from 'axios'
 import {userContext} from '../contexts/userContext'
+import NavBar from '../components/nav-bar'
+
 /**@class - MainPage
  * @description - used to show posts 
  */
@@ -24,6 +26,9 @@ export default class MainPage extends React.Component
 
     render=()=>{
         return(
+            <>
+        <NavBar/>
+
         <div className="main-page">
             <p>{this.state.message}</p>
             <div className="header-section">
@@ -46,7 +51,8 @@ export default class MainPage extends React.Component
                 })
             }
             </div>
-        </div>)
+        </div>
+        </>)
     }
     
 }

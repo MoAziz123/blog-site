@@ -46,30 +46,7 @@ export default class Comment extends React.Component{
         })
     }
     render(){
-        try{
-        if(userContext.user.id == this.props.comment.user_id)
-        {
-            return(<div className="comment-post">
-                    <div className="profile">
-                        <img src="/"/>
-                        <p>{this.props.comment.user_name != null ? this.props.comment.user_name : 'username'} </p>
-            
-                    </div>
-                    <div className="content-wrapper">
-                        <div className="content">
-                            <p>{this.state.text}</p>
-                        </div>
-                        <div className="options">
-                            <p>{this.props.comment.edited}</p>
-                            <p>{this.props.comment.date_posted}</p>
-                            <button onClick={(e)=>this.handleEdit()}>Edit</button>
-                            <button onClick={(e)=>this.handleDelete()}>Delete</button>
-                        </div>
-                    </div>
-                </div>)
-        }}
-        finally{
-            if(this.state.edit)
+        if(this.state.edit)
             {
                 return(
                     <div className="comment-post">
@@ -92,7 +69,38 @@ export default class Comment extends React.Component{
                         </div>
                     </div>)
             }
+        try{
+        if(userContext.user.id == this.props.comment.user_id)
+        {
             return(<div className="comment-post">
+                    <div className="profile">
+                        <img src="/"/>
+                        <p>{this.props.comment.user_name != null ? this.props.comment.user_name : 'username'} </p>
+            
+                    </div>
+                    <div className="content-wrapper">
+                        <div className="content">
+                            <p>{this.state.text}</p>
+                        </div>
+                        <div className="options">
+                            <p>{this.props.comment.edited}</p>
+                            <p>{this.props.comment.date_posted}</p>
+                            <button onClick={(e)=>this.handleEdit()}>Edit</button>
+                            <button onClick={(e)=>this.handleDelete()}>Delete</button>
+                        </div>
+                    </div>
+                </div>)
+           
+        }
+    }
+    catch(error)
+    {
+        console.log(error)
+    }
+        
+            
+            
+                return(<div className="comment-post">
                 <div className="profile">
                     <img src="/"/>
                     <p>{this.props.comment.user_name != null ? this.props.comment.user_name : 'username'} </p>
@@ -108,7 +116,7 @@ export default class Comment extends React.Component{
                     </div>
                 </div>
             </div>)
+            
         }
 
-    }
     }

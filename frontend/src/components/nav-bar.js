@@ -1,6 +1,17 @@
 import React from 'react'
 import {Link,Redirect} from 'react-router-dom'
 import {userContext} from '../contexts/userContext'
+function NavBarView2()
+{
+        if(localStorage.getItem('x-access-token'))
+        {
+            return(<AuthNavBarView/>)
+        }
+        else
+        {
+            return(<NavBarView/>)
+        }
+}
 function NavBarView()
 {
     return(<div className="navbar">
@@ -15,14 +26,11 @@ function NavBarView()
 }
 function handleLogout()
 {
-            localStorage.removeItem('x-access-token')
+    localStorage.removeItem('x-access-token')
 }
 function AuthNavBarView()
 {
-    
-    
     return(
-            
         <div className="navbar">
         <div className="links-wrapper">
             <ul className="links">
@@ -44,20 +52,10 @@ export default class NavBar extends React.Component
         }
         
     }
-    componentDidMount()
-    {
-        
-        
-    }
     render(){
-        if(localStorage.getItem('x-access-token'))
-        {
-            return(<AuthNavBarView/>)
-        }
-        else
-        {
-            return(<NavBarView/>)
-        }
+        return(
+        <NavBarView2/>
+        )
     }
    
 }

@@ -2,6 +2,9 @@ import React from 'react'
 import Axios from 'axios'
 import MainPage from './main-page'
 import PostPreview from '../components/preview-post'
+import {userContext} from '../contexts/userContext'
+import NavBar from './components/nav-bar'
+
 export default class PersonalPage extends MainPage
 {
     constructor(props){
@@ -13,13 +16,18 @@ export default class PersonalPage extends MainPage
     }
     componentDidMount()
     {
-        Axios.get('http://localhost:8080/posts')
+        const user_context = React.useContext(userContext)
+        Axios.get('http://localhost:8080/searchUser',
+        {
+            user_id:user_context.user.id
+        })
         .then((res)=>{
             this.setState({posts:res.data.posts})
         })
     }
     render(){
         return(
+            
                 <div className="main-page">
                     <p>{this.state.message}</p>
                     <div className="header-section">

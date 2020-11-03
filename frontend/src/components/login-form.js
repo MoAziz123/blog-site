@@ -47,7 +47,7 @@ export default class LogInForm extends React.Component{
         {
             return(<Redirect to={this.state.redirect}/>)
         }
-        if(userContext.user)
+        if(localStorage.getItem('x-access-token'))
         {
             return(<Redirect to="/"/>)
 

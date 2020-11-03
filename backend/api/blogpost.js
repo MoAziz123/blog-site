@@ -85,7 +85,25 @@ router.delete('/posts/delete',(req,res)=>{
     })
     .catch((error)=>{return res.json({message:error})})
 })
-
+router.post('/posts/searchUser',(req,res)=>{
+    Post.find({user_id:req.body.user_id})
+    .then((posts)=>{
+        if(posts)
+        {
+            return res.json({
+                posts,
+                message:"Personal posts found"
+            })
+        }
+        else
+        {
+            return res.json({
+                posts:[],
+                message:"Unable to find personal posts"
+            })
+        }
+    })
+})
 router.put('/posts/update',(req,res)=>{
     Post.findOneAndUpdate({_id:req.body.id}, {
         title:req.body.title,

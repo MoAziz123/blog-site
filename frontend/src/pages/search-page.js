@@ -1,6 +1,8 @@
 import React from 'react'
 import Axios from 'axios'
 import PostPreview from '../components/preview-post'
+import NavBar from './components/nav-bar'
+
 /**@class-SearchPage
  * @description - allows users to search for blog posts
  * @since - 1.0.0.
@@ -35,6 +37,8 @@ export default class SearchPage extends React.Component{
     
     render(){
         return(
+            <>
+          <NavBar/>
             <div className="main-page">
             <p>{this.state.message}</p>
             <div className="header-section">
@@ -57,6 +61,7 @@ export default class SearchPage extends React.Component{
             }
             </div>
         </div>
+        </>
         )
     }
 

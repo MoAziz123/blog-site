@@ -20,7 +20,6 @@ function App() {
     <userContext.Provider value={""}>
     <Router>
     <div className="App">
-      <NavBar/>
         <Switch>
           <Route exact path="/" render={(props)=><MainPage {...props}/>}/>
           <Route exact path="/add" component={AddPage}/>
