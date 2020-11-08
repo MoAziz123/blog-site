@@ -25,7 +25,6 @@ export default class Post extends React.Component{
     render(){
         return(
             <>
-            <NavBar/>
             <div className="post">
             <div className="post-row">
                 <p className="title">{this.state.post.title}</p>

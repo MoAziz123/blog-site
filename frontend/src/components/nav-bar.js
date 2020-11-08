@@ -19,6 +19,7 @@ function NavBarView()
         <ul className="links">
             <Link to="/login">Log In</Link>
             <Link to="/">Posts</Link>
+            <Link to="/search">Search posts</Link>
         </ul>
     </div>
 </div>
@@ -37,6 +38,8 @@ function AuthNavBarView()
                 <Link to="/add">Add a post</Link>
                 <Link to="/">View posts</Link>
                 <Link to="/myposts">View my posts</Link>
+                <Link to="/search">Search posts</Link>
+                <Link to="/settings">Settings</Link>
                 <Link to="/login" onClick={(e)=>handleLogout()}>Logout</Link>
             </ul>
         </div>

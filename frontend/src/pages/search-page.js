@@ -1,7 +1,7 @@
 import React from 'react'
 import Axios from 'axios'
 import PostPreview from '../components/preview-post'
-import NavBar from './components/nav-bar'
+import NavBar from '../components/nav-bar'
 
 /**@class-SearchPage
  * @description - allows users to search for blog posts
@@ -50,9 +50,9 @@ export default class SearchPage extends React.Component{
             </div>
             <div className="posts-section">
             {
-                this.state.posts.map((post)=>{
+                this.state.posts && this.state.posts.map((post)=>{
                     if(this.state.posts.length > 0){
-                        return(<PostPreview id={post._id} title={post.title} description={post.description} tags={post.tags} date={post.date} byline={post.byline}/>)
+                        return(<PostPreview post={post}/>)
                     }
                     else{
                         return(<p>No Results Found</p>)

@@ -4,7 +4,7 @@ import Post from '../components/post'
 import Comments from '../components/comments'
 import {userContext} from '../contexts/userContext'
 import {idContext} from '../contexts/idContext'
-import NavBar from './components/nav-bar'
+import NavBar from '../components/nav-bar'
 
 
 /**@class - ViewPage

@@ -38,12 +38,16 @@ export default class MainPage extends React.Component
             {
                 this.state.posts.map((post)=>{
                     if(this.state.posts.length > 0){
-
-                        return(
+                        if(post.private == false)
+                        {
+                            return(
                             <userContext.Consumer>
                             {(value)=>(<PostPreview value={userContext} post={post}/>)}
                             </userContext.Consumer>
                         )
+
+                        }
+                        
                     }
                     else{
                         return(<p>No Results Found</p>)

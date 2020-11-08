@@ -3,9 +3,9 @@ import Axios from 'axios'
 import MainPage from './main-page'
 import PostPreview from '../components/preview-post'
 import {userContext} from '../contexts/userContext'
-import NavBar from './components/nav-bar'
+import NavBar from '../components/nav-bar'
 
-export default class PersonalPage extends MainPage
+export default class PersonalPage extends React.Component
 {
     constructor(props){
         super(props)
@@ -16,8 +16,8 @@ export default class PersonalPage extends MainPage
     }
     componentDidMount()
     {
-        const user_context = React.useContext(userContext)
-        Axios.get('http://localhost:8080/searchUser',
+        const user_context = userContext
+        Axios.post('http://localhost:8080/posts/searchUser',
         {
             user_id:user_context.user.id
         })
@@ -27,7 +27,8 @@ export default class PersonalPage extends MainPage
     }
     render(){
         return(
-            
+                <>
+                <NavBar/>
                 <div className="main-page">
                     <p>{this.state.message}</p>
                     <div className="header-section">
@@ -38,7 +39,7 @@ export default class PersonalPage extends MainPage
                         this.state.posts.map((post)=>{
                             if(this.state.posts.length > 0){
         
-                                return(<PostPreview user={this.props.location.state.user} id={post._id} title={post.title} description={post.description} tags={post.tags} date={post.date} byline={post.byline}/>)
+                                return(<PostPreview user={userContext.user} post={post}/>)
                             }
                             else{
                                 return(<p>No Results Found</p>)
@@ -46,6 +47,7 @@ export default class PersonalPage extends MainPage
                         })
                     }
                     </div>
-                </div>)
+                </div>
+                </>)
     }
 }

@@ -14,6 +14,7 @@ import RegisterPage from './pages/register-page'
 import PersonalPage from './pages/personal-page'
 import {userContext} from './contexts/userContext'
 import {idContext} from './contexts/idContext'
+import SettingsPage from './pages/settings-page'
 function App() {
   return (
     <idContext.Provider value={""}>
@@ -21,13 +22,15 @@ function App() {
     <Router>
     <div className="App">
         <Switch>
-          <Route exact path="/" render={(props)=><MainPage {...props}/>}/>
+          <Route exact path="/posts" render={(props)=><MainPage {...props}/>}/>
           <Route exact path="/add" component={AddPage}/>
           <Route exact path="/update"render={(props)=><UpdatePage {...props}/>}/>
           <Route exact path="/login" component={LoginPage}/>
           <Route exact path="/register" component={RegisterPage}/>
           <Route exact path="/search" component={SearchPage}/>
           <Route exact path ="/posts" render={(props)=><ViewPage {...props}/>}/>
+          <Route exact path ="/settings" render={(props)=><SettingsPage {...props}/>}/>
+          <Route exact path ="/myposts" component={PersonalPage}/>
         </Switch>
       <Footer/>
     </div>

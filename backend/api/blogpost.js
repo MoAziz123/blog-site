@@ -136,7 +136,8 @@ router.post('/posts/search', (req,res)=>{
         if(posts.length > 0)
         {
             post_array = posts.filter((post)=>{
-                if(post.title.startsWith(req.body.search)){
+                let title = post.title.toLowerCase()
+                if(title.startsWith(req.body.search.toLowerCase())){
                     return post
                 }
             })

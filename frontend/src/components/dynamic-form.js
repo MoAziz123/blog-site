@@ -104,7 +104,7 @@ export default class DynamicForm extends React.Component
             byline:document.getElementById("byline").value,
             data:data_array,
             tags:tags,
-            private: document.getElementById("private").value == "on" ? true : false,
+            private: document.getElementById("private").checked ? true : false,
             user_id:userContext.user.id
         })
         .then((res)=>{
