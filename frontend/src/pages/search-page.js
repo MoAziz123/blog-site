@@ -27,7 +27,6 @@ export default class SearchPage extends React.Component{
     }
     handleSearch(query)
     {
-        console.log(query)
         Axios.post('http://localhost:8080/posts/search', {search:query})
         .then((res)=>{
             this.setState({posts:res.data.posts})

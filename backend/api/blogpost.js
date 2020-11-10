@@ -8,7 +8,11 @@ const Post = require('../models/Post')
 /**@route - upload
  * @description - used for uploading images
  */
+router.post('/posts/upload', (req,res)=>{
+    if(req.file){
 
+    }
+})
 router.get('/posts', (req,res)=>{
     Post.find({})
     .then((posts)=>{

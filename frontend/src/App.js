@@ -22,7 +22,7 @@ function App() {
     <Router>
     <div className="App">
         <Switch>
-          <Route exact path="/posts" render={(props)=><MainPage {...props}/>}/>
+          <Route exact path="/" render={(props)=><MainPage {...props}/>}/>
           <Route exact path="/add" component={AddPage}/>
           <Route exact path="/update"render={(props)=><UpdatePage {...props}/>}/>
           <Route exact path="/login" component={LoginPage}/>

@@ -1,2 +1,2 @@
----
 conn_string: "mongodb+srv://wwww."
+image_dir: "./assets/images"

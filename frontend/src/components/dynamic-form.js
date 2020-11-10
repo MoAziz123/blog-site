@@ -82,6 +82,7 @@ export default class DynamicForm extends React.Component
         super(props)
         this.state={
             message:null,
+            date:Date.now()
         }
         console.log(userContext.user)
     }
@@ -146,23 +147,23 @@ export default class DynamicForm extends React.Component
                 <div className="form-inputs-required">
                     <div>
                         <label for="title">Title:</label>
-                        <input className="form-input-required" id="title" type="text" name="title"/>
+                        <input className="form-input-required" required id="title" type="text" name="title"/>
                     </div>
                     <div className="re">
                     <label for="date">Date:</label>
-                        <input className="form-input-required" id="date" type="date" name="date"/>
+                        <input className="form-input-required"  required value={this.state.date} id="date" type="date" name="date"/>
                     </div>
                     <div>
                         <label for="byline">Byline:</label>
-                        <input className="form-input-required" id="byline" type="text" name="byline"/>
+                        <input className="form-input-required" id="byline" required type="text" value={userContext.user.name} name="byline"/>
                     </div>
                     <div>
                         <label for="description">Description:</label>
-                        <input className="form-input-required" id="description" type="text" name="description"/>
+                        <input className="form-input-required" id="description" required type="text" name="description"/>
                     </div>
                     <div >
                     <label for="tags">Tags:</label>
-                        <input className="form-input-required" id="tags" type="text" name="tags"/>
+                        <input className="form-input-required" id="tags" required type="text" name="tags"/>
                     </div>
                     <div>
                     <label for="private">Private:</label>

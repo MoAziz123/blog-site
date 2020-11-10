@@ -38,7 +38,7 @@ export default class MainPage extends React.Component
             {
                 this.state.posts.map((post)=>{
                     if(this.state.posts.length > 0){
-                        if(post.private == false)
+                        if(!post.private)
                         {
                             return(
                             <userContext.Consumer>
