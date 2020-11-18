@@ -103,7 +103,7 @@ export default class DynamicForm extends React.Component
         for(element of elements){
             if(element.getAttribute("name") == "image")
             {
-                if(validateImage(element.files[0].name)){
+                if(this.validateImage(element.files[0].name)){
                     const image = new FormData()
                     image.append("image", element.files[0], element.files[0].name)
                     Axios.post('http://localhost:8080/posts/uploadfile', image)
