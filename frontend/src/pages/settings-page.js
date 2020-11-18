@@ -13,7 +13,8 @@ export default class SettingsPage extends React.Component{
             user:null,
             redirect:"",
             name: userContext.user.name,
-            email:userContext.user.email
+            email:userContext.user.email,
+            password:null
         }
     }
     componentDidMount()
@@ -22,30 +23,43 @@ export default class SettingsPage extends React.Component{
         .then((res)=>this.setState({user:res.data.user}))
     }
     handleChangeDetails(){
-        Axios.put('http://localhost:8080/login/update',{
+        if(this.state.password != null && this.state.name != null && this.state.email != null)
+        {
+            Axios.put('http://localhost:8080/login/update',{
             id:userContext.user.id,
             username:this.state.name,
             password:this.state.password,
             email:this.state.email
+            })
+            .then((res)=>{
+                if(res.data.success){
+                    userContext.user = res.data.user
+                    this.setState({message:res.data.message})
+                }
+            })
+            .catch((error)=>console.error(error))
 
-        })
-        .then((res)=>{
-            if(res.data.success){
-                userContext.user = res.data.user
-                this.setState({message:res.data.message})
-            }
-        })
-        .catch((error)=>console.error(error))
+        }
+        else{
+            this.setState({state:this.state, message:"Fields must not be null."})
+        }
+        
     }
-    handleDeleteAccount=()=>{
+    handleDeleteAccount(){
         Axios.post('http://localhost:8080/login/search', {id:userContext.user.id})
         .then((res)=>{
             if(hash(this.state.password_confirm) == res.data.user.password){
+ 
                 Axios.post('http://localhost:8080/login/delete',{
-                    id:userContext.user.id
+                    user_id:userContext.user.id
                 })
                 .then((res)=>{
-                    this.setState({redirect:"/login"})
+                    if(res.data.success)
+                    {
+                        localStorage.removeItem('x-access-token')
+                        this.setState({redirect:"/login"})
+                    }
+                    
                 })
             }
         })
@@ -69,6 +83,7 @@ export default class SettingsPage extends React.Component{
         <NavBar/>
         <div className="settings-form">
             <div className="setting">
+                <p>{this.state.message}</p>
                 <h3>Change account details</h3>
                 <div className="setting-description">
                     <p>This allows you to change details of your account.</p>
@@ -81,7 +96,7 @@ export default class SettingsPage extends React.Component{
                 <input type="email" name="email" value={this.state.email} onChange={(e)=>{this.setState({state:this.state, email:e.target.value})}}/>
                 <br/>
                 <label for="password">Password:</label>
-                <input type="password" name="password" value={this.state.user.password} onChange={(e)=>{this.setState({state:this.state, password:e.target.value})}}/>
+                <input type="password" required name="password" onChange={(e)=>{this.setState({state:this.state, password:e.target.value})}}/>
                 <br/>
                 
                 

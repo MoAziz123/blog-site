@@ -1,10 +1,10 @@
 const mongoose = require('mongoose')
 
 const postSchema = mongoose.Schema({
-    title:String,
-    description:String,
-    byline:String,
-    date:Date, 
+    title:{type:String, default:""},
+    description:{type:String, default:""},
+    byline:{type:String, default:""},
+    date:{type:Date, default:""}, 
     tags:Array,
     data:Array,
     user_id:String,

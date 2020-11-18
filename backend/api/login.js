@@ -6,6 +6,8 @@ const hash = require('crypto-js/sha256')
 router.use(bodyParser.json())
 router.use(bodyParser.urlencoded({extended:true}))
 const User = require('../models/User')
+const Comment = require('../models/Comment')
+const Post = require('../models/Post')
 
 /**@route -  /submit
  * @description - submits the login details to authenticate
@@ -92,22 +94,28 @@ router.post('/login/search', (req,res)=>{
 })
 
 router.post('/login/delete', (req,res)=>{
-    User.findOneAndDelete({user_id:req.body.user_id})
-    .then((user)=>
-    {
-        if(user){
-            return res.json({
-                message:"Account deleted successfully"
+    Post.deleteMany({user_id:req.body.user_id})
+    .then((post)=>{
+        Comment.deleteMany({user_id:req.body.user_id})
+        .then((comment)=>{
+            User.findOneAndDelete({_id:req.body.user_id})
+            .then((user)=>{
+                if(user){
+                    return res.json({
+                        message:"Account deleted successfully"
+                    })
+                }
+                else{
+                    return res.json({
+                        message:"Unable to delete account"
+                    })
+                }
+
             })
-        }
-        else
-        {
-            return res.json({
-                message:"Unable to delete account"
-            })
-        }
+        })
 
     })
+    
 })
 
 router.put('/login/update',(req,res)=>{

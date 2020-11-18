@@ -11,18 +11,12 @@ export default class LogInForm extends React.Component{
     constructor(){
         super()
         this.state ={
-            redirect:false
+            redirect:false,
+            message:""
         }
 
     }
-    componentDidMount()
-    {
-        let item = localStorage.getItem('x-access-token')
-        if(item)
-        {
-
-        }
-    }
+    
     handleSubmit()
     {
         Axios.post('http://localhost:8080/login/submit', {email:this.state.email, password:this.state.password})
@@ -32,6 +26,10 @@ export default class LogInForm extends React.Component{
                 userContext.user = response.data.user
                 localStorage.setItem('x-access-token', response.data.token)
                 this.setState({redirect:"/"})
+            }
+            else
+            {
+                this.setState({message:response.data.message})
             }
         })
     }
@@ -54,6 +52,7 @@ export default class LogInForm extends React.Component{
         }
         return(
             <div className="login-form">
+                <p className="response-text">{this.state.message}</p>
                 <label for="email">Email:</label>
                 <input type="email" name="password" onChange={(e)=>this.setState({state:this.state, email:e.target.value})}/>
                 <label for="password">Password:</label>

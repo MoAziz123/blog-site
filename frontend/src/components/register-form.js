@@ -11,7 +11,8 @@ export default class RegisterForm extends React.Component{
     constructor(){
         super()
         this.state ={
-            redirect:false
+            redirect:false,
+            message: ""
         }
 
     }
@@ -19,7 +20,7 @@ export default class RegisterForm extends React.Component{
     {
         Axios.post('http://localhost:8080/login/register', {email:this.state.email, password:this.state.password, name:this.state.name})
         .then((response)=>{
-            console.log(response.data)
+            this.setState({message:response.data.message})
             
         })
     }
@@ -31,6 +32,7 @@ export default class RegisterForm extends React.Component{
         }
         return(
             <div className="login-form">
+                <p className="response-text">{this.state.message}</p>
                 <label for="name">Name:</label>
                 <input type="text" name="name" onChange={(e)=>this.setState({state:this.state, name:e.target.value})}/>
                 <label for="email">Email:</label>

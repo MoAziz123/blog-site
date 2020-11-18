@@ -1,0 +1,5 @@
+- Make sure you compartmentalise components - very useful for async stuff
+- Avoid promise hell (async -> await forever -> can do via compartmentalization)
+- file storage should be handled via 
+- navbar should be placed in every component - or an inherited component so they re-render on login change
+- avoid tunnel vision

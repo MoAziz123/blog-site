@@ -1,6 +1,9 @@
 import React from 'react'
 import Axios from 'axios'
 import NavBar from './nav-bar'
+import PostImage from './postImage'
+import { stringify } from 'query-string'
+import { enc } from 'crypto-js'
 
 /**@class - Post
  * @description - shows a post from the db
@@ -44,6 +47,7 @@ export default class Post extends React.Component{
                 <div className="post-content">
                 {
                     this.state.post.data && this.state.post.data.map((item)=>{
+                        
                         if(item.name == "heading")
                         {
                             return(<h1 className="post-heading">{item.data}</h1>)
@@ -52,7 +56,14 @@ export default class Post extends React.Component{
                         {
                             return(<p className="post-text">{item.data}</p>)
                         }
+                        else if(item.name == "image")
+                        {
+                            return (<PostImage image_data={item.data}/>)
+                            
+                                
+                        }
                     })
+
                 }
                 </div>
             </div>

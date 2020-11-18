@@ -86,17 +86,45 @@ export default class DynamicForm extends React.Component
         }
         console.log(userContext.user)
     }
+    validateImage=(data)=>{
+        let ext_arr = data.split(".")
+        let ext = ext_arr[ext_arr.length - 1]
+        if(ext != "jpeg" || ext != "jpg" || ext != "png"){
+            return false
+        }
+        return true
 
+    }
     handleSubmit=()=>{
         let elements = document.getElementsByClassName("form-input")
         let element
         let data_array = []
         let tags = document.getElementById("tags").value.split(",")
         for(element of elements){
+            if(element.getAttribute("name") == "image")
+            {
+                if(validateImage(element.files[0].name)){
+                    const image = new FormData()
+                    image.append("image", element.files[0], element.files[0].name)
+                    Axios.post('http://localhost:8080/posts/uploadfile', image)
+                    data_array.push({
+                        name:element.getAttribute("name"),
+                        data:element.files[0].name
+                    })
+                }
+                else{
+                    this.setState({message:"Unable to validate image - please ensure it is of a valid image format."})
+                }
+                            
+            }
+            else
+            {
                 data_array.push({
                     name:element.getAttribute("name"),
                     data:element.value
                 })
+            }
+               
         }
         Axios.post('http://localhost:8080/posts/new', {
             title:document.getElementById("title").value,
@@ -126,10 +154,6 @@ export default class DynamicForm extends React.Component
             headElement.insertBefore(newNode, refElement)
             ReactDOM.render(<Image/>, newNode)
         }
-        else if(text == "video"){
-            headElement.insertBefore(newNode, refElement)
-            ReactDOM.render(<Video/>, newNode)
-        }
         else if(text == "text"){
             headElement.insertBefore(newNode, refElement)
             ReactDOM.render(<Text/>, newNode)
@@ -151,7 +175,7 @@ export default class DynamicForm extends React.Component
                     </div>
                     <div className="re">
                     <label for="date">Date:</label>
-                        <input className="form-input-required"  required value={this.state.date} id="date" type="date" name="date"/>
+                        <input className="form-input-required"  required value={this.state.date} onChange={(e)=>this.setState({state:this.state, date:e.target.value})} id="date" type="date" name="date"/>
                     </div>
                     <div>
                         <label for="byline">Byline:</label>
