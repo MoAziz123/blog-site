@@ -3,3 +3,46 @@
 - file storage should be handled via 
 - navbar should be placed in every component - or an inherited component so they re-render on login change
 - avoid tunnel vision
+
+
+- must/should/could changes
+- maintain a list of changes for each iteration so you don't forget
+- for each change - take it to a state of completion, don't round robin it
+- any working solution - add to a code snippet manager
+
+PARAMTERISED GET
+- client - Axios.get('/http://localhost:8080/posts/' + id)
+- server - router.get('/posts/:id)
+PARAMTERISED ROUTES
+- on router - <link to="/posts/:id"/>
+- on redirect - <redirect to="/posts/ + id"/>
+ - on post - componentwillmount -> id = window.pathname.href.split("/")[2]
+
+//TODO
+MUST:: - add JSON web auth to pages
+    - include headers on each request to a auth domain
+    - uncomment JSON web token handling middleware
+    - include on ComponentDidMount -> check for localStorage token else redirect to error screen
+
+MUST:: - create a basic UI design for a blogsite
+    - look at Pinterest for inspiration
+    - copy down components you think look nice
+    - then incorporate into design
+
+MUST:: - deploy to GH pages
+
+SHOULD:: - include config in files 
+    - write unchangeable data into a config file
+    - import config file
+    - include the var names
+
+SHOULD:: - write unit tests in mocha
+    HELP:: - look at mocha docs and see how to implement
+
+
+COULD:: - include 404 page for files not included
+    - create a 404 page component that displays specific data
+    HELP:: - set it to render on when going to a page with no link (?)
+
+
+on refresh app needs to get user again because it loses data - potentially could use axios for this

@@ -58,6 +58,7 @@ router.post('/comment/add', (req,res)=>{
         if(comment)
         {
             return res.json({
+                comment,
                 message:"Comment added",
                 success:true
 

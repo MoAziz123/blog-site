@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import Axios from 'axios'
 import {userContext} from '../contexts/userContext'
+import getUser from '../contexts/auth'
 function Heading(props){
     return(
         <div className="heading">
@@ -84,12 +85,17 @@ export default class DynamicForm extends React.Component
             message:null,
             date:Date.now()
         }
-        console.log(userContext.user)
+        getUser()
+        console.log(userContext)
+    }
+    componentWillMount(){
+        getUser()
     }
     validateImage=(data)=>{
         let ext_arr = data.split(".")
         let ext = ext_arr[ext_arr.length - 1]
-        if(ext != "jpeg" || ext != "jpg" || ext != "png"){
+        let invalid = ["@", ".", "/"] in data
+        if(ext != "jpeg" || ext != "jpg" || ext != "png" && !invalid){
             return false
         }
         return true
@@ -106,7 +112,7 @@ export default class DynamicForm extends React.Component
                 if(this.validateImage(element.files[0].name)){
                     const image = new FormData()
                     image.append("image", element.files[0], element.files[0].name)
-                    Axios.post('http://localhost:8080/posts/uploadfile', image)
+                    Axios.post('http://localhost:8080/file/uploadimage', image)
                     data_array.push({
                         name:element.getAttribute("name"),
                         data:element.files[0].name
@@ -179,7 +185,7 @@ export default class DynamicForm extends React.Component
                     </div>
                     <div>
                         <label for="byline">Byline:</label>
-                        <input className="form-input-required" id="byline" required type="text" value={userContext.user.name} name="byline"/>
+                        <input className="form-input-required" id="byline" required type="text" value={userContext.user?.name} name="byline"/>
                     </div>
                     <div>
                         <label for="description">Description:</label>

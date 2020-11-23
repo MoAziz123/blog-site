@@ -5,7 +5,7 @@ import Comments from '../components/comments'
 import {userContext} from '../contexts/userContext'
 import {idContext} from '../contexts/idContext'
 import NavBar from '../components/nav-bar'
-
+import getUser from '../contexts/auth'
 
 /**@class - ViewPage
  * @description - shows the article to the user
@@ -21,8 +21,9 @@ export default class ViewPage extends React.Component{
         }
     }
 
-    componentDidMount(){
-        console.log(idContext.id)
+    componentWillMount(){
+       userContext.user = getUser()
+       
     }
 
     render(){

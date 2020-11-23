@@ -1,5 +1,5 @@
 import React from 'react'
-import Axios from 'axios'
+import Axios from '../config/axios-config'
 /**@class - PostImage
  * @description - used to handle PostImages
  * @since - 1.0.0
@@ -14,11 +14,11 @@ export default class PostImage extends React.Component{
         }
     }
     getImageData(data){
-        let req_link = 'http://localhost:8080/posts/getfile/' + data
+        let req_link = 'http://localhost:8080/file/getimage/' + data
         Axios.get(req_link)
         .then((response)=>{
             if(!response.data.success){
-                this.setState({image_data_alt:"Unable to find image"})
+                this.setState({image_data:"Unable to find image"})
             }
             this.setState({image_data:req_link})
         })

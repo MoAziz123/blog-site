@@ -16,14 +16,21 @@ export default class PersonalPage extends React.Component
     }
     componentDidMount()
     {
-        const user_context = userContext
-        Axios.post('http://localhost:8080/posts/searchUser',
-        {
-            user_id:user_context.user.id
-        })
-        .then((res)=>{
-            this.setState({posts:res.data.posts})
-        })
+        if(localStorage.getItem('x-access-token')){
+            Axios.post('http://localhost:8080/auth/decode',{
+                token:localStorage.getItem('x-access-token')
+            })
+            .then((response)=>{
+                userContext.user = response.data.user
+                return Axios.post('http://localhost:8080/posts/searchUser',{
+                    user_id:userContext.user.id
+                })
+
+            })
+            .then((res)=>{
+                this.setState({posts:res.data.posts})
+            })
+        }
     }
     render(){
         return(

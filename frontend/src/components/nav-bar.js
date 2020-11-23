@@ -1,5 +1,6 @@
 import React from 'react'
 import {Link,Redirect} from 'react-router-dom'
+import getUser from '../contexts/auth'
 import {userContext} from '../contexts/userContext'
 function NavBarView2()
 {
@@ -18,7 +19,7 @@ function NavBarView()
     <div className="links-wrapper">
         <ul className="links">
             <Link to="/login">Log In</Link>
-            <Link to="/">Posts</Link>
+            <Link to="/posts">Posts</Link>
             <Link to="/search">Search posts</Link>
         </ul>
     </div>
@@ -36,7 +37,7 @@ function AuthNavBarView()
         <div className="links-wrapper">
             <ul className="links">
                 <Link to="/add">Add a post</Link>
-                <Link to="/">View posts</Link>
+                <Link to="/posts">View posts</Link>
                 <Link to="/myposts">View my posts</Link>
                 <Link to="/search">Search posts</Link>
                 <Link to="/settings">Settings</Link>
@@ -54,6 +55,9 @@ export default class NavBar extends React.Component
             redirect:null
         }
         
+    }
+    componentWillMount(){
+        getUser()
     }
     render(){
         return(

@@ -1,6 +1,7 @@
 import React from 'react'
 import Axios from 'axios'
 import {userContext} from '../contexts/userContext'
+import getUser from '../contexts/auth'
 
 /**@class - Comment
  * @description - encapsulates a comment for the user to view
@@ -16,11 +17,14 @@ export default class Comment extends React.Component{
         }
         console.log(this.props.comment)
     }
+    componentDidMount(){
+        getUser()
+    }
     handleDelete=()=>{
         let id = this.props.comment._id
         Axios.post("http://localhost:8080/comment/remove" , {data:{_id:id}})
         .then((res)=>{
-            this.setState({state:this.state})
+            this.setState({state:this.state, deleted:true})
         })
     }
     handleEdit()
@@ -46,6 +50,9 @@ export default class Comment extends React.Component{
         })
     }
     render(){
+        if(this.state.deleted){
+            return(<></>)
+        }
         if(this.state.edit)
             {
                 return(

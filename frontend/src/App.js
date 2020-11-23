@@ -22,13 +22,13 @@ function App() {
     <Router>
     <div className="App">
         <Switch>
-          <Route exact path="/" render={(props)=><MainPage {...props}/>}/>
+          <Route exact path="/posts" render={(props)=><MainPage {...props}/>}/>
           <Route exact path="/add" component={AddPage}/>
-          <Route exact path="/update"render={(props)=><UpdatePage {...props}/>}/>
+          <Route exact path="/update/:id"render={(props)=><UpdatePage {...props}/>}/>
           <Route exact path="/login" component={LoginPage}/>
           <Route exact path="/register" component={RegisterPage}/>
           <Route exact path="/search" component={SearchPage}/>
-          <Route exact path ="/posts" render={(props)=><ViewPage {...props}/>}/>
+          <Route exact path ="/posts/:id" render={(props)=><ViewPage {...props}/>}/>
           <Route exact path ="/settings" render={(props)=><SettingsPage {...props}/>}/>
           <Route exact path ="/myposts" component={PersonalPage}/>
         </Switch>

@@ -3,6 +3,7 @@ import Axios from 'axios'
 import querystring from 'query-string'
 import userContext from '../contexts/userContext'
 import {idContext} from '../contexts/idContext'
+import path from 'path'
 import ReactDOM from 'react-dom'
 /**@class - UpdateForm
  * @description - used to update a post
@@ -22,11 +23,12 @@ function Heading(props){
     )
 }
 function Image(props){
+    console.log(props)
     return(
         <div className="image">
             <label for="image">Image:</label>
             <br/>
-            <input className="form-input" type="file" value={props.value} name="image"/>
+            <input className="form-input" type="file" required name="image"/>
             <button onClick={(e)=>handleRemove(e)}>Delete</button>
             <button onClick={(e)=>handleElementUp(e.target.parentElement.parentElement)}>Up</button>
             <button onClick={(e)=>handleElementDown(e.target.parentElement.parentElement)}>Down</button>
@@ -76,12 +78,13 @@ export default class UpdateForm extends React.Component
             message:null
         }
     }
+    
     componentDidMount(){
         this.setState({post:[], message:null})
-        Axios.post("http://localhost:8080/posts/searchOne", 
-            {id:idContext.id}
-        )
+        let link = window.location.pathname.split("/")[2]
+        Axios.get("http://localhost:8080/posts/" + link)
         .then((response)=>{
+            console.log(response)
             this.setState({
                 post:response.data.post,
                 message:response.data.message,
@@ -90,8 +93,17 @@ export default class UpdateForm extends React.Component
         })
         .catch(error=>console.error(error))
         
-       console.log(this.props)
         
+    }
+    validateImage=(data)=>{
+        let ext_arr = data.split(".")
+        let ext = ext_arr[ext_arr.length - 1]
+        let invalid = ["@", ".", "/"] in data
+        if(ext != "jpeg" || ext != "jpg" || ext != "png" && !invalid){
+            return false
+        }
+        return true
+
     }
     handleSubmit()
     {
@@ -100,10 +112,30 @@ export default class UpdateForm extends React.Component
         let data_array = []
         let tags = document.getElementById("tags").value.split(",")
         for(element of elements){
+            if(element.getAttribute("name") == "image")
+            {
+                if(this.validateImage(element.files[0].name)){
+                    const image = new FormData()
+                    image.append("image", element.files[0], element.files[0].name)
+                    Axios.post('http://localhost:8080/file/uploadimage', image)
+                    data_array.push({
+                        name:element.getAttribute("name"),
+                        data:element.files[0].name
+                    })
+                }
+                else{
+                    this.setState({message:"Unable to validate image - please ensure it is of a valid image format."})
+                }
+                            
+            }
+            else
+            {
                 data_array.push({
                     name:element.getAttribute("name"),
                     data:element.value
                 })
+            }
+               
         }
         Axios.put('http://localhost:8080/posts/update', {
             id:idContext.id,
@@ -196,6 +228,7 @@ export default class UpdateForm extends React.Component
                             ReactDOM.render(<Heading value={item.data}/>, newNode)
                         }
                         else if(item.name == "image"){
+                            console.log("hi")
                             headElement.insertBefore(newNode, refElement)
                             ReactDOM.render(<Image value={item.data}/>, newNode)
                         }

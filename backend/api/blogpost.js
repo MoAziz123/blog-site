@@ -37,8 +37,9 @@ router.get('/posts', (req,res)=>{
     .catch((error)=>{return res.json({message:error})})
 })
 
-router.post('/posts/searchOne', (req,res)=>{
-    Post.findOne({_id:req.body.id})
+router.get('/posts/:id', (req,res)=>{
+    let {id} = req.params
+    Post.findOne({_id:id})
     .then((post)=>{
         if(post){
             return res.json({post:post, message:"Post found"})
@@ -78,8 +79,8 @@ router.post('/posts/new',(req,res)=>{
 })
 //deletes first post
 //TODO: change how it deletes post
-router.delete('/posts/delete',(req,res)=>{
-    Post.findOneAndDelete({id:req.body.id})
+router.post('/posts/delete',(req,res)=>{
+    Post.findOneAndDelete({_id:req.body.id})
     .then((post)=>{
         if(post){
             return res.json({
@@ -94,6 +95,7 @@ router.delete('/posts/delete',(req,res)=>{
         }
     })
     .catch((error)=>{return res.json({message:error})})
+    
 })
 router.post('/posts/searchUser',(req,res)=>{
     Post.find({user_id:req.body.user_id})
@@ -146,7 +148,7 @@ router.post('/posts/search', (req,res)=>{
         if(posts.length > 0)
         {
             post_array = posts.filter((post)=>{
-                let title = post.title.toLowerCase()
+                let title = post.title != null ? post.title.toLowerCase() : ""
                 if(title.startsWith(req.body.search.toLowerCase())){
                     return post
                 }

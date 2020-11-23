@@ -3,24 +3,34 @@ import Axios from 'axios'
 import NavBar from '../components/nav-bar'
 import {userContext} from '../contexts/userContext'
 import {Redirect} from 'react-router-dom'
+import getUser from '../contexts/auth'
 import hash from 'crypto-js/sha256'
+
 
 export default class SettingsPage extends React.Component{
     constructor(props)
     {
+        
         super(props)
+        getUser()
         this.state ={
-            user:null,
-            redirect:"",
-            name: userContext.user.name,
-            email:userContext.user.email,
-            password:null
+            redirect:null,
+            message:""
+
         }
+        
+    }
+    componentWillMount(){
+        
     }
     componentDidMount()
     {
-        Axios.post('http://localhost:8080/login/search', {id:userContext.user.id})
-        .then((res)=>this.setState({user:res.data.user}))
+        
+        Axios.post('http://localhost:8080/auth/decode', {token:localStorage.getItem('x-access-token')})
+        .then((response)=>{
+            this.setState({email:response.data.user.email, name:response.data.user.name})
+        })
+        console.log(this.state.user)
     }
     handleChangeDetails(){
         if(this.state.password != null && this.state.name != null && this.state.email != null)

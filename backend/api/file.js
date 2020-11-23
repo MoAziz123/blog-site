@@ -36,7 +36,7 @@ router.post('/file/uploadimage', upload.single('image'), (req,res)=>{
         }
     })
 
-router.get('/posts/getimage/:file', (req,res)=>{
+router.get('/file/getimage/:file', (req,res)=>{
         let {file} = req.params
         res.sendFile(path.resolve('./assets/images/' + file), (err)=>{
             if(err)
@@ -65,3 +65,5 @@ router.get('/posts/getvideo/:file', (req,res)=>{
     })
 
 })
+
+module.exports = router

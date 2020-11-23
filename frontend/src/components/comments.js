@@ -17,7 +17,7 @@ export default class Comments extends React.Component{
         }
     }
     componentDidMount(){
-        Axios.post('http://localhost:8080/comment/search', {post_id:this.props.id})
+        Axios.post('http://localhost:8080/comment/search', {post_id:window.location.pathname.split("/")[2]})
         .then((res)=>{
             this.setState({
                 comments:res.data.comments
@@ -28,7 +28,7 @@ export default class Comments extends React.Component{
     {
         try{
             Axios.post('http://localhost:8080/comment/add', {
-                post_id:this.props.id,
+                post_id:window.location.pathname.split("/")[2],
                 text: this.state.text,
                 user_name:userContext.user.name,
                 user_id:userContext.user.id

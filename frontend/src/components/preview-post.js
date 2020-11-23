@@ -12,31 +12,31 @@ export default class PostPreview extends React.Component{
         super(props)
         this.state = {
             id:this.props.post._id,
-            redirect:null
+            redirect:null,
+            deleted:null
         }
 
     }
     handleView(){
         idContext.id = this.state.id
 
-        this.setState({redirect:"posts"})
+        this.setState({redirect:"posts/" + this.state.id})
 
     }
-    handleDelete=(post_id)=>{
-        Axios.delete("http://localhost:8080/posts/delete",{
-            data:{
-                id:post_id
-            }
-        })
-        .then((res)=>{this.setState({posts:res.posts, message:res.message})})
+    handleDelete=()=>{
+        console.log(this.state.id)
+        Axios.post("http://localhost:8080/posts/delete", {id:this.state.id})
+        .then((res)=>{this.setState({message:res.message, deleted:true})})
     }
 
-    handleEdit(id){
+    handleEdit(d){
         idContext.id = this.state.id
-        console.log(idContext.id)
-        this.setState({redirect:"update"})
+        this.setState({redirect:"update/" + idContext.id})
     }
     render(){
+        if(this.state.deleted){
+            return (<></>)
+        }
         if(this.state.redirect)
         {
             return(<Redirect to={{
@@ -66,8 +66,8 @@ export default class PostPreview extends React.Component{
                 <p className="description">{this.props.post.description}</p>
             </div>
             <div className="post-options">
-                <button className="post-button" onClick={(e)=>this.handleEdit(this.props.post.id)}><i className="fa fa-pencil-square-o"/></button>
-                <button className="post-button" onClick={(e)=>this.handleDelete(this.props.post.id)}><i className="fa fa-trash-o"/></button>                
+                <button className="post-button" onClick={(e)=>this.handleEdit()}><i className="fa fa-pencil-square-o"/></button>
+                <button className="post-button" onClick={(e)=>this.handleDelete()}><i className="fa fa-trash-o"/></button>                
                 <a className="read-more" onClick={(e)=>this.handleView()}>Read More</a>
             </div>
 

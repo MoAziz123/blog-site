@@ -16,24 +16,29 @@ app.use(cors())
 app.use(bodyparser.json())
 app.use(bodyparser.urlencoded({extended:false}))
 
-/*app.use('/', (req,res,next)=>{
-    console.log(req.path)
-    if(req.path.includes('/comment') || req.path.includes('/posts')){
+app.use('/', (req,res,next)=>{
         let token = req.get('x-access-token')
-        let decoded = jwt.decode(token, {complete:true})
-        if((Date.now()/1000) > decoded.payload.exp){
-            res.send({auth:false, redirect:"/login", message:"You are not authenticated"})
-            res.status(200)
-            res.end()
+        if(token != null){
+            let decoded = jwt.decode(token, {complete:true})
+            if((Date.now()/1000) > decoded.payload.exp){
+                res.send({auth:false, redirect:"/login",  message:"You are not authenticated"})
+                res.end()
+            }
+            else{
+                return res.json({
+                    user: decoded.payload.user
+                })
+            }
+            return next()
         }
-        console.log(token)
         return next()
-    }
-    next()
-})*/
+    
+})
 app.use('/', require('./api/blogpost'))
 app.use('/', require('./api/comment'))
 app.use('/', require('./api/login'))
+app.use('/', require('./api/file'))
+app.use('/', require('./api/auth'))
 
 mongoose.connect("mongodb://localhost:27017/blog-site",{useNewUrlParser:true},()=>{
     console.log("MONGODB CONNECTION ESTABLISHED")

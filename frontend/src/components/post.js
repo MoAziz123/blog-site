@@ -2,8 +2,9 @@ import React from 'react'
 import Axios from 'axios'
 import NavBar from './nav-bar'
 import PostImage from './postImage'
-import { stringify } from 'query-string'
+import  queryString from 'query-string'
 import { enc } from 'crypto-js'
+import { Redirect } from 'react-router-dom'
 
 /**@class - Post
  * @description - shows a post from the db
@@ -18,11 +19,15 @@ export default class Post extends React.Component{
 
         }
 
+
     }
     componentWillMount(){
-        Axios.post('http://localhost:8080/posts/searchOne', {id:this.props.id})
+        let id = window.location.pathname.split("/")[2]
+        console.log(id)
+        Axios.get('http://localhost:8080/posts/' + id)
         .then((res)=>{
             this.setState({post:res.data.post})
+
         })
     }
     render(){
