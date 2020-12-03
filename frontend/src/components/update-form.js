@@ -1,74 +1,23 @@
 import React from 'react'
 import Axios from 'axios'
 import querystring from 'query-string'
+import path from 'path'
+
 import userContext from '../contexts/userContext'
 import {idContext} from '../contexts/idContext'
-import path from 'path'
+
 import ReactDOM from 'react-dom'
+
+import Image from '../components/post-image'
+import Text from '../components/post-text'
+import Heading from '../components/post-heading'
+
+import { validateImage } from './validation'
+
 /**@class - UpdateForm
  * @description - used to update a post
  * @since 1.0.0
  */
-function Heading(props){
-    return(
-        <div className="heading">
-            <label for="heading">Heading:</label>
-            <br/>
-            <input className="form-input" type="text" value={props.value} name="heading"/>
-            <button onClick={(e)=>handleRemove(e)}>Delete</button>
-            <button onClick={(e)=>handleElementUp(e.target.parentElement.parentElement)}>Up</button>
-            <button onClick={(e)=>handleElementDown(e.target.parentElement.parentElement)}>Down</button>
-
-        </div>
-    )
-}
-function Image(props){
-    console.log(props)
-    return(
-        <div className="image">
-            <label for="image">Image:</label>
-            <br/>
-            <input className="form-input" type="file" required name="image"/>
-            <button onClick={(e)=>handleRemove(e)}>Delete</button>
-            <button onClick={(e)=>handleElementUp(e.target.parentElement.parentElement)}>Up</button>
-            <button onClick={(e)=>handleElementDown(e.target.parentElement.parentElement)}>Down</button>
-
-        </div>
-    )
-}
-function Text(props){
-    return(
-        <div className="text">
-            <label for="image">Text:</label>
-            <br/>
-            <input className="form-input" type="text" name="text" value={props.value}/>
-            <button onClick={(e)=>handleRemove(e)}>Delete</button>
-            <button onClick={(e)=>handleElementUp(e.target.parentElement.parentElement)}>Up</button>
-            <button onClick={(e)=>handleElementDown(e.target.parentElement.parentElement)}>Down</button>
-
-        </div>
-    )
-}
-function handleRemove(element){
-    element.target.parentElement.parentElement.remove()
-}
-
-function handleElementUp(element){
-    const headElement = document.getElementById("form-inputs")
-    if(element.previousSibling.previousSibling)
-    {
-        headElement.insertBefore(element, element.previousSibling)
-    }
-
-}
-function handleElementDown(element){
-    const headElement = document.getElementById("form-inputs")
-    if(element.nextSibling.nextSibling)
-    {
-        headElement.insertBefore(element, element.nextSibling.nextSibling)
-
-    }
-}
 export default class UpdateForm extends React.Component
 {
     constructor(props){
@@ -84,27 +33,17 @@ export default class UpdateForm extends React.Component
         let link = window.location.pathname.split("/")[2]
         Axios.get("http://localhost:8080/posts/" + link)
         .then((response)=>{
-            console.log(response)
+            console.log(response.data)
             this.setState({
+                id:response.data.post._id,
                 post:response.data.post,
                 message:response.data.message,
             })
             
         })
         .catch(error=>console.error(error))
-        
-        
     }
-    validateImage=(data)=>{
-        let ext_arr = data.split(".")
-        let ext = ext_arr[ext_arr.length - 1]
-        let invalid = ["@", ".", "/"] in data
-        if(ext != "jpeg" || ext != "jpg" || ext != "png" && !invalid){
-            return false
-        }
-        return true
-
-    }
+    
     handleSubmit()
     {
         let elements = document.getElementsByClassName("form-input")
@@ -114,7 +53,7 @@ export default class UpdateForm extends React.Component
         for(element of elements){
             if(element.getAttribute("name") == "image")
             {
-                if(this.validateImage(element.files[0].name)){
+                if(validateImage(element.files[0].name) == ""){
                     const image = new FormData()
                     image.append("image", element.files[0], element.files[0].name)
                     Axios.post('http://localhost:8080/file/uploadimage', image)
@@ -138,7 +77,7 @@ export default class UpdateForm extends React.Component
                
         }
         Axios.put('http://localhost:8080/posts/update', {
-            id:idContext.id,
+            id:this.state.id,
             title:this.state.post.title,
             date:this.state.post.date,
             description:this.state.post.description,
@@ -230,7 +169,7 @@ export default class UpdateForm extends React.Component
                         else if(item.name == "image"){
                             console.log("hi")
                             headElement.insertBefore(newNode, refElement)
-                            ReactDOM.render(<Image value={item.data}/>, newNode)
+                            ReactDOM.render(<Image/>, newNode)
                         }
                         else if(item.name == "text"){
                             headElement.insertBefore(newNode, refElement)

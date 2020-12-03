@@ -22,7 +22,7 @@ app.use('/', (req,res,next)=>{
             let decoded = jwt.decode(token, {complete:true})
             if((Date.now()/1000) > decoded.payload.exp){
                 res.send({auth:false, redirect:"/login",  message:"You are not authenticated"})
-                res.end()
+                
             }
             else{
                 return res.json({

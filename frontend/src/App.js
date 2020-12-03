@@ -15,6 +15,8 @@ import PersonalPage from './pages/personal-page'
 import {userContext} from './contexts/userContext'
 import {idContext} from './contexts/idContext'
 import SettingsPage from './pages/settings-page'
+import ErrorPage from './pages/error-page'
+import UnauthPage from './pages/unauth-page';
 function App() {
   return (
     <idContext.Provider value={""}>
@@ -31,6 +33,9 @@ function App() {
           <Route exact path ="/posts/:id" render={(props)=><ViewPage {...props}/>}/>
           <Route exact path ="/settings" render={(props)=><SettingsPage {...props}/>}/>
           <Route exact path ="/myposts" component={PersonalPage}/>
+          <Route exact path="/404" component={ErrorPage}/>
+          <Route exact path="/unauth" component={UnauthPage}/>
+          <Route component={ErrorPage}/>
         </Switch>
       <Footer/>
     </div>

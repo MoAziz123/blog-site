@@ -24,6 +24,8 @@ MUST:: - add JSON web auth to pages
     - uncomment JSON web token handling middleware
     - include on ComponentDidMount -> check for localStorage token else redirect to error screen
 
+
+
 MUST:: - create a basic UI design for a blogsite
     - look at Pinterest for inspiration
     - copy down components you think look nice
@@ -39,10 +41,15 @@ SHOULD:: - include config in files
 SHOULD:: - write unit tests in mocha
     HELP:: - look at mocha docs and see how to implement
 
+//REFACTOR
 
-COULD:: - include 404 page for files not included
-    - create a 404 page component that displays specific data
-    HELP:: - set it to render on when going to a page with no link (?)
+MUST:: - refactor pages - separating logic into components
+
+MUST::  - refactor auth - single point of entry
+
+MUST:: - validate all inputs - client and serverside
 
 
-on refresh app needs to get user again because it loses data - potentially could use axios for this
+//BUGS
+ISSUE:: Update Form doesn't update images/anything from the data array - keeps failing
+ISSUE::

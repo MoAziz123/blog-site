@@ -3,75 +3,11 @@ import ReactDOM from 'react-dom'
 import Axios from 'axios'
 import {userContext} from '../contexts/userContext'
 import getUser from '../contexts/auth'
-function Heading(props){
-    return(
-        <div className="heading">
-            <label for="heading">Heading:</label>
-            <br/>
-            <input className="form-input" type="text" name="heading"/>
-            <button onClick={(e)=>handleRemove(e)}>Delete</button>
-            <button onClick={(e)=>handleElementUp(e.target.parentElement.parentElement)}>Up</button>
-            <button onClick={(e)=>handleElementDown(e.target.parentElement.parentElement)}>Down</button>
+import Heading from '../components/post-heading'
+import Image from '../components/post-image'
+import Text from '../components/post-text'
 
-        </div>
-    )
-}
-function Image(props){
-    return(
-        <div className="image">
-            <label for="image">Image:</label>
-            <br/>
-            <input className="form-input" type="file" name="image"/>
-            <button onClick={(e)=>handleRemove(e)}>Delete</button>
-            <button onClick={(e)=>handleElementUp(e.target.parentElement.parentElement)}>Up</button>
-            <button onClick={(e)=>handleElementDown(e.target.parentElement.parentElement)}>Down</button>
 
-        </div>
-    )
-}
-function Text(props){
-    return(
-        <div className="text">
-            <label for="image">Text:</label>
-            <br/>
-            <textarea className="form-input" type="text" name="text"></textarea>
-            <button onClick={(e)=>handleRemove(e)}>Delete</button>
-            <button onClick={(e)=>handleElementUp(e.target.parentElement.parentElement)}>Up</button>
-            <button onClick={(e)=>handleElementDown(e.target.parentElement.parentElement)}>Down</button>
-
-        </div>
-    )
-}
-function handleRemove(element){
-    element.target.parentElement.parentElement.remove()
-}
-
-function Video(props){
-    return(
-        <div className="video">
-            <label for="video">Video:</label>
-            <br/>
-            <input className="form-input" type="file" name="video"/>
-            <button onClick={(e)=>handleRemove(e)}>Delete</button>
-        </div>
-    )
-}
-function handleElementUp(element){
-    const headElement = document.getElementById("form-inputs")
-    if(element.previousSibling.previousSibling)
-    {
-        headElement.insertBefore(element, element.previousSibling)
-    }
-
-}
-function handleElementDown(element){
-    const headElement = document.getElementById("form-inputs")
-    if(element.nextSibling.nextSibling)
-    {
-        headElement.insertBefore(element, element.nextSibling.nextSibling)
-
-    }
-}
 /**@class - DynamicForm
  **@description- dynamic form that updates via JS
  * @since - 1.0.0
@@ -86,7 +22,6 @@ export default class DynamicForm extends React.Component
             date:Date.now()
         }
         getUser()
-        console.log(userContext)
     }
     componentWillMount(){
         getUser()
@@ -94,25 +29,27 @@ export default class DynamicForm extends React.Component
     validateImage=(data)=>{
         let ext_arr = data.split(".")
         let ext = ext_arr[ext_arr.length - 1]
-        let invalid = ["@", ".", "/"] in data
-        if(ext != "jpeg" || ext != "jpg" || ext != "png" && !invalid){
-            return false
+        console.log(ext, ext.length, "png" == ext)
+        if(ext == "jpeg" || ext == "jpg" || ext == "png"){
+            return true
         }
-        return true
+        return false
 
     }
     handleSubmit=()=>{
         let elements = document.getElementsByClassName("form-input")
         let element
         let data_array = []
-        let tags = document.getElementById("tags").value.split(",")
+        let tags = this.state.tags.split(",")
         for(element of elements){
             if(element.getAttribute("name") == "image")
             {
                 if(this.validateImage(element.files[0].name)){
+                    console.log(element.files[0].name)
                     const image = new FormData()
                     image.append("image", element.files[0], element.files[0].name)
                     Axios.post('http://localhost:8080/file/uploadimage', image)
+                    .then(response=>console.log(response.data))
                     data_array.push({
                         name:element.getAttribute("name"),
                         data:element.files[0].name
@@ -133,18 +70,19 @@ export default class DynamicForm extends React.Component
                
         }
         Axios.post('http://localhost:8080/posts/new', {
-            title:document.getElementById("title").value,
-            date:document.getElementById("date").value,
-            description:document.getElementById("description").value,
-            byline:document.getElementById("byline").value,
+            title:this.state.title,
+            date:this.state.date,
+            description:this.state.description,
+            byline:this.state.byline,
             data:data_array,
             tags:tags,
-            private: document.getElementById("private").checked ? true : false,
+            private: this.state.private.checked ? true : false,
             user_id:userContext.user.id
         })
         .then((res)=>{
             this.setState({message:res.message})
         })
+        
     }
     
     
@@ -177,7 +115,7 @@ export default class DynamicForm extends React.Component
                 <div className="form-inputs-required">
                     <div>
                         <label for="title">Title:</label>
-                        <input className="form-input-required" required id="title" type="text" name="title"/>
+                        <input className="form-input-required" required id="title" type="text" name="title" onChange={(e)=>{this.setState({state:this.state, title:e.target.value})}}/>
                     </div>
                     <div className="re">
                     <label for="date">Date:</label>
@@ -185,19 +123,19 @@ export default class DynamicForm extends React.Component
                     </div>
                     <div>
                         <label for="byline">Byline:</label>
-                        <input className="form-input-required" id="byline" required type="text" value={userContext.user?.name} name="byline"/>
+                        <input className="form-input-required" id="byline" required type="text" value={userContext.user?.name} name="byline" onChange={(e)=>{this.setState({state:this.state, byline:e.target.value})}}/>
                     </div>
                     <div>
                         <label for="description">Description:</label>
-                        <input className="form-input-required" id="description" required type="text" name="description"/>
+                        <input className="form-input-required" id="description" required type="text" name="description" onChange={(e)=>this.setState({state:this.state, description:e.target.value})}/>
                     </div>
                     <div >
                     <label for="tags">Tags:</label>
-                        <input className="form-input-required" id="tags" required type="text" name="tags"/>
+                        <input className="form-input-required" id="tags" required type="text" name="tags" onChange={(e)=>this.setState({state:this.state, tags:e.target.value})}/>
                     </div>
                     <div>
                     <label for="private">Private:</label>
-                    <input className="form-input-required" id="private" type="checkbox" name="private"/>
+                    <input className="form-input-required" id="private" type="checkbox" name="private" onChange={(e)=>this.setState({state:this.state, private:e.target.value})}/>
                     </div>
                     
                 </div>

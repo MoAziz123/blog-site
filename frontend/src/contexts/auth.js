@@ -7,7 +7,13 @@ function getUser(){
             token:localStorage.getItem('x-access-token')
         })
         .then((response)=>{
-            userContext.user = response.data.user
+            if(response.data.user){
+                userContext.user = response.data.user
+
+            }
+            else{
+                <Redirect to="/unauthenticated"/>
+            }
         })
     }
 }
