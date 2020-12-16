@@ -141,4 +141,17 @@ router.put('/login/update',(req,res)=>{
 
     })
 })
+
+
+//TODO: implement loggedIn route of authorization
+router.post('/login/loggedIn',(req,res)=>{
+    let token = req.get('Authorization')
+
+})
+
+
+//TODO: implement adminOnly route of authorization
+router.post('/login/adminOnly',(req,res)=>{
+    let token = req.get('Authorization')
+})
 module.exports = router

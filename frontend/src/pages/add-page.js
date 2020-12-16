@@ -24,7 +24,7 @@ export default class AddPage extends React.Component
         return(
             <>
             <NavBar/>
-        <DynamicForm/>
+        <DynamicForm handler="add" />
         </>
         )
     }

@@ -29,6 +29,7 @@ export default class SearchPosts extends React.Component{
         .then((res)=>{
             this.setState({posts:res.data.posts})
         })
+        console.log(this.state.posts)
         
     }
     

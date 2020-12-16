@@ -1,5 +1,6 @@
 import React from 'react'
-import Axios from '../config/axios-config'
+import Axios from 'axios'
+import hash from 'crypto-js'
 /**@class - PostImage
  * @description - used to handle PostImages
  * @since - 1.0.0
@@ -24,7 +25,9 @@ export default class PostImage extends React.Component{
         })
     }
     componentDidMount(){
-        this.getImageData(this.props.image_data)
+        let full_pathname = this.props.image_data.split("\\")
+        let canon_path = full_pathname[full_pathname.length-1]
+        this.getImageData(canon_path)
     }
 
     render(){

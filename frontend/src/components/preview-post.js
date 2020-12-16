@@ -3,6 +3,7 @@ import React from 'react'
 import { Redirect } from 'react-router-dom'
 import {userContext} from '../contexts/userContext'
 import {idContext} from '../contexts/idContext'
+import PostImage from './postImage'
 /**@class - PostPreview
  * @description - 
   */
@@ -20,7 +21,7 @@ export default class PostPreview extends React.Component{
     handleView(){
         idContext.id = this.state.id
 
-        this.setState({redirect:"posts/" + this.state.id})
+        this.setState({redirect:"posts/" + this.props.post._id})
 
     }
     handleDelete=()=>{
@@ -65,6 +66,16 @@ export default class PostPreview extends React.Component{
                 </div>
                 <p className="description">{this.props.post.description}</p>
             </div>
+            <div className="preview-post-image">
+                {
+                    this.props.post.data.map((item)=>{
+                        if(item.name == "image"){
+                            return(<PostImage image_data={item.data}/>)
+                        }
+                    })
+                }
+
+            </div>
             <div className="post-options">
                 <button className="post-button" onClick={(e)=>this.handleEdit()}><i className="fa fa-pencil-square-o"/></button>
                 <button className="post-button" onClick={(e)=>this.handleDelete()}><i className="fa fa-trash-o"/></button>                
@@ -94,6 +105,16 @@ export default class PostPreview extends React.Component{
                 }
                 </div>
                 <p className="description">{this.props.post.description}</p>
+                <div className="preview-post-image">
+                {
+                    this.props.post.data && this.props.post.data.map((item)=>{
+                        if(item.name == "image"){
+                            return(<PostImage image_data={item.data}/>)
+                        }
+                    })
+                }
+
+            </div>
             </div>
             <div className="post-options">
                 <a className="read-more" onClick={(e)=>this.handleView()}>Read More</a>

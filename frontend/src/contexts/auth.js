@@ -1,4 +1,5 @@
-
+import React from 'react'
+import {Redirect} from 'react-router-dom'
 import { userContext } from '../contexts/userContext'
 import Axios from 'axios'
 function getUser(){
@@ -12,7 +13,7 @@ function getUser(){
 
             }
             else{
-                <Redirect to="/unauthenticated"/>
+                return(<Redirect to="/unauth"/>)
             }
         })
     }

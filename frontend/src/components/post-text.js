@@ -32,7 +32,7 @@ export default class PostText extends React.Component{
             <div className="text">
                 <label for="image">Text:</label>
                 <br/>
-                <textarea className="form-input" value={this.props.value} type="text" name="text"></textarea>
+                <textarea className="form-input" value={this.props.value} type="text" name="text" onChange={(e)=>{}}></textarea>
                 <button onClick={(e)=>this.handleRemove(e)}>Delete</button>
                 <button onClick={(e)=>this.handleElementUp(e.target.parentElement.parentElement)}>Up</button>
                 <button onClick={(e)=>this.handleElementDown(e.target.parentElement.parentElement)}>Down</button>

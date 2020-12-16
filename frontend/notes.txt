@@ -43,7 +43,6 @@ SHOULD:: - write unit tests in mocha
 
 //REFACTOR
 
-MUST:: - refactor pages - separating logic into components
 
 MUST::  - refactor auth - single point of entry
 
@@ -51,5 +50,12 @@ MUST:: - validate all inputs - client and serverside
 
 
 //BUGS
-ISSUE:: Update Form doesn't update images/anything from the data array - keeps failing
-ISSUE::
+ISSUE:: Search functionality broken - gets last result?
+SOLUTION:: search functionality just needed the passed props id and not the id from context
+
+ISSUE:: null image input will not send image 
+
+
+//TODO
+FEATURE:: Add being able to view image once uploaded to server on postimage
+FEATURE:: Add being able to move image whilst null

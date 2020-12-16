@@ -15,6 +15,29 @@ var upload = multer({storage:storage})
 router.use(bodyParser.json())
 router.use(bodyParser.urlencoded({extended:true}))
 const Post = require('../models/Post')
+const { validateTitle, validateDescription,  validateByline } = require('../validation')
+
+function validatePost(post){
+    let valid_title = validateTitle(post.title)
+    let valid_desc = validateDescription(post.description)
+    let valid_tags = ""
+    let valid_byline = validateByline(post.byline)
+    if(valid_title == ""
+    && valid_desc == ""
+    && valid_tags == ""
+    && valid_byline == ""){
+        return ""
+    }
+    else{
+        return "Errors found - see below"
+
+    }
+
+
+}
+
+
+
 /**@route - upload
  * @description - used for uploading images
  */
@@ -51,31 +74,41 @@ router.get('/posts/:id', (req,res)=>{
 })
 
 router.post('/posts/new',(req,res)=>{
-    let new_post = new Post({
-        title:req.body.title,
-        date:req.body.date,
-        tags:req.body.tags,
-        description:req.body.description,
-        byline:req.body.byline,
-        private:req.body.private,
-        data:req.body.data,
-        user_id:req.body.user_id
-    })
-    .save()
-    .then((post)=>{
-        if(post){
-            return res.json({
-                post,
-                message:"Post created successfully"
-            })
-        }
-        else{
-            return res.json({
-                message:"Post creation unsuccessful"
-            })
-        }
-    })
-    .catch((error)=>{return res.json({message:error})})
+    let valid_post = validatePost(req.body)
+    if(valid_post == ""){
+        let new_post = new Post({
+            title:req.body.title,
+            date:req.body.date,
+            tags:req.body.tags,
+            description:req.body.description,
+            byline:req.body.byline,
+            private:req.body.private,
+            data:req.body.data,
+            user_id:req.body.user_id
+        })
+        
+        new_post.save()
+        .then((post)=>{
+            if(post){
+                return res.json({
+                    post,
+                    message:"Post created successfully"
+                })
+            }
+            else{
+                return res.json({
+                    message:"Post creation unsuccessful"
+                })
+            }
+        })
+        .catch((error)=>{return res.json({message:error})})
+    }
+    
+    else{
+        return res.json({
+            error:valid_post
+        })
+    }
 })
 //deletes first post
 //TODO: change how it deletes post
@@ -135,7 +168,8 @@ router.put('/posts/update',(req,res)=>{
         }
         else{
             return res.json({
-                message:"Post update unsuccessful"
+                message:"Post update unsuccessful",
+                post
             })
         }
     })

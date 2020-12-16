@@ -30,18 +30,7 @@ export default class UpdateForm extends React.Component
     
     componentDidMount(){
         this.setState({post:[], message:null})
-        let link = window.location.pathname.split("/")[2]
-        Axios.get("http://localhost:8080/posts/" + link)
-        .then((response)=>{
-            console.log(response.data)
-            this.setState({
-                id:response.data.post._id,
-                post:response.data.post,
-                message:response.data.message,
-            })
-            
-        })
-        .catch(error=>console.error(error))
+        
     }
     
     handleSubmit()
@@ -121,13 +110,13 @@ export default class UpdateForm extends React.Component
                     title:document.getElementById("title").value,
                     date:document.getElementById("date").value,
                     description:document.getElementById("description").value,
-                    byline:document.getElementById("byline").value,                    
+                    byline:document.getElementById("byline").value, 
+                    private:document.getElementById("private").value                   
                 }
             })
     }
     render=()=>{
-            return(
-                <div className="dynamic-form">
+        return(<div className="dynamic-form">
                 <p>{this.state.message}</p>
                 <h1>Update a post</h1>
                 <div id="form-inputs">
@@ -169,7 +158,7 @@ export default class UpdateForm extends React.Component
                         else if(item.name == "image"){
                             console.log("hi")
                             headElement.insertBefore(newNode, refElement)
-                            ReactDOM.render(<Image/>, newNode)
+                            ReactDOM.render(<Image value={item.data}/>, newNode)
                         }
                         else if(item.name == "text"){
                             headElement.insertBefore(newNode, refElement)
@@ -196,6 +185,7 @@ export default class UpdateForm extends React.Component
                 </div>
                 <button type="button" onClick={(e)=>this.handleSubmit()}>Submit</button>
             </div>)
+           
         }
         
 }

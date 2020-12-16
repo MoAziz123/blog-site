@@ -1,5 +1,5 @@
 import React from 'react'
-import UpdateForm from '../components/update-form'
+import DynamicForm from '../components/dynamic-form'
 import {idContext} from '../contexts/idContext'
 import NavBar from '../components/nav-bar'
 
@@ -10,7 +10,7 @@ export default class UpdatePage extends React.Component{
         <>
         <NavBar/>
         <idContext.Consumer>
-            {(value)=> <UpdateForm value={idContext}/>}
+            {(value)=> <DynamicForm handler="update" value={idContext}/>}
         </idContext.Consumer>
         </>)
     }

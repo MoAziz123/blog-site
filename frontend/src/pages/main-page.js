@@ -4,7 +4,7 @@ import Axios from 'axios'
 import {userContext} from '../contexts/userContext'
 import NavBar from '../components/nav-bar'
 import getUser from '../contexts/auth'
-import MainPosts from '../components/main-posts'
+import Posts from '../components/posts'
 
 /**
  * @class - MainPage
@@ -18,11 +18,10 @@ export default class MainPage extends React.Component
         <>
             <NavBar/>
             <div className="main-page">
-                <p>{this.state.message}</p>
                 <div className="header-section">
                     <h1>Posts</h1>
                 </div>
-                <MainPosts/>
+                <Posts/>
             </div>
         </>
         )
