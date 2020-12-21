@@ -11,7 +11,6 @@ export default class PostImage extends React.Component{
         super(props)
         this.state={
             image_data:this.props.image_data
-
         }
     }
     getImageData(data){
@@ -25,9 +24,8 @@ export default class PostImage extends React.Component{
         })
     }
     componentDidMount(){
-        let full_pathname = this.props.image_data.split("\\")
-        let canon_path = full_pathname[full_pathname.length-1]
-        this.getImageData(canon_path)
+            this.getImageData(this.props.image_data)
+        
     }
 
     render(){

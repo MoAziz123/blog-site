@@ -5,6 +5,8 @@ import PostImage from './postImage'
 import  queryString from 'query-string'
 import { enc } from 'crypto-js'
 import { Redirect } from 'react-router-dom'
+import Tag from './tag'
+import {mongoToRealDate} from './conversion'
 
 /**@class - Post
  * @description - shows a post from the db
@@ -37,14 +39,12 @@ export default class Post extends React.Component{
             <div className="post-row">
                 <p className="title">{this.state.post.title}</p>
                 <p className="byline">by {this.state.post.byline}</p>
-                <p className="date">Date: {this.state.post.date}</p>
+                <p className="date">Date: {mongoToRealDate(this.state.post.date)}</p>
                 <div className="post-tags">
                 {
                     this.state.post.tags && this.state.post.tags.map((tag)=>{
                         return(
-                            <div className="post-tag">
-                                <text>{tag}</text>
-                            </div>
+                            <Tag tag={tag}/>
                         )
                     })
                 }
@@ -63,7 +63,7 @@ export default class Post extends React.Component{
                         }
                         else if(item.name == "image")
                         {
-                            return (<PostImage image_data={item.data}/>)
+                            return (<PostImage className="post-post-image" image_data={item.data}/>)
                             
                                 
                         }

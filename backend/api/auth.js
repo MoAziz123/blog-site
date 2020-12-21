@@ -24,10 +24,15 @@ router.post('/auth/decode', (req,res)=>{
             auth:false
         })
     }
-    return res.json({
-        message:"No data received"
-    })
 
 })
 
+router.get()
+//TODO: get site name from api
+
+router.post('/auth/change', (req,res)=>{
+    if(req.body.site_name){
+        //TODO: change site name via config
+    }
+})
 module.exports = router

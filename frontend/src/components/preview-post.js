@@ -4,6 +4,8 @@ import { Redirect } from 'react-router-dom'
 import {userContext} from '../contexts/userContext'
 import {idContext} from '../contexts/idContext'
 import PostImage from './postImage'
+import Tag from './tag'
+import {mongoToRealDate} from './conversion'
 /**@class - PostPreview
  * @description - 
   */
@@ -18,25 +20,26 @@ export default class PostPreview extends React.Component{
         }
 
     }
+    
     handleView(){
         idContext.id = this.state.id
 
-        this.setState({redirect:"posts/" + this.props.post._id})
+        this.setState({redirect:"/posts/" + this.props.post._id})
 
     }
     handleDelete=()=>{
         console.log(this.state.id)
-        Axios.post("http://localhost:8080/posts/delete", {id:this.state.id})
+        Axios.post("http://localhost:8080/posts/delete", {id:this.props.post._id})
         .then((res)=>{this.setState({message:res.message, deleted:true})})
     }
 
     handleEdit(d){
         idContext.id = this.state.id
-        this.setState({redirect:"update/" + idContext.id})
+        this.setState({redirect:"/update/" + this.props.post._id})
     }
     render(){
         if(this.state.deleted){
-            return (<></>)
+            this.setState({redirect:"/404"})
         }
         if(this.state.redirect)
         {
@@ -52,14 +55,13 @@ export default class PostPreview extends React.Component{
             <div className="post-row">
                 <p className="title">{this.props.post.title}</p>
                 <p className="byline">by {this.props.post.byline}</p>
-                <p className="date">Date: {this.props.post.date}</p>
+                <p className="date">Date: {mongoToRealDate(this.props.post.date)}</p>
                 <div className="post-tags">
                 {
                     this.props.post.tags.map((tag)=>{
                         return(
-                            <div className="post-tag">
-                                <text>{tag}</text>
-                            </div>
+                            <Tag tag={tag}/>
+
                         )
                     })
                 }
@@ -92,14 +94,12 @@ export default class PostPreview extends React.Component{
             <div className="post-row">
                 <p className="title">{this.props.post.title}</p>
                 <p className="byline">by {this.props.post.byline}</p>
-                <p className="date">Date: {this.props.post.date}</p>
+                <p className="date">Date: {mongoToRealDate(this.props.post.date)}</p>
                 <div className="post-tags">
                 {
                     this.props.post.tags.map((tag)=>{
                         return(
-                            <div className="post-tag">
-                                <text>{tag}</text>
-                            </div>
+                            <Tag tag={tag}/>
                         )
                     })
                 }

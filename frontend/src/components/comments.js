@@ -52,8 +52,10 @@ export default class Comments extends React.Component{
             <p>{this.state.message}</p>
             <div className="comment-input">
                 <label for="comment">Comment: </label>
+                <div className="comment-box">
                 <textarea name="comment" onChange={(e)=>this.setState({state:this.state, text:e.target.value})}></textarea>
                 <button type="submit" onClick={(e)=>this.handleSubmit()}>Post</button>
+                </div>
             </div>
             {
                

@@ -17,12 +17,21 @@ import {idContext} from './contexts/idContext'
 import SettingsPage from './pages/settings-page'
 import ErrorPage from './pages/error-page'
 import UnauthPage from './pages/unauth-page';
+import TagsPage from './pages/tags-page'
+import Authentication from './components/authentication'
+import Helmet from 'react-helmet'
+
+
 function App() {
   return (
     <idContext.Provider value={""}>
     <userContext.Provider value={""}>
     <Router>
     <div className="App">
+      <Helmet>
+        <title>{localStorage.getItem('site-name')}</title>
+      </Helmet>
+      <Authentication/>
         <Switch>
           <Route exact path="/posts" render={(props)=><MainPage {...props}/>}/>
           <Route exact path="/add" component={AddPage}/>
@@ -33,6 +42,7 @@ function App() {
           <Route exact path ="/posts/:id" render={(props)=><ViewPage {...props}/>}/>
           <Route exact path ="/settings" render={(props)=><SettingsPage {...props}/>}/>
           <Route exact path ="/myposts" component={PersonalPage}/>
+          <Route exact path="/tags/:tag" component={TagsPage}/>
           <Route exact path="/404" component={ErrorPage}/>
           <Route exact path="/unauth" component={UnauthPage}/>
           <Route component={ErrorPage}/>

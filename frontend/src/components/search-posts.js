@@ -1,6 +1,7 @@
 import React from 'react'
 import Axios from 'axios'
 import PostPreview from '../components/preview-post'
+import Spinner from './spinner'
 
 /**
  * @class - SearchPosts
@@ -13,23 +14,25 @@ export default class SearchPosts extends React.Component{
         super()
         this.state={
             posts:[], 
-            message:""
+            message:"",
+            query:""
         }
     }
     
     componentDidMount(){
+        this.setState({loading:true})
         Axios.get('http://localhost:8080/posts')
         .then((res)=>{
-            this.setState({posts:res.data.posts})
+            this.setState({posts:res.data.posts, loading:false})
         })
     }
 
-    handleSearch(query){
-        Axios.post('http://localhost:8080/posts/search', {search:query})
+    handleSearch(){
+        this.setState({loading:true})
+        Axios.post('http://localhost:8080/posts/search', {search:this.state.query})
         .then((res)=>{
-            this.setState({posts:res.data.posts})
+            this.setState({posts:res.data.posts, loading:false})
         })
-        console.log(this.state.posts)
         
     }
     
@@ -38,11 +41,15 @@ export default class SearchPosts extends React.Component{
             <>
             <div className="search-bar">
                     <label for="search">Search:</label>
-                    <input type="text"  name="search" onChange={(e)=>{this.handleSearch(e.target.value)}}/>
+                    <input type="text"  name="search" onChange={(e)=>{this.setState({query:e.target.value})}}/>
+                    <button type="button" onClick={(e)=>this.handleSearch()}>Search</button>
             </div>
             <div className="posts-section">
             {
-                this.state.posts && this.state.posts.map((post)=>{
+                this.state.loading && <Spinner/>
+            }
+            {
+                !this.state.loading && this.state.posts && this.state.posts.map((post)=>{
                     if(this.state.posts.length > 0){
                         return(<PostPreview post={post}/>)
                     }

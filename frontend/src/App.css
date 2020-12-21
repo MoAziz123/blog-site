@@ -1,7 +1,8 @@
 body
 {
-    background-color:#34312D;
+    background-color:#14110f;
     color:white;
+    font-family:'Gayathri';
 }
 .navbar
 {
@@ -11,6 +12,12 @@ body
 
 
 
+}
+.links > *{
+    padding:0 .5em 0 .5em;
+    color:white;;
+    text-decoration: none;
+    font-family:'Gayathri'
 }
 .links-wrapper
 {
@@ -52,6 +59,7 @@ body
 {
     display:flex;
     flex-direction: row;
+    font-family:'Arial Medium';
 }
 .preview-post .post-tags .post-tag
 {
@@ -66,7 +74,9 @@ body
 {
     font-size:2em;
     font-weight:650;
+    font-family: 'Rokkitt';
     width: 100%;
+    text-transform: uppercase;
     
 }
 .preview-post .date
@@ -130,16 +140,19 @@ body
     justify-content:center;
     text-align: center;
 }
-.form-picker
+#form-picker
 {
     display:flex;
     flex-direction: row;
-    width:auto;
+    justify-content: center;
+    align-items: center;
+    width:100%;
 }
-.form-picker-img
+.form-picker-img, .form-picker-text, .form-picker-heading
 {
     border:1px dashed white;
     padding:1.5em;
+    margin:.5em;
 
 
 }
@@ -160,14 +173,15 @@ body
     display:flex;
     flex-direction: row;
     margin:auto;
-    width:75%;
     margin-top:1em;
     margin-bottom:2em;
     padding-bottom:.5em;
     border-bottom:2px solid white;
     margin-left:1em;
-    margin-right:auto;
+    margin-right:1em;
+    justify-content: center;
 }
+
 .post .post-tags
 {
     border-bottom: 1px solid white;
@@ -184,17 +198,31 @@ body
     margin-bottom: 1em;
     border-radius:25px;
 }
+.post-tag:hover{
+    background-color:white;
+    color:black;
+    cursor: pointer;
+}
+
 .post .title
 {
     font-size:2.5em;
     font-weight:650;
     margin:0;
     width: 100%;
+    text-transform:uppercase;
+    letter-spacing: .1em;
     
 }
 .post-heading
 {
     font-weight:500;
+}
+.post{
+    display:flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
 }
 .post .date
 {
@@ -208,6 +236,10 @@ body
 {
 }
 
+h1{
+    font-family:'Rokkitt';
+    text-transform: uppercase;
+}
 
 .image, .text, .heading{
     display:flex;
@@ -228,17 +260,57 @@ body
     cursor:pointer;
 
 }
-/***form inputs*((/*/
-.form-inputs input
-{
-    background-color:red;
-
+/***form inputs**/
+.form-inputs-required{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.form-inputs-required input{
+    width:300px;
+    padding:.5em;
+}
+.form-inputs-required div{
+    display:flex;
+    flex-direction: column;
+    margin-top:1em;
+    width:100%;
+    align-items: center;
+}
+.form-inputs-required label{
+    margin:0;
+    width:auto;
+    width:100%;
+}
+.title{
+    width:auto;
 }
 
+
 /***comment***/
+.comment-box{
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+}
+.comment-box button{
+    margin-left:.5em;
+}
 .comment-post{
     display:flex;
     flex-direction: row;
+}
+.profile{
+    padding:1em;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.profile img{
+    height: 50px;
+    width:50px;
 }
 
 /****loginform****/
@@ -250,7 +322,60 @@ body
     align-items: center;
 }
 
+.post-row{
+    min-width:50%;
+
+}
+.post-content{
+    display:flex;
+    flex-direction: column;
+}
 .post-image{
-    width:100px;
     height:100px;
+    width:100px;
+}
+.post-post-image{
+    display:flex;
+    justify-self: center;
+    height:500px;
+    width:auto;
+}
+
+/**comment**/
+.comments{
+    margin-left:1em;
+    border-bottom: 2px solid white;
+    margin-bottom:1em;
+    padding-top:1em;
+    padding-bottom:2em;
+}
+
+.comments button{
+    background-color:transparent;
+    color:white;
+    border:1px solid white;
+    padding:.5em 1em .5em 1em;
+}
+
+/***spinner***/
+.spinner{
+    height: 1.5em;
+    width:1.5em;
+    border-radius:100%;
+    background-color:transparent;
+    border:3px solid transparent;
+    border-bottom-color: white;
+    margin-top:1em;
+    margin-bottom:1em;
+    animation:1s infinite spinner;
+}
+
+@keyframes spinner{
+    0%{
+        transform:rotateZ(0deg);
+    }
+    100%{
+        transform:rotateZ(360deg);
+    }
+
 }

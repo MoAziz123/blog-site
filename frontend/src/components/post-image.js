@@ -1,15 +1,19 @@
 import React from 'react'
 import PI from './postImage'
 import md5 from 'crypto-js'
+import {validateImage} from './validation'
+import Axios from 'axios'
 export default class PostImage extends React.Component{
     constructor(props){
         super(props)
         console.log(this.props.value)
         this.state={
-            image_name: this.props.value != null ? this.props.value.split("\\")[2] : "" 
+            image_name: this.props.value
         }
     }
-
+    componentDidMount(){
+        console.log(this.state.image_name)
+    }
     handleElementDown(element){
         const headElement = document.getElementById("form-inputs")
         if(element.nextSibling.nextSibling)
@@ -36,25 +40,39 @@ export default class PostImage extends React.Component{
         return image_name
     }
     handleImageChange=(image_data)=>{
+        if(validateImage(image_data.files[0]?.name ?? "") == ""){
+            this.uploadImage(image_data.files[0])
+        }
         this.setState({
-            image_name: this.formatValue(image_data)
+            image_name: image_data.files[0].name
         })
+    }
+    uploadImage=(image_data)=>{
+        const image = new FormData()
+        image.append("image", image_data, image_data.name)
+        Axios.post('http://localhost:8080/file/uploadimage', image)
+        .then(response=>console.log(response.data))
     }
     render(){
         return(
-            <div>
-                <label for="image">Image:</label>
+            <div className="form-input-image">
                 {
-                    this.state.image_name && 
-                    (
+                    this.state.image_name &&(
+                        <>
+                        <label for="image">Image:</label>
                         <PI image_data={this.state.image_name}/>
+                        <p className="form-input" name="image">{this.state.image_name}</p>
+                        </>
                     )
-                    
                 }
                 <br/>
-                <p>{this.state.image_name}</p>
                 <br/>
-                <input className="form-input" type="file" name="image" onChange={(e)=>this.handleImageChange(e.target.value)}/>
+                {
+                    !this.state.image_name &&(
+                        <input className="form-input" type="file" name="image" onChange={(e)=>this.handleImageChange(e.target)}/>
+
+        )
+                }
                 <button onClick={(e)=>this.handleRemove(e)}>Delete</button>
                 <button onClick={(e)=>this.handleElementUp(e.target.parentElement.parentElement)}>Up</button>
                 <button onClick={(e)=>this.handleElementDown(e.target.parentElement.parentElement)}>Down</button>

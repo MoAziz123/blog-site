@@ -73,6 +73,25 @@ router.get('/posts/:id', (req,res)=>{
     })
 })
 
+router.get('/posts/tags/:tag', (req,res)=>{
+    let {tag} = req.params
+    Post.find({})
+    .then((posts)=>{
+        let filtered_posts = posts.filter(post=>{
+            for(let item in post.tags){
+                if(tag == post.tags[item]){
+                    return post
+                }
+            }
+            
+        })
+        return res.json({
+            posts:filtered_posts
+        })
+        
+    })
+})
+
 router.post('/posts/new',(req,res)=>{
     let valid_post = validatePost(req.body)
     if(valid_post == ""){

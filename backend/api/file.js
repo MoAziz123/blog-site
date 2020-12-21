@@ -51,7 +51,7 @@ router.get('/file/getimage/:file', (req,res)=>{
     
 })
 
-router.get('/posts/getvideo/:file', (req,res)=>{
+router.get('/file/getvideo/:file', (req,res)=>{
     let {file} = req.params
     res.sendFile(path.resolve('./assets/videos/' + file), (err)=>{
         if(err)

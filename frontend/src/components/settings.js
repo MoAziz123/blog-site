@@ -15,7 +15,8 @@ export default class Settings extends React.Component{
         getUser()
         this.state ={
             redirect:null,
-            message:""
+            message:"",
+            site_name:localStorage.getItem('site-name')
 
         }
         
@@ -73,8 +74,8 @@ export default class Settings extends React.Component{
         })
         
     }
-    handleChangeSiteName=(value)=>{
-        localStorage.setItem('site-name', value)
+    handleChangeSiteName=()=>{
+        localStorage.setItem('site-name', this.state.site_name)
 
     }
     handleChangeTheme=(theme)=>{
@@ -132,7 +133,7 @@ export default class Settings extends React.Component{
                     <p>Input a new name for the site.</p>
                 </div>
                 <label for="site_name_change">Site Name:</label>
-                <input type="text" name="site_name_change" value={localStorage.getItem('site-name')} onChange={(e)=>this.setState({state:this.state, site_name:e.target.value})}/>
+                <input type="text" name="site_name_change" value={this.state.site_name} onChange={(e)=>this.setState({state:this.state, site_name:e.target.value})}/>
                 <button type="submit" onClick={(e)=>this.handleChangeSiteName()}>Change Name</button>
             </div>
             <div className="setting">
@@ -143,9 +144,9 @@ export default class Settings extends React.Component{
                 <br/>
 
                 <div className="theme-boxes">
-                    <div className="theme-box" onClick={(e)=>this.handleChangeTheme()}>
-                        <img src="/" />
-                    </div>
+                    <select onChange={(e)=>this.handleChangeTheme(e.target.value)}>
+
+                    </select>
                 </div>
                 <br/>
 

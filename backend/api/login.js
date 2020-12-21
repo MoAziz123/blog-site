@@ -126,11 +126,19 @@ router.put('/login/update',(req,res)=>{
     })
     .then((user)=>{
         if(user){
-            return res.json({
-                success:true,
-                user:{id:user._id, name:user.name, email:user.email},
-                message:"User details updated successfully"
+            Post.updateMany({byline:req.body.username}, {byline:req.body.username})
+            .then(()=>{
+                Comment.updateMany({byline:req.body.username}, {byline:req.body.username})
+                .then(()=>{
+                    return res.json({
+                        success:true,
+                        user:{id:user._id, name:user.name, email:user.email},
+                        message:"User details updated successfully"
+                    })
+                })
+                .catch(error=>{return res.json({error})})
             })
+            .catch(error=>{return res.json({error})})
         }
         else
         {

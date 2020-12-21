@@ -7,7 +7,7 @@ import Heading from '../components/post-heading'
 import Image from '../components/post-image'
 import Text from '../components/post-text'
 import {validateByline, validateDescription, validateImage, validateTags, validateTitle} from '../components/validation'
-
+import {convertToHTMLDate, mongoToHTMLDate} from './conversion'
 /**@class - DynamicForm
  **@description- dynamic form that updates via JS
  * @since - 1.0.0
@@ -22,27 +22,16 @@ export default class DynamicForm extends React.Component
                 title:"", description:"", byline:"", tags:"", data:[]
             },
             message:null,
-            errors:[]
+            date:convertToHTMLDate(new Date(), "-"),
+            errors:[],
         }
+        
+    }
+    componentDidMount(){
         getUser()
-    }
-    convertToHTMLDate(date, infix){
-        let day = date.getDate().toString()
-        let month = date.getMonth() +1
-        month = month.toString()
-        let year = date.getFullYear().toString()
-        if(month.length < 2){
-            month = "0" + month
-        }
-        return year + infix + month + infix + day
-
-    }
-    mongoToHTMLDate=(date)=>{
-        try{ return date.toString().substring(0, 10)}
-        catch{return date}
+      
     }
     componentWillMount(){
-        getUser()
         if(this.props.handler == "update"){
             let link = window.location.pathname.split("/")[2]
             Axios.get("http://localhost:8080/posts/" + link)
@@ -70,13 +59,7 @@ export default class DynamicForm extends React.Component
         }
        
     }
-    uploadImage=(image_data)=>{
-        console.log(image_data.name)
-        const image = new FormData()
-        image.append("image", image_data, image_data.name)
-        Axios.post('http://localhost:8080/file/uploadimage', image)
-        .then(response=>console.log(response.data))
-    }
+    
     
     getUserInputs=()=>{
         
@@ -84,18 +67,13 @@ export default class DynamicForm extends React.Component
         let data_array = []
         for(let element of elements){
             if(element.getAttribute("name") == "image"){
-                if(validateImage(element.files[0]?.name ?? "") == ""){
-
-                    this.uploadImage(element.files[0])
+                if(element.tagName == "P"){
                     data_array.push({
                         name:element.getAttribute("name"),
-                        data:element.value
+                        data:element.innerHTML
                     })
+                    
                 }
-                else{
-                    this.state.errors.push("Unable to validate image - please ensure it is of type jpg, png, or jpeg")
-                    this.setState({errors:this.state.errors, message:"Errors"})
-                }     
             }
             else{
                 data_array.push({
@@ -130,7 +108,7 @@ export default class DynamicForm extends React.Component
         
     }
     addPost=()=>{
-        let tags_array = document.getElementById("tags").value.split()
+        let tags_array = document.getElementById("tags").value.split(",")
         let data_array = this.getUserInputs()
         Axios.post('http://localhost:8080/posts/new', {
             id:this.state.id,
@@ -237,14 +215,14 @@ export default class DynamicForm extends React.Component
                 <h1>Update a post</h1>
                 
                 <div id="form-inputs">
-                    <div className="s-required">
+                    <div className="form-inputs-required">
                         <div>
                             <label for="title">Title:</label>
                             <input className="form-input-required" id="title" type="text" value={this.state.post.title} onChange={(e)=>{this.handleInputChange()}} name="title"/>
                         </div>
                         <div className="">
                         <label for="date">Date:</label>
-                            <input className="form-input-required" id="date" type="date" value={this.mongoToHTMLDate(this.state.post.date)} onChange={(e)=>{this.handleInputChange()}}/>
+                            <input className="form-input-required" id="date" type="date" value={mongoToHTMLDate(this.state.post.date)} onChange={(e)=>{this.handleInputChange()}}/>
                         </div>
                         <div>
                             <label for="byline">Byline:</label>
@@ -263,6 +241,7 @@ export default class DynamicForm extends React.Component
                         <input className="form-input-required" id="private" type="checkbox" name="private" value={this.state.post.private} onChange={(e)=>{this.handleInputChange()}}/>
                     </div>
                     </div>
+                    <div className="extra-form-inputs">
                     {  
                        this.state.post.data && this.state.post.data.map((item)=>{
                         const newNode = document.createElement("div")
@@ -284,6 +263,7 @@ export default class DynamicForm extends React.Component
                        })
                       
                    }
+                   </div>
                     <div id="form-picker">
                         <div className="form-picker-img" onClick={(e)=>this.handleClick("image")}>
                             <i className="fa fa-image"/>
@@ -328,7 +308,7 @@ export default class DynamicForm extends React.Component
                         </div>
                         <div>
                             <label for="byline">Byline:</label>
-                            <input className="form-input-required" id="byline" required type="text" value={userContext.user?.name} name="byline" onChange={(e)=>{this.handleInputChange()}}/>
+                            <input className="form-input-required" id="byline" required type="text" value={"b"} name="byline" onChange={(e)=>{this.handleInputChange()}}/>
                         </div>
                         <div>
                             <label for="description">Description:</label>

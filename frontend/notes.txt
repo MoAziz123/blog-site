@@ -57,5 +57,13 @@ ISSUE:: null image input will not send image
 
 
 //TODO
-FEATURE:: Add being able to view image once uploaded to server on postimage
-FEATURE:: Add being able to move image whilst null
+BUG:: fix tag disappearing on click
+BUG:: fix byline not appearing in add
+BUG:: down button requires a double click 
+FEATURE:: implement UI for extraneous components - comments and stuff
+FEATURE:: implement SEO component
+FEATURE:: allow the changing of the style sheet (through select?)
+FEATURE:: change site name via config setting
+FEATURE:: allow update to byline - remove byline entirely
+
+DEPLOY:: deploy to github pages

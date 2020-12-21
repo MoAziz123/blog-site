@@ -14,17 +14,14 @@ export default class AddPage extends React.Component
         super()
         
     }
-    componentWillMount(){
-        getUser()
-        console.log(userContext)
-        
-    }
         
     render=()=>{
         return(
             <>
             <NavBar/>
-        <DynamicForm handler="add" />
+        <userContext.Consumer>
+            {(value)=>(<DynamicForm handler="add" value={value}/>)}
+        </userContext.Consumer>
         </>
         )
     }

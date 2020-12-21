@@ -3,6 +3,7 @@ import PostPreview from './preview-post'
 import Axios from 'axios'
 import {userContext} from '../contexts/userContext'
 import getUser from '../contexts/auth'
+import Spinner from './spinner'
 
 /**@class - MainPosts
  * @description - used to show posts 
@@ -13,11 +14,12 @@ export default class Posts extends React.Component
         super(props)
         this.state={
             posts:[],
-            message:null
+            message:null,
+            loading:false
         }
     }
     componentWillMount=()=>{
-        getUser()
+        this.setState({loading:true})
         if(this.props.post_type == "personal"){
             if(localStorage.getItem('x-access-token')){
             
@@ -32,24 +34,30 @@ export default class Posts extends React.Component
     
                 })
                 .then((res)=>{
-                    this.setState({posts:res.data.posts})
+                    this.setState({posts:res.data.posts, loading:false})
                 })
             }
+        }
+        else if(this.props.tag){
+            console.log(this.props.tag)
+            Axios.get('http://localhost:8080/posts/tags/' + this.props.tag)
+            .then((res)=>this.setState({posts:res.data.posts, loading:false}))
         }
         else{
             Axios.get('http://localhost:8080/posts')
             .then((res)=>{
-                this.setState({posts:res.data.posts})
+                this.setState({posts:res.data.posts, loading:false})
             })
         }
         
     }
 
     render=()=>{
+        if(this.state.loading){
+            return (<Spinner/>)
+        }
         return(
             <>
-
-        
             <div className="posts-section">
             {
                 this.state.posts.map((post)=>{
