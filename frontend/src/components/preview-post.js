@@ -1,8 +1,9 @@
 import Axios from 'axios'
 import React from 'react'
-import { Redirect } from 'react-router-dom'
+import { Redirect, Link } from 'react-router-dom'
 import {userContext} from '../contexts/userContext'
 import {idContext} from '../contexts/idContext'
+
 import PostImage from './postImage'
 import Tag from './tag'
 import {mongoToRealDate} from './conversion'
@@ -54,7 +55,7 @@ export default class PostPreview extends React.Component{
             return(<div className="preview-post">
             <div className="post-row">
                 <p className="title">{this.props.post.title}</p>
-                <p className="byline">by {this.props.post.byline}</p>
+                <Link  className="byline" to={"/users/" + this.props.post.user_id}>by {this.props.post.byline}</Link>
                 <p className="date">Date: {mongoToRealDate(this.props.post.date)}</p>
                 <div className="post-tags">
                 {
@@ -68,16 +69,7 @@ export default class PostPreview extends React.Component{
                 </div>
                 <p className="description">{this.props.post.description}</p>
             </div>
-            <div className="preview-post-image">
-                {
-                    this.props.post.data.map((item)=>{
-                        if(item.name == "image"){
-                            return(<PostImage image_data={item.data}/>)
-                        }
-                    })
-                }
-
-            </div>
+           
             <div className="post-options">
                 <button className="post-button" onClick={(e)=>this.handleEdit()}><i className="fa fa-pencil-square-o"/></button>
                 <button className="post-button" onClick={(e)=>this.handleDelete()}><i className="fa fa-trash-o"/></button>                
@@ -93,7 +85,7 @@ export default class PostPreview extends React.Component{
         <div className="preview-post">
             <div className="post-row">
                 <p className="title">{this.props.post.title}</p>
-                <p className="byline">by {this.props.post.byline}</p>
+                <Link  className="byline" to={"/users/" + this.props.post.user_id}>by {this.props.post.byline}</Link>
                 <p className="date">Date: {mongoToRealDate(this.props.post.date)}</p>
                 <div className="post-tags">
                 {
@@ -105,16 +97,7 @@ export default class PostPreview extends React.Component{
                 }
                 </div>
                 <p className="description">{this.props.post.description}</p>
-                <div className="preview-post-image">
-                {
-                    this.props.post.data && this.props.post.data.map((item)=>{
-                        if(item.name == "image"){
-                            return(<PostImage image_data={item.data}/>)
-                        }
-                    })
-                }
-
-            </div>
+               
             </div>
             <div className="post-options">
                 <a className="read-more" onClick={(e)=>this.handleView()}>Read More</a>

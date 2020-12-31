@@ -4,6 +4,12 @@ body
     color:white;
     font-family:'Gayathri';
 }
+button{
+    background-color:transparent;
+    color:white;
+    border-radius:25px;
+    border:1px solid white;
+}
 .navbar
 {
     color:white;
@@ -69,6 +75,8 @@ body
     padding:0 .5em .2em .5em;
     margin-bottom: 1em;
     border-radius:25px;
+    text-decoration: none;
+    
 }
 .preview-post .title
 {
@@ -362,6 +370,8 @@ h1{
     height: 1.5em;
     width:1.5em;
     border-radius:100%;
+    margin-left:auto;
+    margin-right:auto;
     background-color:transparent;
     border:3px solid transparent;
     border-bottom-color: white;
@@ -378,4 +388,19 @@ h1{
         transform:rotateZ(360deg);
     }
 
+}
+
+/***SETTU+INGS***/
+.setting{
+    margin-bottom:1em;
+    padding:1em;
+    border-bottom:1px solid white;
+}
+
+.byline{
+    color:white;
+}
+
+.link-tag{
+    color:silver;
 }

@@ -20,7 +20,8 @@ import UnauthPage from './pages/unauth-page';
 import TagsPage from './pages/tags-page'
 import Authentication from './components/authentication'
 import Helmet from 'react-helmet'
-
+import SEO from './components/seo'
+import UserPage from './pages/user-page'
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
     <div className="App">
       <Helmet>
         <title>{localStorage.getItem('site-name')}</title>
+        <SEO/>
       </Helmet>
       <Authentication/>
         <Switch>
@@ -42,8 +44,8 @@ function App() {
           <Route exact path ="/posts/:id" render={(props)=><ViewPage {...props}/>}/>
           <Route exact path ="/settings" render={(props)=><SettingsPage {...props}/>}/>
           <Route exact path ="/myposts" component={PersonalPage}/>
-          <Route exact path="/tags/:tag" component={TagsPage}/>
-          <Route exact path="/404" component={ErrorPage}/>
+          <Route path="/tags/:tag" component={TagsPage}/>
+          <Route path="/users/:user" component={UserPage}/>
           <Route exact path="/unauth" component={UnauthPage}/>
           <Route component={ErrorPage}/>
         </Switch>

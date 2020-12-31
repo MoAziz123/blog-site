@@ -27,12 +27,5 @@ router.post('/auth/decode', (req,res)=>{
 
 })
 
-router.get()
-//TODO: get site name from api
 
-router.post('/auth/change', (req,res)=>{
-    if(req.body.site_name){
-        //TODO: change site name via config
-    }
-})
 module.exports = router

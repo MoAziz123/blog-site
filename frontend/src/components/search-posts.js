@@ -15,7 +15,7 @@ export default class SearchPosts extends React.Component{
         this.state={
             posts:[], 
             message:"",
-            query:""
+            query:"",
         }
     }
     

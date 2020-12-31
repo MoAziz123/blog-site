@@ -10,12 +10,16 @@ import {userContext} from '../contexts/userContext'
  */
 export default class AddPage extends React.Component
 {
-    constructor(){
-        super()
+    constructor(props){
+        super(props)
         
+    }
+    componentWillMount(){
+        getUser()
     }
         
     render=()=>{
+        if(localStorage.getItem('x-access-token'))
         return(
             <>
             <NavBar/>
@@ -24,6 +28,18 @@ export default class AddPage extends React.Component
         </userContext.Consumer>
         </>
         )
+        else{
+            return(
+                <>
+                <NavBar/>
+                <div className="main-page">
+                    <h1>Error 403 - Unauthorised</h1>
+                    <p>You are not authorised. Please log in.</p>
+                </div>
+                </>
+            )
+        }
+        
     }
     
 }

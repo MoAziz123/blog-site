@@ -9,8 +9,9 @@ function getUser(){
         })
         .then((response)=>{
             if(response.data.user){
+                console.log(userContext.user)
                 userContext.user = response.data.user
-
+                return userContext.user
             }
             else{
                 return(<Redirect to="/unauth"/>)

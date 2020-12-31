@@ -2,7 +2,6 @@ const express = require('express')
 const router = express.Router()
 const bodyParser = require('body-parser')
 const jwt = require('jsonwebtoken')
-const hash = require('crypto-js/sha256')
 router.use(bodyParser.json())
 router.use(bodyParser.urlencoded({extended:true}))
 const User = require('../models/User')
@@ -21,10 +20,11 @@ router.get('/login', (req,res)=>{
     })
 })
 router.post('/login/submit', (req,res)=>{
-    User.findOne({email:req.body.email, password:hash(req.body.password).toString()})
+    console.log(req.body.password.toString(), req.body.email)
+    User.findOne({email:req.body.email, password:req.body.password.toString()})
     .then((user)=>{
         if(user){
-            if(user.email  == req.body.email && user.password != hash(req.body.password))
+            if(user.email  == req.body.email && user.password != req.body.password)
             {
                 return res.json({
                     message:"incorrect password",
@@ -33,13 +33,13 @@ router.post('/login/submit', (req,res)=>{
 
             }
             
-            let payload ={email:user.email,id:user._id, name:user.name}
+            let payload ={email:user.email,id:user._id, name:user.name, access:user.access}
             let token = jwt.sign(payload, 'jwt_secret', {expiresIn:'3h'})
             return res.json({
                         message:"User authenticated",
                         token,
                         auth:true,
-                        user: {id:user._id, email:user.email, name:user.name},
+                        user: {id:user._id, email:user.email, name:user.name, access:user.access},
                         id:user._id
                     })
         }
@@ -56,7 +56,7 @@ router.post('/login/submit', (req,res)=>{
 router.post('/login/register', (req,res)=>{
     let new_user = new User({
         email:req.body.email,
-        password:hash(req.body.password),
+        password:req.body.password,
         name:req.body.name
     })
     .save()
@@ -121,7 +121,7 @@ router.post('/login/delete', (req,res)=>{
 router.put('/login/update',(req,res)=>{
     User.findOneAndUpdate({_id:req.body.id},{
         email:req.body.email,
-        password:hash(req.body.password),
+        password:req.body.password,
         name:req.body.username
     })
     .then((user)=>{

@@ -53,17 +53,16 @@ MUST:: - validate all inputs - client and serverside
 ISSUE:: Search functionality broken - gets last result?
 SOLUTION:: search functionality just needed the passed props id and not the id from context
 
+
+
 ISSUE:: null image input will not send image 
+//PROCESS:
+- workability above all else
+- refactor after
 
 
 //TODO
-BUG:: fix tag disappearing on click
-BUG:: fix byline not appearing in add
-BUG:: down button requires a double click 
-FEATURE:: implement UI for extraneous components - comments and stuff
-FEATURE:: implement SEO component
+BUG:: fix tag request repeating
 FEATURE:: allow the changing of the style sheet (through select?)
-FEATURE:: change site name via config setting
-FEATURE:: allow update to byline - remove byline entirely
-
+FEATURE:: infinite scroll pagination
 DEPLOY:: deploy to github pages

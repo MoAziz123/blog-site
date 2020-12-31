@@ -1,5 +1,5 @@
 import React from 'react'
-import {Redirect} from 'react-router-dom'
+import {Redirect, Link} from 'react-router-dom'
 
 /**
  * @class - Tag
@@ -18,16 +18,12 @@ import {Redirect} from 'react-router-dom'
     componentDidMount=()=>{
         let query = window.location.pathanme
     }
-    handleTagClick(){
-        this.setState({redirect:"/tags/" + this.props.tag })
-    }
+   
     render(){
-        if(this.state.redirect){
-            return(<Redirect from="/tags" to={this.state.redirect}/>)
-        }
+       
         return(
         <div className="post-tag">
-            <a onClick={(e)=>{this.handleTagClick()}}>{this.props.tag}</a>
+            <Link className="link-tag" to={"/tags/"+this.props.tag}>{this.props.tag}</Link>
         </div>)
     }
  }

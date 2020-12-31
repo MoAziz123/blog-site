@@ -24,11 +24,23 @@ export default class DynamicForm extends React.Component
             message:null,
             date:convertToHTMLDate(new Date(), "-"),
             errors:[],
+            username:""
         }
         
     }
     componentDidMount(){
-        getUser()
+        if(localStorage.getItem('x-access-token')){
+            Axios.post('http://localhost:8080/auth/decode', {
+                token:localStorage.getItem('x-access-token')
+            })
+            .then((response)=>{
+                if(response.data.user){
+                    console.log(response.data.user.name)
+                    this.setState({username:response.data.user.name})
+                }
+                
+            })
+        }
       
     }
     componentWillMount(){
@@ -241,7 +253,6 @@ export default class DynamicForm extends React.Component
                         <input className="form-input-required" id="private" type="checkbox" name="private" value={this.state.post.private} onChange={(e)=>{this.handleInputChange()}}/>
                     </div>
                     </div>
-                    <div className="extra-form-inputs">
                     {  
                        this.state.post.data && this.state.post.data.map((item)=>{
                         const newNode = document.createElement("div")
@@ -263,7 +274,6 @@ export default class DynamicForm extends React.Component
                        })
                       
                    }
-                   </div>
                     <div id="form-picker">
                         <div className="form-picker-img" onClick={(e)=>this.handleClick("image")}>
                             <i className="fa fa-image"/>
@@ -308,7 +318,7 @@ export default class DynamicForm extends React.Component
                         </div>
                         <div>
                             <label for="byline">Byline:</label>
-                            <input className="form-input-required" id="byline" required type="text" value={"b"} name="byline" onChange={(e)=>{this.handleInputChange()}}/>
+                            <input className="form-input-required" id="byline" required type="text" value={this.state.username} name="byline" onChange={(e)=>{this.handleInputChange()}}/>
                         </div>
                         <div>
                             <label for="description">Description:</label>

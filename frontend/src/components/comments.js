@@ -2,6 +2,8 @@ import React from 'react'
 import Axios from 'axios'
 import Comment from './comment'
 import {userContext} from '../contexts/userContext'
+import getUser from '../contexts/auth'
+import Spinner from './spinner'
 /**@class - Comments
  * @description - encapsulates the comments system
  * @since 1.0.0
@@ -12,15 +14,19 @@ export default class Comments extends React.Component{
     {
         super(props)
         this.state={
-            comments:[]
-
+            comments:[],
+            loading:true
         }
+        console.log(userContext)
+
     }
     componentDidMount(){
+        this.state.loading = true
         Axios.post('http://localhost:8080/comment/search', {post_id:window.location.pathname.split("/")[2]})
         .then((res)=>{
             this.setState({
-                comments:res.data.comments
+                comments:res.data.comments,
+                loading:false
             })
         })
     }
@@ -47,6 +53,36 @@ export default class Comments extends React.Component{
     }
 
     render(){
+        if(this.state.loading){
+            return (<Spinner/>)
+        }
+        try{
+            if(userContext.user.access != 1){
+                return(
+                    <div className="comments">
+                        <p>{this.state.message}</p>
+                        <div className="comment-input">
+                            <label for="comment">Comment: </label>
+                            <textarea name="comment" onChange={(e)=>this.setState({state:this.state, text:e.target.value})}></textarea>
+                            <br/>
+                            <p>You need to login to comment.</p>
+                         </div>
+                    </div>)
+            }
+        }
+        catch{
+            return(
+                <div className="comments">
+                    <p>{this.state.message}</p>
+                    <div className="comment-input">
+                        <label for="comment">Comment: </label>
+                        <textarea name="comment" onChange={(e)=>this.setState({state:this.state, text:e.target.value})}></textarea>
+                        <br/>
+                        <p>You need to login to comment.</p>
+                     </div>
+                </div>)
+        }
+        
         return(
         <div className="comments">
             <p>{this.state.message}</p>

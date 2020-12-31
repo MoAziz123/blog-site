@@ -3,5 +3,5 @@ import React from 'react'
  * @description - used to provide user details to all forms that require it
  * 
  */
-const userContext = React.createContext({user:{}})
+const userContext = React.createContext({user:{access:0}})
 export {userContext}

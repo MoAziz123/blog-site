@@ -1,7 +1,12 @@
 import React from 'react'
 import NavBar from '../components/nav-bar'
 function Unauth(){
-    return(<p>You are not authenticated</p>)
+    return(
+        <>
+        <h1>ERROR 403 - UNAUTHORISED</h1>
+    <p>You are not authenticated.</p>
+    <p>Please log in again.</p>
+    </>)
 }
 
 /**
@@ -11,6 +16,9 @@ function Unauth(){
  */
 
  export default class UnauthPage extends React.Component{
+     componentWillMount(){
+         localStorage.removeItem('x-access-token')
+     }
      render(){
          return(
             <>

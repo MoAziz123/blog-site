@@ -1,6 +1,7 @@
 import React from 'react'
 import Axios from 'axios'
 import {userContext} from '../contexts/userContext'
+import {mongoToRealDate} from './conversion'
 import getUser from '../contexts/auth'
 
 /**@class - Comment
@@ -77,7 +78,7 @@ export default class Comment extends React.Component{
                     </div>)
             }
         try{
-        if(userContext.user.id == this.props.comment.user_id)
+        if(userContext.user.id == this.props.comment.user_id )
         {
             return(<div className="comment-post">
                     <div className="profile">
@@ -91,7 +92,7 @@ export default class Comment extends React.Component{
                         </div>
                         <div className="options">
                             <p>{this.props.comment.edited}</p>
-                            <p>{this.props.comment.date_posted}</p>
+                            <p>{mongoToRealDate(this.props.comment.date_posted)}</p>
                             <button onClick={(e)=>this.handleEdit()}>Edit</button>
                             <button onClick={(e)=>this.handleDelete()}>Delete</button>
                         </div>
@@ -119,7 +120,7 @@ export default class Comment extends React.Component{
                     </div>
                     <div className="options">
                         <p>{this.props.comment.edited}</p>
-                        <p>{this.props.comment.date_posted}</p>
+                        <p>{mongoToRealDate(this.props.comment.date_posted)}</p>
                     </div>
                 </div>
             </div>)

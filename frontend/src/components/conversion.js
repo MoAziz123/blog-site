@@ -26,7 +26,7 @@ export function mongoToRealDate(date){
         for(let item in date_array){
             new_date += date_array[item] + "/"
         }
-        return new_date.substring(0, new_date.length-1)
+        return new Date(date.toString().substring(0, 10)).toDateString()
     }
     catch{return date}
 }

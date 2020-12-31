@@ -57,7 +57,7 @@ export function validateEmail(email){
 //TODO:include regex for this
 export function validatePassword(password){
 
-    let pattern = /^(?=.*[A-z])(?=.*[0-9])(?=.*[!"£$%^&*()@{#};:,.]).{8}$/
+    let pattern = /^(?=.*[0-9])(?=.*[A-z])(?=.*[#!"£$%^&*()@{}:<>]).{8,50}$/
     return pattern.test(password) ? "" : "Password - should be greater than 8 characters and contain at least 1 uppercase, lowercase, numerical and special character"
 }
 

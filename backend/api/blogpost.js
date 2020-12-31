@@ -43,7 +43,11 @@ function validatePost(post){
  */
 
 router.get('/posts', (req,res)=>{
+    let count = parseInt(req.query.count)
+    console.log(count)
     Post.find({})
+    .skip(0)
+    .limit(count)
     .then((posts)=>{
         if(posts.length > 0){
             return res.json({

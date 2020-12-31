@@ -6,6 +6,7 @@ import NavBar from '../components/nav-bar'
 export default class UpdatePage extends React.Component{
     render()
     {
+        if(localStorage.getItem('x-access-token'))
         return(
         <>
         <NavBar/>
@@ -13,5 +14,16 @@ export default class UpdatePage extends React.Component{
             {(value)=> <DynamicForm handler="update" value={idContext}/>}
         </idContext.Consumer>
         </>)
+        else{
+            return(
+                <>
+                <NavBar/>
+                <div className="main-page">
+                    <h1>Error 403 - Unauthorised</h1>
+                    <p>You are not authorised. Please log in.</p>
+                </div>
+                </>
+            )
+        }
     }
 }

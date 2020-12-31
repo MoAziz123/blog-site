@@ -4,7 +4,7 @@ import NavBar from './nav-bar'
 import PostImage from './postImage'
 import  queryString from 'query-string'
 import { enc } from 'crypto-js'
-import { Redirect } from 'react-router-dom'
+import { Redirect, Link } from 'react-router-dom'
 import Tag from './tag'
 import {mongoToRealDate} from './conversion'
 
@@ -17,10 +17,15 @@ export default class Post extends React.Component{
     {
         super(props)
         this.state={
-            post:[]
+            post:[],
+            redirect:null
 
         }
 
+
+    }
+    handleUserClick(){
+        this.setState({redirect:"/users/" + this.state.post.user_id})
 
     }
     componentWillMount(){
@@ -33,12 +38,15 @@ export default class Post extends React.Component{
         })
     }
     render(){
+        if(this.state.redirect){
+            return(<Redirect to={this.state.redirect}/>)
+        }
         return(
             <>
             <div className="post">
             <div className="post-row">
                 <p className="title">{this.state.post.title}</p>
-                <p className="byline">by {this.state.post.byline}</p>
+                <Link  className="byline" to={"/users/" + this.state.post.user_id}>by {this.state.post.byline}</Link>
                 <p className="date">Date: {mongoToRealDate(this.state.post.date)}</p>
                 <div className="post-tags">
                 {

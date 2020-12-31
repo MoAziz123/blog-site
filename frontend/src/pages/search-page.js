@@ -18,7 +18,7 @@ export default class SearchPage extends React.Component{
           <NavBar/>
             <div className="main-page">
             <div className="header-section">
-                <h1>Your posts</h1>
+                <h1>search posts</h1>
             </div>
             <SearchPosts/>
         </div>
