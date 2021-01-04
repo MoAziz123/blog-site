@@ -62,7 +62,12 @@ ISSUE:: null image input will not send image
 
 
 //TODO
-BUG:: fix tag request repeating
-FEATURE:: allow the changing of the style sheet (through select?)
-FEATURE:: infinite scroll pagination
+BUG:: fix tag request repeating (timeout option)
+SOLUTION:: compare previous props to current props and check if tag is not equal
+
+
+//NEW BUGS
+BUG:: fix createdAt timestamp
+BUG:: fix date ISSUE
+FEATURE:: add config
 DEPLOY:: deploy to github pages

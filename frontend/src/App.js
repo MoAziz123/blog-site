@@ -31,11 +31,12 @@ function App() {
     <div className="App">
       <Helmet>
         <title>{localStorage.getItem('site-name')}</title>
+        <meta name="description" content="Blogsite produced using mongoDB and React"/>
         <SEO/>
       </Helmet>
       <Authentication/>
         <Switch>
-          <Route exact path="/posts" render={(props)=><MainPage {...props}/>}/>
+          <Route exact path="/" render={(props)=><MainPage {...props}/>}/>
           <Route exact path="/add" component={AddPage}/>
           <Route exact path="/update/:id"render={(props)=><UpdatePage {...props}/>}/>
           <Route exact path="/login" component={LoginPage}/>

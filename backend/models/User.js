@@ -5,6 +5,6 @@ const userSchema = mongoose.Schema({
     name:String,
     password:String,
     access:{type:Number, default:1}
-})
+},  {timestamps:true})
 
 module.exports = mongoose.model('User', userSchema)

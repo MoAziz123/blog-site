@@ -47,8 +47,13 @@ button{
 {
     display:flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+    
+    min-height:75vw;
+}
+.view-page{
+    margin-left:1em;
+    margin-right:1em;
 }
 .preview-post
 {
@@ -185,8 +190,6 @@ button{
     margin-bottom:2em;
     padding-bottom:.5em;
     border-bottom:2px solid white;
-    margin-left:1em;
-    margin-right:1em;
     justify-content: center;
 }
 
@@ -211,7 +214,10 @@ button{
     color:black;
     cursor: pointer;
 }
-
+.post {
+    border-bottom:1px solid white;
+    padding-bottom:5em;
+}
 .post .title
 {
     font-size:2.5em;
@@ -225,6 +231,7 @@ button{
 .post-heading
 {
     font-weight:500;
+    text-align:center;
 }
 .post{
     display:flex;
@@ -261,6 +268,7 @@ h1{
 }
 .read-more{
     margin-top:5em;
+    width:100%;
 }
 .read-more:hover
 {
@@ -269,14 +277,57 @@ h1{
 
 }
 /***form inputs**/
-.form-inputs-required{
+.dynamic-form{
+    
     display:flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
+.form-inputs-required{
+    display:flex;
+    flex-direction: column;
+    text-align:left;
+    justify-content: flex-start;
+    align-items:flex-start;
+}
 .form-inputs-required input{
-    width:300px;
+    width:550px;
+    padding:.5em;
+}
+.form-input-heading{
+    text-align: left;
+    margin-top:1em;
+
+}
+.form-input-heading input{
+    width:550px;
+    padding:.5em;
+    margin-bottom:.5em;
+
+}
+.component-button{
+    color:whitesmoke;
+    margin-right:.5em;
+    margin-left:.5em;
+}
+.form-input-text{
+    text-align:left;
+    margin-top:1em;
+}
+.form-input{
+    width:550px;
+}
+.form-input-image{
+    width:100%;
+}
+.form-input-buttons i:not(:last-child){
+    margin:0 1em 1em 0;
+
+}
+.form-input-text textarea{
+    width:550px;
+    height:75px;
     padding:.5em;
 }
 .form-inputs-required div{
@@ -284,7 +335,15 @@ h1{
     flex-direction: column;
     margin-top:1em;
     width:100%;
-    align-items: center;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+.form-input-image{
+    margin-top:1em;
+    text-align:left;
+}
+.form-input-image label{
+
 }
 .form-inputs-required label{
     margin:0;
@@ -301,12 +360,17 @@ h1{
     display:flex;
     flex-direction: row;
     align-items: center;
+    padding-bottom:1em;
+    margin-bottom:.5em;
+    border-bottom:1px solid white;
 }
 .comment-box button{
     margin-left:.5em;
 }
 .comment-post{
     display:flex;
+    padding-top:1em;
+    border-bottom: 1px solid white;
     flex-direction: row;
 }
 .profile{
@@ -330,28 +394,35 @@ h1{
     align-items: center;
 }
 
-.post-row{
-    min-width:50%;
+.post-row-row{
+    width:100%;
 
 }
 .post-content{
     display:flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 .post-image{
     height:100px;
     width:100px;
 }
-.post-post-image{
+.post-post-image img{
     display:flex;
     justify-self: center;
-    height:500px;
+    height:auto;
     width:auto;
 }
-
+.App{
+    display:flex;
+    flex-direction: column;
+}
+.footer{
+    margin-top:2em;
+}
 /**comment**/
 .comments{
-    margin-left:1em;
     border-bottom: 2px solid white;
     margin-bottom:1em;
     padding-top:1em;
@@ -363,6 +434,13 @@ h1{
     color:white;
     border:1px solid white;
     padding:.5em 1em .5em 1em;
+}
+.submit-button{
+    padding:1em;
+    width:6.5em;
+    margin-top:1em;
+    margin-bottom:1em;
+
 }
 
 /***spinner***/
@@ -396,6 +474,15 @@ h1{
     padding:1em;
     border-bottom:1px solid white;
 }
+.setting {
+}
+.setting input{
+    width:450px;
+    padding:.5em;
+    margin-top:.5em;
+    margin-bottom:.5em;
+
+}
 
 .byline{
     color:white;
@@ -403,4 +490,101 @@ h1{
 
 .link-tag{
     color:silver;
+}
+.links-alt-wrapper{
+    display:none;
+}
+
+
+
+@media only screen and (max-width:500px){
+    .preview-post p{
+        overflow-x: hidden;
+    }
+    .main-page h1{
+        text-align:center;
+
+    }
+    .dynamic-form{
+        margin-left:1em;
+        margin-right:1em;
+    }
+    .form-input{
+        max-width:330px;
+    }
+    .form-input-required{
+        display:flex;
+        flex-direction: column;
+        max-width: 330px;
+        margin:0;
+    }
+    .posts-section{
+        display:flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .preview-post p{
+        height: 100%;
+    }
+    .post-options{
+        display:flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        margin:0;
+    }
+    .preview-post{
+        margin-bottom:1em;
+        max-width:350px;
+        display:flex;
+        flex-direction: column;
+    }
+    .title{
+        overflow: scroll;
+    }
+    .links-wrapper{
+        display:none;
+    }
+    .links-alt-wrapper{
+        display:flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        width:100%;
+    }
+    .links-alt{
+        padding:.5em;
+        
+        display:flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin:0;
+        width:100%;
+
+    }
+    .links-alt a{
+        text-decoration: none;
+        color:white;
+        border-bottom:1px solid white;
+    }
+    
+    .setting{
+        width:350px;
+    }
+    .setting input{
+        width:330px;
+        
+    }
+    .comment-box textarea{
+        width:100%;
+        padding:.5em;
+    }
+    .read-more{
+        margin-right:2em;
+        justify-self: flex-end;
+        margin-top:3em;
+    }
+    .links{
+        display:none;
+    }
 }

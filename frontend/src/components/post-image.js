@@ -60,6 +60,7 @@ export default class PostImage extends React.Component{
                     this.state.image_name &&(
                         <>
                         <label for="image">Image:</label>
+                        <br/>
                         <PI image_data={this.state.image_name}/>
                         <p className="form-input" name="image">{this.state.image_name}</p>
                         </>
@@ -73,9 +74,9 @@ export default class PostImage extends React.Component{
 
         )
                 }
-                <button onClick={(e)=>this.handleRemove(e)}>Delete</button>
-                <button onClick={(e)=>this.handleElementUp(e.target.parentElement.parentElement)}>Up</button>
-                <button onClick={(e)=>this.handleElementDown(e.target.parentElement.parentElement)}>Down</button>
+                <i className="component-button fa fa-trash-o" onClick={(e)=>this.handleRemove(e)}></i>
+                <i className="component-button fa fa-arrow-up"onClick={(e)=>this.handleElementUp(e.target.parentElement.parentElement)}></i>
+                <i className="component-button fa fa-arrow-down" onClick={(e)=>this.handleElementDown(e.target.parentElement.parentElement)}></i>
             </div>
 
         )

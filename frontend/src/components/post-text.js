@@ -36,10 +36,11 @@ export default class PostText extends React.Component{
                 <label for="image">Text:</label>
                 <br/>
                 <textarea className="form-input"  type="text" name="text" onChange={(e)=>{this.setState({text:e.target.value})}}>{this.state.text}</textarea>
-                <button onClick={(e)=>this.handleRemove(e)}>Delete</button>
-                <button onClick={(e)=>this.handleElementUp(e.target.parentElement.parentElement)}>Up</button>
-                <button onClick={(e)=>this.handleElementDown(e.target.parentElement.parentElement)}>Down</button>
-
+                
+                <i className="component-button fa fa-trash-o" onClick={(e)=>this.handleRemove(e)}></i>
+                <i className="component-button fa fa-arrow-up"onClick={(e)=>this.handleElementUp(e.target.parentElement.parentElement)}></i>
+                <i className="component-button fa fa-arrow-down" onClick={(e)=>this.handleElementDown(e.target.parentElement.parentElement)}></i>
+            
             </div>
         )
     }

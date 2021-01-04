@@ -37,10 +37,10 @@ export default class PostHeading extends React.Component{
                 <label for="heading">Heading:</label>
                 <br/>
                 <input className="form-input" type="text" value={this.state.heading} name="heading" onChange={(e)=>{this.setState({heading:e.target.value})}}/>
-                <button onClick={(e)=>this.handleRemove(e)}>Delete</button>
-                <button onClick={(e)=>this.handleElementUp(e.target.parentElement.parentElement)}>Up</button>
-                <button onClick={(e)=>this.handleElementDown(e.target.parentElement.parentElement)}>Down</button>
-            </div>
+                <i className="component-button fa fa-trash-o" onClick={(e)=>this.handleRemove(e)}></i>
+                <i className="component-button fa fa-arrow-up"onClick={(e)=>this.handleElementUp(e.target.parentElement.parentElement)}></i>
+                <i className="component-button fa fa-arrow-down" onClick={(e)=>this.handleElementDown(e.target.parentElement.parentElement)}></i>
+                     </div>
         )
     }
 }

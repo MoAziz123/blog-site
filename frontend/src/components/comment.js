@@ -59,7 +59,7 @@ export default class Comment extends React.Component{
                 return(
                     <div className="comment-post">
                         <div className="profile">
-                            <img src="/"/>
+                    <i className="fa fa-user fa-3x"/>
                             <p>{this.props.comment.user_name}</p>
                 
                         </div>
@@ -82,7 +82,7 @@ export default class Comment extends React.Component{
         {
             return(<div className="comment-post">
                     <div className="profile">
-                        <img src="/"/>
+                    <i className="fa fa-user fa-3x"/>
                         <p>{this.props.comment.user_name != null ? this.props.comment.user_name : 'username'} </p>
             
                     </div>
@@ -110,7 +110,7 @@ export default class Comment extends React.Component{
             
                 return(<div className="comment-post">
                 <div className="profile">
-                    <img src="/"/>
+                <i className="fa fa-user fa-3x"/>
                     <p>{this.props.comment.user_name != null ? this.props.comment.user_name : 'username'} </p>
         
                 </div>

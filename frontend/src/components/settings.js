@@ -17,7 +17,8 @@ export default class Settings extends React.Component{
             redirect:null,
             message:"",
             site_name:localStorage.getItem('site-name'),
-            user:{access:""}
+            user:{access:""},
+            themes:[]
 
         }
         
@@ -27,10 +28,11 @@ export default class Settings extends React.Component{
     {
         Axios.post('http://localhost:8080/auth/decode', {token:localStorage.getItem('x-access-token')})
         .then((response)=>{
+
             this.setState({email:response.data.user.email, name:response.data.user.name, access:response.data.user.access})
         })
-        console.log(this.state.user)
     }
+   
     handleChangeDetails(){
         if(this.state.password != null && this.state.name != null && this.state.email != null)
         {
@@ -102,12 +104,15 @@ export default class Settings extends React.Component{
                         </div>
                         <br/>
                         <label for="username">Name:</label>
+                        <br/>
                         <input type="text" name="username" value={this.state.name} onChange={(e)=>{this.setState({state:this.state, name:e.target.value})}}/>
                         <br/>
                         <label for="email">Email:</label>
+                        <br/>
                         <input type="email" name="email" value={this.state.email} onChange={(e)=>{this.setState({state:this.state, email:e.target.value})}}/>
                         <br/>
                         <label for="password">Password:</label>
+                        <br/>
                         <input type="password" required name="password" onChange={(e)=>{this.setState({state:this.state, password:e.target.value})}}/>
                         <br/>
                         
@@ -150,7 +155,7 @@ export default class Settings extends React.Component{
         
                         <div className="theme-boxes">
                             <select onChange={(e)=>this.handleChangeTheme(e.target.value)}>
-        
+                                
                             </select>
                         </div>
                         <br/>
@@ -169,14 +174,17 @@ export default class Settings extends React.Component{
                 </div>
                 <br/>
                 <label for="username">Name:</label>
-                <input type="text" name="username" value={this.state.name} onChange={(e)=>{this.setState({state:this.state, name:e.target.value})}}/>
-                <br/>
-                <label for="email">Email:</label>
-                <input type="email" name="email" value={this.state.email} onChange={(e)=>{this.setState({state:this.state, email:e.target.value})}}/>
-                <br/>
-                <label for="password">Password:</label>
-                <input type="password" required name="password" onChange={(e)=>{this.setState({state:this.state, password:e.target.value})}}/>
-                <br/>
+                        <br/>
+                        <input type="text" name="username" value={this.state.name} onChange={(e)=>{this.setState({state:this.state, name:e.target.value})}}/>
+                        <br/>
+                        <label for="email">Email:</label>
+                        <br/>
+                        <input type="email" name="email" value={this.state.email} onChange={(e)=>{this.setState({state:this.state, email:e.target.value})}}/>
+                        <br/>
+                        <label for="password">Password:</label>
+                        <br/>
+                        <input type="password" required name="password" onChange={(e)=>{this.setState({state:this.state, password:e.target.value})}}/>
+                        <br/>
                 
                 
                 <button type="submit" onClick={(e)=>this.handleChangeDetails()}>Change</button>
@@ -191,6 +199,7 @@ export default class Settings extends React.Component{
                 <br/>
 
                 <label for="password-confirm">Password:</label>
+                <br/>
                 <input type="password" name="password-confirm" onChange={(e)=>{this.setState({state:this.state, password_confirm:e.target.value})}}/>
                 <br/>
                 

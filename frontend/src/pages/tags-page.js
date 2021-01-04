@@ -12,7 +12,8 @@ export default class TagsPage extends React.Component{
         this.state = {
             tag: this.props.match.params.tag,
             posts:[], 
-            loading:true
+            loading:true,
+            switcher:false
         }
     }
     escapeSpecialChars=(unsafe)=>{
@@ -26,13 +27,13 @@ export default class TagsPage extends React.Component{
 
     }
     
-    componentDidUpdate(props, state){
-        if(props.match.params.tag != state.tag){
-            this.state.loading = true
-            Axios.get('http://localhost:8080/posts/tags/' + props.match.params.tag)
+    componentDidUpdate(prevProps, prevState){
+        this.state.loading = true
+        if(prevProps.match.params.tag != this.props.match.params.tag){
+            Axios.get('http://localhost:8080/posts/tags/' + this.props.match.params.tag)
             .then(res=>this.setState({posts:res.data.posts, loading:false}))
         }
-
+          
     }
     render(){
         if(this.state.loading){

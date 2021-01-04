@@ -28,7 +28,7 @@ export default class LogInForm extends React.Component{
                 {
                     userContext.user = response.data.user
                     localStorage.setItem('x-access-token', response.data.token)
-                    this.setState({redirect:"/posts"})
+                    this.setState({redirect:"/"})
                 }
                 else
                 {

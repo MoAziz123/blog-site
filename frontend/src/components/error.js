@@ -32,7 +32,7 @@ import {Redirect} from 'react-router-dom'
             <>
             <h1>ERROR 404</h1>
             <p>No page found. Try going back to 
-                <a onClick={(e)=>this.handleRedirect()}>/posts?</a>
+                <a className="link" onClick={(e)=>this.handleRedirect()}> the homepage?</a>
             </p>
             </>
         )

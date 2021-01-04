@@ -11,7 +11,9 @@ export default class UserPage extends React.Component{
         super(props)
         this.state ={
             posts:[],
-            name:""
+            user:{
+                name:""
+            }
         }
     }
 
@@ -19,17 +21,19 @@ export default class UserPage extends React.Component{
         this.setState({loading:true})
         let id = window.location.pathname.split("/")[2]
         console.log(id)
+        
+        Axios.post('http://localhost:8080/posts/searchUser', {
+                user_id: id
+            })
+        .then(res=>this.setState({state:this.state, posts:res.data.posts, loading:false}))
         Axios.post('http://localhost:8080/login/search',{
             id:id
         })
         .then(response=>{
-            this.setState({name:response.data.user.name})
-            return Axios.post('http://localhost:8080/posts/searchUser', {
-                user_id: id
-            })
+            console.log(response.data)
+            this.setState({user:response.data.user})
+            
         })
-        .then(res=>this.setState({posts:res.data.posts, loading:false}))
-
     }
 
     render(){
@@ -41,7 +45,7 @@ export default class UserPage extends React.Component{
                     </div>
                     <div className="post-section">
                     </div>
-                    <h1>Posts for {this.state.name}</h1>
+                    <h1>Posts for {this.state.user.name}</h1>
                     <div className="posts-section">
                     <Spinner/>
                 </div>
@@ -53,12 +57,16 @@ export default class UserPage extends React.Component{
             <NavBar/>
             <div className="main-page">
                 <div className="user-section">
+                <h1>User Details</h1>
+                <p>Name: {this.state.user.name}</p>
+                <p>Date Joined: {this.state.user.createdAt}</p>
+                <p>Posts Created: {this.state.posts.length} </p>
 
                 </div>
                 <div className="post-section">
                     
                 </div>
-                <h1>Posts for {this.state.name}</h1>
+                <h1>Posts for {this.state.user.name}</h1>
                 
                 <div className="posts-section">
             {

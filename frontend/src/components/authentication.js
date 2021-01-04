@@ -19,8 +19,6 @@ export default class Authentication extends React.Component
                 token:localStorage.getItem('x-access-token')}, {headers:{'x-access-token':localStorage.getItem('x-access-token')}}
             )
             .then((response)=>{
-                console.log("hi")
-                console.log(response.data)
                 if(response.data.user && response.data.auth){
                     console.log(userContext.user)
                     userContext.user = response.data.user

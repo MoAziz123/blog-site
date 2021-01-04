@@ -1,3 +1,3 @@
 //CONFIG FILE FOR APPLICATION
-host: "http://localhost:8080"
-database: "http://localhost:3000"
+host: "http://localhost:3000"
+database: "http://localhost:8080"

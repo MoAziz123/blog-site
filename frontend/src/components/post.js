@@ -44,7 +44,7 @@ export default class Post extends React.Component{
         return(
             <>
             <div className="post">
-            <div className="post-row">
+            <div className="post-row-row">
                 <p className="title">{this.state.post.title}</p>
                 <Link  className="byline" to={"/users/" + this.state.post.user_id}>by {this.state.post.byline}</Link>
                 <p className="date">Date: {mongoToRealDate(this.state.post.date)}</p>

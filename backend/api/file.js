@@ -36,6 +36,41 @@ router.post('/file/uploadimage', upload.single('image'), (req,res)=>{
         }
     })
 
+    router.post('/file/uploadimage', upload.single('image'), (req,res)=>{
+        console.log(req.file, req.body)
+            let image = req.file
+            if(!image){
+                console.log(image)
+                return res.json({
+                    message:"No file found",
+                    success:false
+    
+                })
+            }
+            else{
+                return res.json({
+                    message:"Upload completed",
+                    success:true
+                })
+            }
+        })
+router.post('/file/uploadstyle', upload.single('style'), (req,res)=>{
+        let stylesheet = req.file
+        if(!stylesheet){
+            return res.json({
+                message:"No file found",
+                success:false
+
+            })
+        }
+        else{
+            return res.json({
+                message:"Upload completed",
+                success:true
+            })
+        }
+    })
+    
 router.get('/file/getimage/:file', (req,res)=>{
         let {file} = req.params
         res.sendFile(path.resolve('./assets/images/' + file), (err)=>{
@@ -54,6 +89,21 @@ router.get('/file/getimage/:file', (req,res)=>{
 router.get('/file/getvideo/:file', (req,res)=>{
     let {file} = req.params
     res.sendFile(path.resolve('./assets/videos/' + file), (err)=>{
+        if(err)
+        {
+            console.log(err)
+            return res.json({
+                success:false,
+                file
+            })
+        }
+    })
+
+})
+
+router.get('/file/getstylesheet/:file', (req,res)=>{
+    let {file} = req.params
+    res.sendFile(path.resolve('./assets/stylesheets/' + file), (err)=>{
         if(err)
         {
             console.log(err)

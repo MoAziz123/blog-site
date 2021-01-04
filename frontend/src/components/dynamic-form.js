@@ -19,7 +19,7 @@ export default class DynamicForm extends React.Component
         super(props)
         this.state={
             post:{
-                title:"", description:"", byline:"", tags:"", data:[]
+                title:"", description:"", byline:"", tags:"", data:[], date:""
             },
             message:null,
             date:convertToHTMLDate(new Date(), "-"),
@@ -290,7 +290,7 @@ export default class DynamicForm extends React.Component
                         </div>
                     </div>
                 </div>
-                <button type="button" onClick={(e)=>this.handleSubmit()}>Submit</button>
+                <button type="button" className="submit-button" onClick={(e)=>this.handleSubmit()}>Submit</button>
             </div>)
            
 
@@ -314,7 +314,7 @@ export default class DynamicForm extends React.Component
                         </div>
                         <div className="re">
                         <label for="date">Date:</label>
-                            <input className="form-input-required"  required value={this.state.date} onChange={(e)=>{this.handleInputChange()}} id="date" type="date" name="date"/>
+                            <input className="form-input-required"  required value={new Date().toDateString()} onChange={(e)=>{this.handleInputChange()}} id="date" type="date" name="date"/>
                         </div>
                         <div>
                             <label for="byline">Byline:</label>
@@ -349,7 +349,7 @@ export default class DynamicForm extends React.Component
                         </div>
                     </div>
                 </div>
-                <button type="button" onClick={(e)=>this.handleSubmit()}>Submit</button>
+                <button type="button" className="submit-button" onClick={(e)=>this.handleSubmit()}>Submit</button>
             </div>
             )    
     }

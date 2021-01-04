@@ -18,31 +18,24 @@ export default class Posts extends React.Component
             message:null,
             loading:false,
             redirect:null,
+            load_posts:true,
             count:10
         }
     }
     incrementCount(){
+        if(this.props.post_type == "personal"){
+            Axios.get('http://localhost:8080/posts/searchUser', {
+                user_id:this.props.post.user_id,
+                count:this.state.count
+            })
+            .then((res)=>this.setState({posts:res.data.posts, count:this.state.count+10}))
+        }
+        console.log(this.state.count)
         Axios.get('http://localhost:8080/posts', {params:{count:this.state.count+10}})
-        .then((res)=>this.setState({posts:res.data.posts, count:this.state.count+10}))
+        .then((res)=>this.setState({posts:res.data.posts, count:this.state.count+10,load_posts:false}))
     }
     
    
-    componentDidMount=()=>{
-        window.addEventListener('scroll',()=>{
-            const footer = document.getElementsByClassName("preview-post");
-            const posts = footer[footer.length - 2]
-            try{
-                if(posts.getBoundingClientRect().top < 0){
-                    this.incrementCount()
-                }
-            }
-            catch{
-
-            }
-            
-        })
-        
-    }
     componentWillMount=()=>{
         getUser()
         this.setState({loading:true})
@@ -54,8 +47,9 @@ export default class Posts extends React.Component
                 .then((response)=>{
                     userContext.user = response.data.user
                     return Axios.post('http://localhost:8080/posts/searchUser',{
-                        user_id:userContext.user.id
-                    , headers:{'x-access-token':localStorage.getItem('x-access-token')}})
+                        user_id:userContext.user.id,
+                        count:this.state.count
+                    })
     
                 })
                 .then((res)=>{
@@ -73,8 +67,7 @@ export default class Posts extends React.Component
             this.setState({posts:this.props.posts, loading:false})
         }
         else if(this.props.tag){
-            Axios.get('http://localhost:8080/posts/tags/' + this.props.tag, {
-                headers:{'x-access-token':localStorage.getItem('x-access-token')}})
+            Axios.get('http://localhost:8080/posts/tags/' + this.props.tag )
             .then((res)=>
             {
                 if(!res.data.auth){
@@ -91,11 +84,22 @@ export default class Posts extends React.Component
             Axios.get('http://localhost:8080/posts', {params:{count:10}} )
             .then((res)=>{
                 if(!res.data.auth){
+                    
                     this.setState({
                         redirect:res.data.redirect,
                         message:res.data.message
                     })
                 }
+                window.addEventListener('scroll',()=>{
+                    const footer = document.getElementsByClassName("preview-post");
+                    const posts = footer[footer.length - 2]
+                    try{
+                        if(posts.getBoundingClientRect().top < 0){
+                            setTimeout(this.incrementCount(), 10000)
+                        }
+                    }
+                    catch{}
+                })
                 this.setState({posts:res.data.posts, loading:false})
             })
         }
