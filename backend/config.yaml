@@ -1,3 +1,0 @@
-conn_string: "mongodb+srv://wwww."
-upload_dir: "./assets/images"
-site_name: "Mo's Blog"

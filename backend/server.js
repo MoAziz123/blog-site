@@ -9,7 +9,8 @@ const js_yaml = require('js-yaml')
 const fs = require('fs')
 const cors = require('cors')
 const bodyparser = require('body-parser')
-
+require('dotenv').config()
+const port = process.env.PORT || 8080
 
 
 app.use(cors())
@@ -30,15 +31,18 @@ app.use('/', (req,res,next)=>{
         return next()
     
 })
+if(process.env.NODE_ENV == "production"){
+    app.use(express.static('../frontend/build'))
+}
 app.use('/', require('./api/blogpost'))
 app.use('/', require('./api/comment'))
 app.use('/', require('./api/login'))
 app.use('/', require('./api/file'))
 app.use('/', require('./api/auth'))
 
-mongoose.connect("mongodb://localhost:27017/blog-site",{useNewUrlParser:true},()=>{
+mongoose.connect(process.env.MONGODB_URL || "mongodb://localhost:27017/blog-site",{useNewUrlParser:true},()=>{
     console.log("MONGODB CONNECTION ESTABLISHED")
-    app.listen(8080, ()=>{
+    app.listen(port, ()=>{
         console.log("API CONNECTION ESTABLISHED")
     })
 })

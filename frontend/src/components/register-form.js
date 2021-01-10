@@ -2,7 +2,7 @@ import React from 'react'
 import Axios from 'axios'
 import {Redirect} from 'react-router-dom'
 import hash from 'crypto-js/md5'
-import {validateEmail, validatePassword} from './validation'
+import {validateEmail, validatePassword, validateName} from './validation'
 /**@class - RegisterForm
  * @description - the form for users to submit login/password
  * @since 1.0.0/
@@ -20,10 +20,12 @@ export default class RegisterForm extends React.Component{
     }
     handleSubmit()
     {
+        this.state.errors = []
+        this.state.message = ""
         let valid_email = validateEmail(this.state.email)
         let valid_password = validatePassword(this.state.password)
-        console.log(valid_email, valid_password)
-        if(validateEmail(this.state.email) == "" && validatePassword(this.state.password) == ""){
+        let valid_name = validateName(this.state.name)
+        if(validateName(this.state.name)  == "" && validateEmail(this.state.email) == "" && validatePassword(this.state.password) == ""){
             Axios.post('http://localhost:8080/login/register', {email:this.state.email, password:hash(this.state.password).toString(), name:this.state.name})
             .then((response)=>{
                 this.setState({message:response.data.message})
@@ -31,7 +33,7 @@ export default class RegisterForm extends React.Component{
             })
         }
         else{
-            this.state.errors.push(valid_email, valid_password)
+            this.state.errors.push(valid_name, valid_email, valid_password)
             this.setState({
                 errors:this.state.errors
 
@@ -56,12 +58,23 @@ export default class RegisterForm extends React.Component{
                         })
                     }
                     </div>
+                <div className="login-element">
                 <label for="name">Name:</label>
-                <input type="text" name="name" onChange={(e)=>this.setState({state:this.state, name:e.target.value})}/>
+                <br/>
+                <input type="text" name="name" onChange={(e)=>this.setState({state:this.state, name:e.target.value})}/> 
+                </div>
+              
+                <div className="login-element">
                 <label for="email">Email:</label>
+                <br/>
                 <input type="email" name="password" onChange={(e)=>this.setState({state:this.state, email:e.target.value})}/>
+                </div>
+                <div className="login-element">
                 <label for="password">Password:</label>
+                <br/>
                 <input type="password" name="password" onChange={(e)=>this.setState({state:this.state, password:e.target.value})}/>
+                </div>
+
                 <button type="submit" onClick={(e)=>this.handleSubmit()}>Register</button>
             </div>
         )

@@ -5,6 +5,7 @@ import Posts from '../components/posts'
 import {userContext} from '../contexts/userContext'
 import PostPreview from '../components/preview-post'
 import Spinner from '../components/spinner'
+import {mongoToRealDate} from '../components/conversion'
 export default class UserPage extends React.Component{
 
     constructor(props){
@@ -59,7 +60,7 @@ export default class UserPage extends React.Component{
                 <div className="user-section">
                 <h1>User Details</h1>
                 <p>Name: {this.state.user.name}</p>
-                <p>Date Joined: {this.state.user.createdAt}</p>
+                <p>Date Joined: {mongoToRealDate(this.state.user.createdAt)}</p>
                 <p>Posts Created: {this.state.posts.length} </p>
 
                 </div>

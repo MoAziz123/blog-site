@@ -29,6 +29,9 @@ export default class PostImage extends React.Component{
     }
 
     render(){
+        if(this.props.image_type == "small"){
+            return <img className="post-image-small" src={this.state.image_data}/>
+        }
         return <img className="post-image" src={this.state.image_data}/>
     }
 

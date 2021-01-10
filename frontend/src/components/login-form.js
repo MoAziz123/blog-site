@@ -60,13 +60,25 @@ export default class LogInForm extends React.Component{
             <div className="login-form">
              
                 <p className="response-text">{this.state.message}</p>
+                <div className="login-element">
                 <label for="email">Email:</label>
+                <br/>
                 <input type="email" name="password" onChange={(e)=>this.setState({state:this.state, email:e.target.value})}/>
+                
+                </div>
+
+                <div className="login-element">
                 <label for="password">Password:</label>
+                <br/>
                 <input type="password" name="password" onChange={(e)=>this.setState({state:this.state, password:e.target.value})}/>
+               
+                </div>
+                <div className="login-buttons">
                 <button type="submit" onClick={(e)=>this.handleSubmit()}>Log In</button>
                 <button type="submit" onClick={(e)=>this.handleRegisterClick()}>Register</button>
 
+                </div>
+              
             </div>
         )
 

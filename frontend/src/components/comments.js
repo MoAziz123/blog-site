@@ -75,10 +75,8 @@ export default class Comments extends React.Component{
                 <div className="comments">
                     <p>{this.state.message}</p>
                     <div className="comment-input">
-                        <label for="comment">Comment: </label>
-                        <textarea name="comment" onChange={(e)=>this.setState({state:this.state, text:e.target.value})}></textarea>
+                            <p>You need to login to comment.</p>
                         <br/>
-                        <p>You need to login to comment.</p>
                      </div>
                 </div>)
         }

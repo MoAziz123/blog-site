@@ -50,6 +50,7 @@ router.post('/login/submit', (req,res)=>{
         })
     }
     })
+    .catch(error=>console.log(error))
 
 })
 

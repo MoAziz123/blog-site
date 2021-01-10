@@ -46,6 +46,9 @@ export function validateTags(tags){
 
 }
 
+export function validateName(name){
+    return name == null || typeof name == "undefined" ? "Name - should not be empty or contain numbers" : ""
+}
 //TODO: include regex for this
 export function validateEmail(email){
 

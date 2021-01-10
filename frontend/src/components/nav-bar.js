@@ -23,6 +23,13 @@ function NavBarView()
             <Link to="/search">Search posts</Link>
         </ul>
     </div>
+    <div className="links-alt-wrapper">
+            <ul className="links-alt-2">
+            
+            <Link to="/login">Log In</Link>
+            <Link to="/">Posts</Link>
+            <Link to="/search">Search posts</Link>    </ul>
+            </div>
 </div>
 )
 }

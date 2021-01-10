@@ -1,3 +1,2 @@
 //CONFIG FILE FOR APPLICATION
-host: "http://localhost:3000"
-database: "http://localhost:8080"
+host: "http://moaziz123.github.io/blog-site-backend:8080"

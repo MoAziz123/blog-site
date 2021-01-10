@@ -7,7 +7,9 @@ export default class RegisterPage extends React.Component{
     {
         return(<>
         <NavBar/>
+        <div className="main-page">
         <RegisterForm/>
+        </div>
         </>)
     }
     

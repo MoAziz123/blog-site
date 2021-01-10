@@ -22,7 +22,7 @@ export default class DynamicForm extends React.Component
                 title:"", description:"", byline:"", tags:"", data:[], date:""
             },
             message:null,
-            date:convertToHTMLDate(new Date(), "-"),
+            date:new Date().toISOString().substring(0,10),
             errors:[],
             username:""
         }
@@ -71,6 +71,7 @@ export default class DynamicForm extends React.Component
         }
        
     }
+    
     
     
     getUserInputs=()=>{
@@ -139,9 +140,10 @@ export default class DynamicForm extends React.Component
         })
     }
     validatePost=()=>{
+        this.setState({errors:[], state:this.state})
         let valid_title = validateTitle(this.state.post.title)
         let valid_description = validateDescription(this.state.post.description)
-        let valid_byline = validateByline(this.state.post.byline)
+        let valid_byline = validateByline(document.getElementById("byline").value)
         let valid_date = this.state.post.date != null ? "" : "Date - ensure that it has a valid value"
         let valid_tags = ""
         if(valid_title == "" 
@@ -174,10 +176,9 @@ export default class DynamicForm extends React.Component
     }
     handleSubmit=()=>{
         
-        this.setState({
-            errors:[],
-            message:""
-        })
+        this.state.errors = []
+        this.state.message = ""
+        console.log(this.state.errors)
         this.validatePost()
         
         
@@ -265,7 +266,7 @@ export default class DynamicForm extends React.Component
                         else if(item.name == "image"){
                             console.log("hi")
                             headElement.insertBefore(newNode, refElement)
-                            ReactDOM.render(<Image value={item.data}/>, newNode)
+                            ReactDOM.render(<Image image_type="small" value={item.data}/>, newNode)
                         }
                         else if(item.name == "text"){
                             headElement.insertBefore(newNode, refElement)
@@ -314,7 +315,7 @@ export default class DynamicForm extends React.Component
                         </div>
                         <div className="re">
                         <label for="date">Date:</label>
-                            <input className="form-input-required"  required value={new Date().toDateString()} onChange={(e)=>{this.handleInputChange()}} id="date" type="date" name="date"/>
+                            <input className="form-input-required"  required value={this.state.date} onChange={(e)=>{this.handleInputChange()}} id="date" type="date" name="date"/>
                         </div>
                         <div>
                             <label for="byline">Byline:</label>

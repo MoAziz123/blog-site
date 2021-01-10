@@ -39,7 +39,7 @@ export default class PostPreview extends React.Component{
     }
     render(){
         if(this.state.deleted){
-            this.setState({redirect:"/404"})
+            return(<Redirect to={window.location.pathname}/>)
         }
         if(this.state.redirect)
         {
@@ -59,10 +59,13 @@ export default class PostPreview extends React.Component{
                 <div className="post-tags">
                 {
                     this.props.post.tags.map((tag)=>{
-                        return(
-                            <Tag tag={tag}/>
-
-                        )
+                        if(tag == "" || tag == null){
+                            return (<></>)
+                        }
+                            return(
+                                <Tag tag={tag}/>
+    
+                            )
                     })
                 }
                 </div>

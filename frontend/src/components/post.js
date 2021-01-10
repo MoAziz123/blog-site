@@ -51,9 +51,13 @@ export default class Post extends React.Component{
                 <div className="post-tags">
                 {
                     this.state.post.tags && this.state.post.tags.map((tag)=>{
-                        return(
-                            <Tag tag={tag}/>
-                        )
+                        if(tag == ""){
+                            return (<></>)
+                        }
+                            return(
+                                <Tag tag={tag}/>
+    
+                            )
                     })
                 }
                 </div>

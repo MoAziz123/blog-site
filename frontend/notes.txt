@@ -68,6 +68,16 @@ SOLUTION:: compare previous props to current props and check if tag is not equal
 
 //NEW BUGS
 BUG:: fix createdAt timestamp
-BUG:: fix date ISSUE
+SOLUTION:: all future users will have this function
+BUG:: validation issue - keeps repeating
+SOLUTION:: setting state to []/"" for messages will remove it
+
 FEATURE:: add config
-DEPLOY:: deploy to github pages
+DEPLOY:: deploy to heroku/mongolab
+
+//REVIEW
+ISSUES:: time significantly extended with scope creep
+ISSUES:: little testing done in start, makes stuff harder to do
+ISSUES:: tunnel vision sometimes - reducing will make easier to find solutions
+ISSUES:: not keeping a reivew doc at start
+ISSUES:: deployment - lack of experience, do at start?

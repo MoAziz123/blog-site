@@ -10,9 +10,13 @@ export default class LogInPage extends React.Component{
        return(
            <>
             <NavBar/>
-       <userContext.Consumer>
+            <div className="main-page">
+
+            <userContext.Consumer>
             {(value)=>(<LogInForm user={value}/>)}
         </userContext.Consumer>
+            </div>
+
         </>
        )
     }

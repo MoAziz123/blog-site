@@ -91,8 +91,9 @@ export default class Posts extends React.Component
                     })
                 }
                 window.addEventListener('scroll',()=>{
-                    const footer = document.getElementsByClassName("preview-post");
-                    const posts = footer[footer.length - 2]
+                    const preview_posts = document.getElementsByClassName("preview-post");
+                    const posts = preview_posts[preview_posts.length-5]
+                    console.log(this.state.posts.length, preview_posts.length)
                     try{
                         if(posts.getBoundingClientRect().top < 0){
                             setTimeout(this.incrementCount(), 10000)
@@ -107,6 +108,9 @@ export default class Posts extends React.Component
     }
 
     render=()=>{
+        if(this.state.posts.length <= 0){
+            return(<p>No posts found</p>)
+        }
         if(this.state.loading){
             return (<Spinner/>)
         }
