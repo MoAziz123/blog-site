@@ -38,6 +38,7 @@ export default class Posts extends React.Component
    
     componentWillMount=()=>{
         getUser()
+        console.log(this.state.loading)
         this.setState({loading:true})
         if(this.props.post_type == "personal"){
             if(localStorage.getItem('x-access-token')){
@@ -108,12 +109,14 @@ export default class Posts extends React.Component
     }
 
     render=()=>{
+        if(this.state.loading){
+            console.log("spinner spin")
+            return (<Spinner/>)
+        }
         if(this.state.posts.length <= 0){
             return(<p>No posts found</p>)
         }
-        if(this.state.loading){
-            return (<Spinner/>)
-        }
+        
         if(this.state.redirect){
             return(<Redirect to="/unauth"/>)
         }

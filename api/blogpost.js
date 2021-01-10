@@ -42,6 +42,11 @@ function validatePost(post){
  * @description - used for uploading images
  */
 
+
+ /**
+  * @route - posts
+  * @description - to get posts
+  */
 router.get('/posts', (req,res)=>{
     let count = parseInt(req.query.count)
     Post.find({})
