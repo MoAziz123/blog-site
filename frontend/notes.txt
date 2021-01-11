@@ -75,6 +75,13 @@ SOLUTION:: setting state to []/"" for messages will remove it
 FEATURE:: add config
 DEPLOY:: deploy to heroku/mongolab
 
+- how to deploy:
+- move backend into root folder
+- create Procfile - web:"node server.js"
+- in package.json, scripts, add a heroku-postbuild script which will install dependencies and run server
+for both frontend backend
+- deploy
+
 //REVIEW
 ISSUES:: time significantly extended with scope creep
 ISSUES:: little testing done in start, makes stuff harder to do

@@ -31,7 +31,7 @@ export default class Post extends React.Component{
     componentWillMount(){
         let id = window.location.pathname.split("/")[2]
         console.log(id)
-        Axios.get('http://localhost:8080/posts/' + id)
+        Axios.get('/api/posts/' + id)
         .then((res)=>{
             this.setState({post:res.data.post})
 

@@ -45,7 +45,7 @@ export default class UpdateForm extends React.Component
                 if(validateImage(element.files[0].name) == ""){
                     const image = new FormData()
                     image.append("image", element.files[0], element.files[0].name)
-                    Axios.post('http://localhost:8080/file/uploadimage', image)
+                    Axios.post('/api/file/uploadimage', image)
                     data_array.push({
                         name:element.getAttribute("name"),
                         data:element.files[0].name
@@ -65,7 +65,7 @@ export default class UpdateForm extends React.Component
             }
                
         }
-        Axios.put('http://localhost:8080/posts/update', {
+        Axios.put('/api/posts/update', {
             id:this.state.id,
             title:this.state.post.title,
             date:this.state.post.date,

@@ -15,7 +15,7 @@ export default class Authentication extends React.Component
     componentWillMount(){
         console.log("hi")
         if(localStorage.getItem('x-access-token')){
-            Axios.post('http://localhost:8080/auth/decode', {
+            Axios.post('/api/auth/decode', {
                 token:localStorage.getItem('x-access-token')}, {headers:{'x-access-token':localStorage.getItem('x-access-token')}}
             )
             .then((response)=>{

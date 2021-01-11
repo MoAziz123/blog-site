@@ -31,18 +31,18 @@ app.use('/', (req,res,next)=>{
         return next()
     
 })
+
+app.use('/api/', require('./api/blogpost'))
+app.use('/api/', require('./api/comment'))
+app.use('/api/', require('./api/login'))
+app.use('/api/', require('./api/file'))
+app.use('/api/', require('./api/auth'))
 if(process.env.NODE_ENV == "production"){
     app.use(express.static('./frontend/build'))
     app.get("*", (req, res) => {
         res.sendFile(path.resolve(__dirname,  "build", "index.html"))
 })
 }
-app.use('/', require('./api/blogpost'))
-app.use('/', require('./api/comment'))
-app.use('/', require('./api/login'))
-app.use('/', require('./api/file'))
-app.use('/', require('./api/auth'))
-
 mongoose.connect(process.env.MONGODB_URL || "mongodb://localhost:27017/blog-site",{useNewUrlParser:true},()=>{
     console.log("MONGODB CONNECTION ESTABLISHED")
     app.listen(port, ()=>{

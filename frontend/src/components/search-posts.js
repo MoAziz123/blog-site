@@ -21,7 +21,7 @@ export default class SearchPosts extends React.Component{
     }
     
     componentDidMount(){
-        Axios.get('http://localhost:8080/posts')
+        Axios.get('/api/posts')
         .then((res)=>{
             this.setState({posts:res.data.posts, loading:false})
         })
@@ -29,7 +29,7 @@ export default class SearchPosts extends React.Component{
 
     handleSearch(){
         this.setState({loading:true})
-        Axios.post('http://localhost:8080/posts/search', {search:this.state.query})
+        Axios.post('/api/posts/search', {search:this.state.query})
         .then((res)=>{
             this.setState({posts:res.data.posts, loading:false})
         })

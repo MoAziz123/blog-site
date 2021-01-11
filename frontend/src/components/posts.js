@@ -24,14 +24,14 @@ export default class Posts extends React.Component
     }
     incrementCount(){
         if(this.props.post_type == "personal"){
-            Axios.get('http://localhost:8080/posts/searchUser', {
+            Axios.get('/api/posts/searchUser', {
                 user_id:this.props.post.user_id,
                 count:this.state.count
             })
             .then((res)=>this.setState({posts:res.data.posts, count:this.state.count+10}))
         }
         console.log(this.state.count)
-        Axios.get('http://localhost:8080/posts', {params:{count:this.state.count+10}})
+        Axios.get('/api/posts', {params:{count:this.state.count+10}})
         .then((res)=>this.setState({posts:res.data.posts, count:this.state.count+10,load_posts:false}))
     }
     
@@ -42,12 +42,12 @@ export default class Posts extends React.Component
         this.setState({loading:true})
         if(this.props.post_type == "personal"){
             if(localStorage.getItem('x-access-token')){
-                Axios.post('http://localhost:8080/auth/decode',{
+                Axios.post('/api/auth/decode',{
                     token:localStorage.getItem('x-access-token')
                 })
                 .then((response)=>{
                     userContext.user = response.data.user
-                    return Axios.post('http://localhost:8080/posts/searchUser',{
+                    return Axios.post('/api/posts/searchUser',{
                         user_id:userContext.user.id,
                         count:this.state.count
                     })
@@ -68,7 +68,7 @@ export default class Posts extends React.Component
             this.setState({posts:this.props.posts, loading:false})
         }
         else if(this.props.tag){
-            Axios.get('http://localhost:8080/posts/tags/' + this.props.tag )
+            Axios.get('/api/posts/tags/' + this.props.tag )
             .then((res)=>
             {
                 if(!res.data.auth){
@@ -82,7 +82,7 @@ export default class Posts extends React.Component
                )
         }
         else{
-            Axios.get('http://localhost:8080/posts', {params:{count:10}} )
+            Axios.get('/api/posts', {params:{count:10}} )
             .then((res)=>{
                 if(!res.data.auth){
                     

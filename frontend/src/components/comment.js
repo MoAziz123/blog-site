@@ -23,7 +23,7 @@ export default class Comment extends React.Component{
     }
     handleDelete=()=>{
         let id = this.props.comment._id
-        Axios.post("http://localhost:8080/comment/remove" , {data:{_id:id}})
+        Axios.post("/api/comment/remove" , {data:{_id:id}})
         .then((res)=>{
             this.setState({state:this.state, deleted:true})
         })
@@ -38,7 +38,7 @@ export default class Comment extends React.Component{
     }
     handleUpdate()
     {
-        Axios.put('http://localhost:8080/comment/update', {
+        Axios.put('/api/comment/update', {
             id:this.props.comment._id,
             date_posted:Date.now(),
             text:this.state.text,

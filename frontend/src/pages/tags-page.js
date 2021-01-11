@@ -22,7 +22,7 @@ export default class TagsPage extends React.Component{
     }
     componentWillMount(){
         this.state.loading = true
-        Axios.get('http://localhost:8080/posts/tags/' + this.props.match.params.tag)
+        Axios.get('/api/posts/tags/' + this.props.match.params.tag)
         .then(res=>this.setState({posts:res.data.posts, loading:false}))
 
     }
@@ -30,7 +30,7 @@ export default class TagsPage extends React.Component{
     componentDidUpdate(prevProps, prevState){
         this.state.loading = true
         if(prevProps.match.params.tag != this.props.match.params.tag){
-            Axios.get('http://localhost:8080/posts/tags/' + this.props.match.params.tag)
+            Axios.get('/api/posts/tags/' + this.props.match.params.tag)
             .then(res=>this.setState({posts:res.data.posts, loading:false}))
         }
           

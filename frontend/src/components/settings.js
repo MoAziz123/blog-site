@@ -26,7 +26,7 @@ export default class Settings extends React.Component{
     
     componentDidMount()
     {
-        Axios.post('http://localhost:8080/auth/decode', {token:localStorage.getItem('x-access-token')})
+        Axios.post('/api/auth/decode', {token:localStorage.getItem('x-access-token')})
         .then((response)=>{
 
             this.setState({email:response.data.user.email, name:response.data.user.name, access:response.data.user.access})
@@ -36,7 +36,7 @@ export default class Settings extends React.Component{
     handleChangeDetails(){
         if(this.state.password != null && this.state.name != null && this.state.email != null)
         {
-            Axios.put('http://localhost:8080/login/update',{
+            Axios.put('/api/login/update',{
             id:userContext.user.id,
             username:this.state.name,
             password:hash(this.state.password),
@@ -57,11 +57,11 @@ export default class Settings extends React.Component{
         
     }
     handleDeleteAccount(){
-        Axios.post('http://localhost:8080/login/search', {id:userContext.user.id})
+        Axios.post('/api/login/search', {id:userContext.user.id})
         .then((res)=>{
             if(hash(this.state.password_confirm) == res.data.user.password){
  
-                Axios.post('http://localhost:8080/login/delete',{
+                Axios.post('/api/login/delete',{
                     user_id:userContext.user.id
                 })
                 .then((res)=>{

@@ -30,7 +30,7 @@ export default class DynamicForm extends React.Component
     }
     componentDidMount(){
         if(localStorage.getItem('x-access-token')){
-            Axios.post('http://localhost:8080/auth/decode', {
+            Axios.post('/api/auth/decode', {
                 token:localStorage.getItem('x-access-token')
             })
             .then((response)=>{
@@ -46,7 +46,7 @@ export default class DynamicForm extends React.Component
     componentWillMount(){
         if(this.props.handler == "update"){
             let link = window.location.pathname.split("/")[2]
-            Axios.get("http://localhost:8080/posts/" + link)
+            Axios.get("/api/posts/" + link)
             .then((response)=>{
                 console.log(response.data)
                 this.setState({
@@ -106,7 +106,7 @@ export default class DynamicForm extends React.Component
         }
         else{
             console.log(data_array)
-            Axios.put('http://localhost:8080/posts/update', {
+            Axios.put('/api/posts/update', {
                 id:this.state.id,
                 title:this.state.post.title,
                 date:this.state.post.date,
@@ -123,7 +123,7 @@ export default class DynamicForm extends React.Component
     addPost=()=>{
         let tags_array = document.getElementById("tags").value.split(",")
         let data_array = this.getUserInputs()
-        Axios.post('http://localhost:8080/posts/new', {
+        Axios.post('/api/posts/new', {
             id:this.state.id,
             title:this.state.post.title,
             date:this.state.post.date,

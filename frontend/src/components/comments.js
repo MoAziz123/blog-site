@@ -22,7 +22,7 @@ export default class Comments extends React.Component{
     }
     componentDidMount(){
         this.state.loading = true
-        Axios.post('http://localhost:8080/comment/search', {post_id:window.location.pathname.split("/")[2]})
+        Axios.post('/api/comment/search', {post_id:window.location.pathname.split("/")[2]})
         .then((res)=>{
             this.setState({
                 comments:res.data.comments,
@@ -33,7 +33,7 @@ export default class Comments extends React.Component{
     handleSubmit()
     {
         try{
-            Axios.post('http://localhost:8080/comment/add', {
+            Axios.post('/api/comment/add', {
                 post_id:window.location.pathname.split("/")[2],
                 text: this.state.text,
                 user_name:userContext.user.name,

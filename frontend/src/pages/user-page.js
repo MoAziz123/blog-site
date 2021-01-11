@@ -23,11 +23,11 @@ export default class UserPage extends React.Component{
         let id = window.location.pathname.split("/")[2]
         console.log(id)
         
-        Axios.post('http://localhost:8080/posts/searchUser', {
+        Axios.post('/api/posts/searchUser', {
                 user_id: id
             })
         .then(res=>this.setState({state:this.state, posts:res.data.posts, loading:false}))
-        Axios.post('http://localhost:8080/login/search',{
+        Axios.post('/api/login/search',{
             id:id
         })
         .then(response=>{

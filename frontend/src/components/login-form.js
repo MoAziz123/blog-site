@@ -22,7 +22,7 @@ export default class LogInForm extends React.Component{
     
     handleSubmit()
     {
-            Axios.post('http://localhost:8080/login/submit', {email:this.state.email, password:hash(this.state.password).toString()})
+            Axios.post('/api/login/submit', {email:this.state.email, password:hash(this.state.password).toString()})
             .then((response)=>{
                 if(response.data.auth == true && response.data.token)
                 {

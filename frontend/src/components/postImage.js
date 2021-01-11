@@ -14,7 +14,7 @@ export default class PostImage extends React.Component{
         }
     }
     getImageData(data){
-        let req_link = 'http://localhost:8080/file/getimage/' + data
+        let req_link = '/api/file/getimage/' + data
         Axios.get(req_link)
         .then((response)=>{
             if(!response.data.success){

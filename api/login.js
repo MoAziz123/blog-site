@@ -11,14 +11,7 @@ const Post = require('../models/Post')
 /**@route -  /submit
  * @description - submits the login details to authenticate
 */
-router.get('/login', (req,res)=>{
-    User.find({})
-    .then((user)=>{
-        return res.json({
-            user
-        })
-    })
-})
+
 router.post('/login/submit', (req,res)=>{
     console.log(req.body.password.toString(), req.body.email)
     User.findOne({email:req.body.email, password:req.body.password.toString()})

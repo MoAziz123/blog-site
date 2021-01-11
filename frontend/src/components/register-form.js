@@ -26,7 +26,7 @@ export default class RegisterForm extends React.Component{
         let valid_password = validatePassword(this.state.password)
         let valid_name = validateName(this.state.name)
         if(validateName(this.state.name)  == "" && validateEmail(this.state.email) == "" && validatePassword(this.state.password) == ""){
-            Axios.post('http://localhost:8080/login/register', {email:this.state.email, password:hash(this.state.password).toString(), name:this.state.name})
+            Axios.post('/api/login/register', {email:this.state.email, password:hash(this.state.password).toString(), name:this.state.name})
             .then((response)=>{
                 this.setState({message:response.data.message})
                 

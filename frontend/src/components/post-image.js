@@ -50,7 +50,7 @@ export default class PostImage extends React.Component{
     uploadImage=(image_data)=>{
         const image = new FormData()
         image.append("image", image_data, image_data.name)
-        Axios.post('http://localhost:8080/file/uploadimage', image)
+        Axios.post('/api/file/uploadimage', image)
         .then(response=>console.log(response.data))
     }
     render(){
