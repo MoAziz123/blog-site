@@ -50,7 +50,15 @@ export default class SearchPosts extends React.Component{
             )
         }
         if(this.state.posts.length <= 0){
-            return(<p>No posts found</p>)
+            return(
+            <>
+            <div className="search-bar">
+                    <label for="search">Search:</label>
+                    <input type="text"  name="search" onChange={(e)=>{this.setState({query:e.target.value})}}/>
+                    <button type="button" onClick={(e)=>this.handleSearch()}>Search</button>
+            </div>
+            <p>No posts found</p>
+            </>)
         }
         return(
             <>

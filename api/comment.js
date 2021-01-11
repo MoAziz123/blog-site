@@ -9,7 +9,7 @@ const Comment = require('../models/Comment')
  * @route - /all
  * @description - gets all comments
  */
-router.get('/api/comment/all', (req,res)=>{
+router.get('/comment/all', (req,res)=>{
     Comment.find({})
     .then((comments)=>{
         return res.json({
@@ -21,7 +21,7 @@ router.get('/api/comment/all', (req,res)=>{
 /**@route - /search
  * @description - gets comments associated with post
  */
-router.post('/api/comment/search', (req,res)=>{
+router.post('/comment/search', (req,res)=>{
     Comment.find({post_id:req.body.post_id})
     .then((comments)=>{
         if(comments){
@@ -44,7 +44,7 @@ router.post('/api/comment/search', (req,res)=>{
 /**@route - /add 
  * @description - adds a new comment to a post
 */
-router.post('/api/comment/add', (req,res)=>{
+router.post('/comment/add', (req,res)=>{
     let new_comment = new Comment({
         post_id:req.body.post_id,
         text:req.body.text,
@@ -79,7 +79,7 @@ router.post('/api/comment/add', (req,res)=>{
 /**@route - /remove
  * @description - removes a comment from a post
  */
-router.post('/api/comment/remove', (req,res)=>{
+router.post('/comment/remove', (req,res)=>{
     console.log(req.body)
     Comment.findOneAndDelete({_id:req.body.data._id})
     .then((comment)=>{
@@ -103,7 +103,7 @@ router.post('/api/comment/remove', (req,res)=>{
  /**@route - /update
   * @description - updates a comment
   */
- router.put('/api/comment/update', (req,res)=>{
+ router.put('/comment/update', (req,res)=>{
      Comment.findOneAndUpdate({_id:req.body.id},{
         text:req.body.text,
         edited:req.body.edited,

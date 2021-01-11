@@ -82,9 +82,17 @@ DEPLOY:: deploy to heroku/mongolab
 for both frontend backend
 - deploy
 
+
+
 //REVIEW
 ISSUES:: time significantly extended with scope creep
 ISSUES:: little testing done in start, makes stuff harder to do
 ISSUES:: tunnel vision sometimes - reducing will make easier to find solutions
 ISSUES:: not keeping a reivew doc at start
 ISSUES:: deployment - lack of experience, do at start?
+
+
+GOOD:: 
+- make sure routes have /api in them (app.use('/api', route))
+- make sure requests contain /api too, so that you can send them to the same domain
+- in server, make sure that you've placed the request redirect (to serve static pages) before connection

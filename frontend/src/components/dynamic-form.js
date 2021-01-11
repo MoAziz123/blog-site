@@ -194,7 +194,7 @@ export default class DynamicForm extends React.Component
         }
         else if(text == "image"){
             headElement.insertBefore(newNode, refElement)
-            ReactDOM.render(<Image/>, newNode)
+            ReactDOM.render(<Image image_type="small" />, newNode)
         }
         else if(text == "text"){
             headElement.insertBefore(newNode, refElement)
