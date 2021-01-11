@@ -222,7 +222,8 @@ router.post('/posts/search', (req,res)=>{
         else
         {
             return res.json({
-                message:"Unable to find psots"
+                message:"Unable to find posts",
+                posts:[]
             })
         }
     })
