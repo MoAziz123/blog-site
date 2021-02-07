@@ -1,6 +1,6 @@
 import React from 'react'
 import Axios from 'axios'
-import {Redirect} from 'react-router-dom'
+import {Redirect, Link} from 'react-router-dom'
 import {userContext} from '../contexts/userContext'
 import { validateEmail, validatePassword } from './validation'
 import hash from 'crypto-js/md5'
@@ -73,6 +73,7 @@ export default class LogInForm extends React.Component{
                 <input type="password" name="password" onChange={(e)=>this.setState({state:this.state, password:e.target.value})}/>
                
                 </div>
+                <Link to="/forget">Forgot Password?</Link>
                 <div className="login-buttons">
                 <button type="submit" onClick={(e)=>this.handleSubmit()}>Log In</button>
                 <button type="submit" onClick={(e)=>this.handleRegisterClick()}>Register</button>

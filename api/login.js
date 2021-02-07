@@ -13,7 +13,6 @@ const Post = require('../models/Post')
 */
 
 router.post('/login/submit', (req,res)=>{
-    console.log(req.body.password.toString(), req.body.email)
     User.findOne({email:req.body.email, password:req.body.password.toString()})
     .then((user)=>{
         if(user){
@@ -143,7 +142,36 @@ router.put('/login/update',(req,res)=>{
 
     })
 })
+router.post('/login/test', (req,res)=>{
+    console.log("test")
+})
+router.post('/login/forget',(req,res)=>{
+    return res.json({
+        test:"test"
+    })
+    console.log("test")
+    /*if(!req.body.email){
+        return res.json({
+            message:"Email not provided"
+        })
+    }
+    User.find({email:req.body.email})
+    .then((email)=>{
+        if(user){
+            //TODO: send mail
+            return res.json({message:"Email founds"})
+        }
+        return res.json({
+            message:"Account not found within database"
+        })
+    })
+    return res.json({message:"Error"})*/
 
+})
+
+router.post('/login/verify',(req,res)=>{
+
+})
 
 //TODO: implement loggedIn route of authorization
 router.post('/login/loggedIn',(req,res)=>{
@@ -156,4 +184,8 @@ router.post('/login/loggedIn',(req,res)=>{
 router.post('/login/adminOnly',(req,res)=>{
     let token = req.get('Authorization')
 })
+
+
+
+
 module.exports = router

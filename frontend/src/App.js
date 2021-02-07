@@ -18,10 +18,12 @@ import SettingsPage from './pages/settings-page'
 import ErrorPage from './pages/error-page'
 import UnauthPage from './pages/unauth-page';
 import TagsPage from './pages/tags-page'
+import ForgetPage from './pages/forget-page'
 import Authentication from './components/authentication'
 import Helmet from 'react-helmet'
 import SEO from './components/seo'
 import UserPage from './pages/user-page'
+import VerifyPage from './pages/verify-page';
 
 function App() {
   return (
@@ -48,6 +50,8 @@ function App() {
           <Route path="/tags/:tag" component={TagsPage}/>
           <Route path="/users/:user" component={UserPage}/>
           <Route exact path="/unauth" component={UnauthPage}/>
+          <Route exact path="/forget" component={ForgetPage}/>
+          <Route exact path="/forget/verify/:id" component={VerifyPage}/>
           <Route component={ErrorPage}/>
         </Switch>
       <Footer/>

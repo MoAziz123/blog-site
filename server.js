@@ -37,6 +37,7 @@ app.use('/api/', require('./api/comment'))
 app.use('/api/', require('./api/login'))
 app.use('/api/', require('./api/file'))
 app.use('/api/', require('./api/auth'))
+
 if(process.env.NODE_ENV == "production"){
     app.use(express.static('./frontend/build'))
     app.get("*", (req, res) => {
